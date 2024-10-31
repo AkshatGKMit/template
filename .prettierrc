@@ -2,11 +2,28 @@
   "arrowParens": "always",
   "bracketSameLine": false,
   "bracketSpacing": true,
+  "semi": true,
+  "experimentalTernaries": false,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
   "trailingComma": "all",
+  "singleAttributePerLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": false,
+  "proseWrap": "never",
+  "insertPragma": false,
   "printWidth": 80,
+  "requirePragma": false,
   "tabWidth": 2,
   "useTabs": false,
-  "semi": true,
-  "singleAttributePerLine": true,
-  "singleQuote": true
+  "embeddedLanguageFormatting": "auto",
+  "jsxBracketSameLine": false,
+  "overrides": [
+    {
+      "files": [".eslintrc", ".json"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
 }
