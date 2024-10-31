@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, Text } from 'react-native';
-import { TOKEN } from '@env';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ThemeContext, { ThemeContextProvider } from '@config/context/ThemeContext';
+import PlatformStatusBar from '@config/components/platformStatusBar';
+import ThemedStyles from '@themes/globalStyles';
 
-const App = (): React.JSX.Element => {
+const App = () => {
   return (
-    <SafeAreaView>
-      <Text>{TOKEN}</Text>
-    </SafeAreaView>
+    <ThemeContextProvider>
+      <SafeAreaProvider>
+        <Main />
+      </SafeAreaProvider>
+    </ThemeContextProvider>
+  );
+};
+
+const Main = () => {
+  const { theme } = useContext(ThemeContext);
+  const styles = ThemedStyles(theme);
+
+  return (
+    <>
+      <PlatformStatusBar />
+      <SafeAreaView style={styles.screen}>
+        <Text>React Native Template App</Text>
+      </SafeAreaView>
+    </>
   );
 };
 

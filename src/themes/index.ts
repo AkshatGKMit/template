@@ -1,3 +1,5 @@
+import Colors from './colors';
+
 export const ThemeColorModes: ThemeColorModes = {
   light: {
     accentColor: '',
@@ -9,7 +11,7 @@ export const ThemeColorModes: ThemeColorModes = {
     primaryColor: '',
     primaryTextColor: '',
     screenBGColor: '',
-    statusBarColor: '',
+    statusBarColor: Colors.primary.light,
   },
   dark: {
     accentColor: '',
@@ -21,6 +23,6 @@ export const ThemeColorModes: ThemeColorModes = {
     primaryColor: '',
     primaryTextColor: '',
     screenBGColor: '',
-    statusBarColor: '',
+    statusBarColor: Colors.primary.dark,
   },
 };

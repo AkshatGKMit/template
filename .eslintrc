@@ -50,7 +50,6 @@
       }
     ],
     "@typescript-eslint/no-unnecessary-condition": "error",
-    "@typescript-eslint/no-use-before-define": "error",
     "prefer-destructuring": "off",
     "@typescript-eslint/prefer-destructuring": "error"
   }
