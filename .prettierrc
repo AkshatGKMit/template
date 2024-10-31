@@ -22,7 +22,8 @@
     {
       "files": [".eslintrc", ".json"],
       "options": {
-        "trailingComma": "none"
+        "trailingComma": "none",
+        "semi": false
       }
     }
   ]

@@ -15,12 +15,6 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "selector": "default",
-        "format": ["camelCase"],
-        "leadingUnderscore": "allow",
-        "trailingUnderscore": "allow"
-      },
-      {
         "selector": "import",
         "format": ["camelCase", "PascalCase"],
         "leadingUnderscore": "allow",

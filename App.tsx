@@ -1,12 +1,13 @@
 import React from 'react';
 import { SafeAreaView, Text } from 'react-native';
+import { TOKEN } from '@env';
 
-function App(): React.JSX.Element {
+const App = (): React.JSX.Element => {
   return (
     <SafeAreaView>
-      <Text>Hello Developer</Text>
+      <Text>{TOKEN}</Text>
     </SafeAreaView>
   );
-}
+};
 
 export default App;
