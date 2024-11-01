@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { View, StatusBar } from 'react-native';
-import ThemeContext from '@config/context/ThemeContext';
+import ConfigContext from '@config/context/ConfigContext';
 import { isIos } from '@constants/constants';
 import ThemedStyles from './styles';
 
 const PlatformStatusBar = () => {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(ConfigContext);
   const styles = ThemedStyles(theme);
 
   if (!isIos) {

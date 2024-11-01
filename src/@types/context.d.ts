@@ -5,7 +5,7 @@ declare global {
     children?: ReactNode;
   }
 
-  interface ThemeCtxProps {
+  interface ConfigCtxProps {
     theme: ThemeColors;
     isDark: boolean;
     changeTheme: (themeMode: ThemeMode) => void;

@@ -2,15 +2,15 @@ import React, { createContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { ThemeColorModes } from '@themes/index';
 
-const defaultValue: ThemeCtxProps = {
+const defaultValue: ConfigCtxProps = {
   theme: ThemeColorModes.light,
   changeTheme: () => {},
   isDark: false,
 };
 
-const ThemeContext = createContext<ThemeCtxProps>(defaultValue);
+const ConfigContext = createContext<ConfigCtxProps>(defaultValue);
 
-export const ThemeContextProvider = ({ children }: CtxProviderProps) => {
+export const ConfigContextProvider = ({ children }: CtxProviderProps) => {
   const colorScheme = useColorScheme();
 
   const { theme: defaultTheme, isDark: defaultIsDark } = defaultValue;
@@ -33,11 +33,11 @@ export const ThemeContextProvider = ({ children }: CtxProviderProps) => {
   const ctxValues = { theme, changeTheme, isDark };
 
   return (
-    <ThemeContext.Provider
+    <ConfigContext.Provider
       value={ctxValues}
       children={children}
     />
   );
 };
 
-export default ThemeContext;
+export default ConfigContext;
