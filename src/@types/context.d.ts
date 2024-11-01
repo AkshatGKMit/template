@@ -14,12 +14,15 @@ declare global {
   interface ConfigCtxValues {
     theme: ThemeColors;
     isDark: boolean;
-    changeTheme: (themeMode: ThemeMode) => void;
+    switchTheme: (themeMode: ThemeMode) => void;
     orientation: Orientation;
     dimensions: WindowDimensions;
   }
 
-  type StorageKey = '';
+  type StorageKey = 'theme';
 
-  interface StorageCtxValues {}
+  interface StorageCtxValues {
+    darkTheme: boolean;
+    changeTheme: (dark: boolean) => void;
+  }
 }

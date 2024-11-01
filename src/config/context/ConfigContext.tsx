@@ -1,12 +1,13 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Dimensions, ScaledSize, useColorScheme } from 'react-native';
+import StorageContext from './StorageContext';
 import { ThemeColorModes } from '@themes/index';
 
 const { height, width } = Dimensions.get('window');
 
 const defaultValue: ConfigCtxValues = {
   theme: ThemeColorModes.light,
-  changeTheme: () => {},
+  switchTheme: () => {},
   isDark: false,
   dimensions: { height, width },
   orientation: height > width ? 'portrait' : 'landscape',
@@ -15,17 +16,14 @@ const defaultValue: ConfigCtxValues = {
 const ConfigContext = createContext<ConfigCtxValues>(defaultValue);
 
 export const ConfigContextProvider = ({ children }: CtxProviderProps) => {
-  const colorScheme = useColorScheme();
+  const { dimensions: defaultDimensions, orientation: defaultOrientation } = defaultValue;
 
-  const {
-    theme: defaultTheme,
-    isDark: defaultIsDark,
-    dimensions: defaultDimensions,
-    orientation: defaultOrientation,
-  } = defaultValue;
+  const { darkTheme, changeTheme } = useContext(StorageContext);
 
-  const [theme, setTheme] = useState<ThemeColors>(defaultTheme);
-  const [isDark, setIsDark] = useState<boolean>(defaultIsDark);
+  const [theme, setTheme] = useState<ThemeColors>(
+    darkTheme ? ThemeColorModes.dark : ThemeColorModes.light,
+  );
+  const [isDark, setIsDark] = useState<boolean>(darkTheme);
   const [dimensions, setDimensions] = useState(defaultDimensions);
   const [orientation, setOrientation] = useState(defaultOrientation);
 
@@ -48,18 +46,17 @@ export const ConfigContextProvider = ({ children }: CtxProviderProps) => {
   }, []);
 
   useEffect(() => {
-    if (colorScheme) {
-      setTheme(ThemeColorModes[colorScheme]);
-      setIsDark(colorScheme === 'dark');
-    }
-  }, [colorScheme]);
+    setTheme(ThemeColorModes[darkTheme ? 'dark' : 'light']);
+    setIsDark(darkTheme);
+  }, [darkTheme]);
 
-  const changeTheme = (themeMode: ThemeMode) => {
+  const switchTheme = (themeMode: ThemeMode) => {
     setTheme(ThemeColorModes[themeMode]);
     setIsDark(themeMode === 'dark');
+    changeTheme(themeMode === 'dark');
   };
 
-  const ctxValues = { theme, changeTheme, isDark, dimensions, orientation };
+  const ctxValues: ConfigCtxValues = { theme, switchTheme, isDark, dimensions, orientation };
 
   return (
     <ConfigContext.Provider

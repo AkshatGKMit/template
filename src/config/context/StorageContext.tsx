@@ -1,12 +1,20 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useColorScheme } from 'react-native';
 
-const defaultValue: StorageCtxValues = {};
+const defaultValue: StorageCtxValues = {
+  darkTheme: false,
+  changeTheme: () => {},
+};
 
 const StorageContext = createContext<StorageCtxValues>(defaultValue);
 
 export const StorageContextProvider = ({ children }: CtxProviderProps) => {
-  const [] = useState();
+  const { darkTheme: defaultDarkTheme } = defaultValue;
+
+  const colorScheme = useColorScheme();
+
+  const [darkTheme, setDarkTheme] = useState(defaultDarkTheme);
 
   async function getStoreValue<T>(key: StorageKey): Promise<T | undefined> {
     try {
@@ -27,7 +35,22 @@ export const StorageContextProvider = ({ children }: CtxProviderProps) => {
     await AsyncStorage.setItem(key, value);
   }
 
-  const ctxValues: StorageCtxValues = {};
+  async function loadStore() {
+    const darkTheme = (await getStoreValue<boolean>('theme')) ?? colorScheme === 'dark';
+
+    setDarkTheme(darkTheme);
+  }
+
+  useEffect(() => {
+    loadStore();
+  }, []);
+
+  const changeTheme = async (dark: boolean) => {
+    setDarkTheme(dark);
+    await saveStoreValue('theme', JSON.stringify(dark));
+  };
+
+  const ctxValues: StorageCtxValues = { darkTheme, changeTheme };
 
   return (
     <StorageContext.Provider

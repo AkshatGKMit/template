@@ -10,7 +10,7 @@ export const ThemeColorModes: ThemeColorModes = {
     placeholderColor: '',
     primaryColor: '',
     primaryTextColor: '',
-    screenBGColor: '',
+    screenBGColor: Colors.white,
     statusBarColor: Colors.primary.light,
   },
   dark: {
@@ -22,7 +22,7 @@ export const ThemeColorModes: ThemeColorModes = {
     placeholderColor: '',
     primaryColor: '',
     primaryTextColor: '',
-    screenBGColor: '',
+    screenBGColor: Colors.black,
     statusBarColor: Colors.primary.dark,
   },
 };
