@@ -11,11 +11,15 @@ declare global {
     width: number;
   }
 
-  interface ConfigCtxProps {
+  interface ConfigCtxValues {
     theme: ThemeColors;
     isDark: boolean;
     changeTheme: (themeMode: ThemeMode) => void;
     orientation: Orientation;
     dimensions: WindowDimensions;
   }
+
+  type StorageKey = '';
+
+  interface StorageCtxValues {}
 }

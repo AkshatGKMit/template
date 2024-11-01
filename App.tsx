@@ -1,17 +1,20 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StorageContextProvider } from '@config/context/StorageContext';
 import ConfigContext, { ConfigContextProvider } from '@config/context/ConfigContext';
 import PlatformStatusBar from '@config/components/platformStatusBar';
 import ThemedStyles from '@themes/globalStyles';
 
 const App = () => {
   return (
-    <ConfigContextProvider>
-      <SafeAreaProvider>
-        <Main />
-      </SafeAreaProvider>
-    </ConfigContextProvider>
+    <StorageContextProvider>
+      <ConfigContextProvider>
+        <SafeAreaProvider>
+          <Main />
+        </SafeAreaProvider>
+      </ConfigContextProvider>
+    </StorageContextProvider>
   );
 };
 

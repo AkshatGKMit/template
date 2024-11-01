@@ -4,7 +4,7 @@ import { ThemeColorModes } from '@themes/index';
 
 const { height, width } = Dimensions.get('window');
 
-const defaultValue: ConfigCtxProps = {
+const defaultValue: ConfigCtxValues = {
   theme: ThemeColorModes.light,
   changeTheme: () => {},
   isDark: false,
@@ -12,7 +12,7 @@ const defaultValue: ConfigCtxProps = {
   orientation: height > width ? 'portrait' : 'landscape',
 };
 
-const ConfigContext = createContext<ConfigCtxProps>(defaultValue);
+const ConfigContext = createContext<ConfigCtxValues>(defaultValue);
 
 export const ConfigContextProvider = ({ children }: CtxProviderProps) => {
   const colorScheme = useColorScheme();

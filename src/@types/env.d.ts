@@ -1,3 +1,1 @@
-declare module '@env' {
-  export const TOKEN: string;
-}
+declare module '@env' {}
