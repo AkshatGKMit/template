@@ -12,4 +12,17 @@ export const Errors = {
   runtimeError: 'Unexpected error occurred',
 } as const;
 
+export const IconFamily = {
+  antDesign: 'AntDesign',
+  entypo: 'Entypo',
+  feather: 'Feather',
+  fontAwesome: 'FontAwesome',
+  fontisto: 'Fontisto',
+  ionicons: 'Ionicons',
+  materialCommunityIcons: 'MaterialCommunityIcons',
+  materialIcons: 'MaterialIcons',
+  octicons: 'Octicons',
+  simpleLineIcons: 'SimpleLineIcons',
+} as const;
+
 export const Images = {};
