@@ -19,4 +19,19 @@ declare global {
     underlayColor?: string;
     onPress?: (ev?: GestureResponderEvent) => void;
   }
+
+  interface GradientScreenProps {
+    children: ReactNode;
+    style?: StyleProp<ViewStyle>;
+  }
+
+  type LoaderProps = {
+    color?: string;
+    size?: number | 'small' | 'large';
+  };
+
+  interface LoadingViewProps {
+    processInfo?: string;
+    invertedStyle?: boolean;
+  }
 }

@@ -18,6 +18,9 @@ const GlobalThemedStyles = (theme: ThemeColors) => {
         justifyContent: 'center',
         flexDirection: 'column',
       },
+      flex1: {
+        flex: 1,
+      },
     });
   }, [theme]);
 };

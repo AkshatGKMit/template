@@ -2,6 +2,7 @@ import { colorWithOpacity } from '@utility/helpers';
 
 import { Colors } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
+import GlobalThemedStyles from './globalStyles';
 
 const lightTheme = {
   accent: Colors.accent.light,
@@ -58,4 +59,4 @@ export const Orientation = {
   landscape: 'landscape',
 } as const;
 
-export { FontFamily, FontSize, FontWeight, Colors };
+export { FontFamily, FontSize, FontWeight, Colors, GlobalThemedStyles };
