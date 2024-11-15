@@ -10,8 +10,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-import ThemeContext from '@config/ThemeContext';
-
 import ThemedStyles from './style';
 
 const iconFamilies = {
@@ -28,15 +26,9 @@ const iconFamilies = {
 };
 
 const Icon = ({ family, name, style }: IconProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext);
-
-  const styles = ThemedStyles(colors);
+  const styles = ThemedStyles();
 
   const SelectedIcon = iconFamilies[family];
-
-  if (!SelectedIcon) return null;
 
   return (
     <SelectedIcon

@@ -1,16 +1,16 @@
+import { createThemedStyles } from '@config/useStyles';
 import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
-const ThemedStyles = ({ colors }: ThemeConfig, statusBarHeight: number) => {
-  return useMemo(() => {
-    return StyleSheet.create({
-      statusBar: {
-        height: statusBarHeight,
-        width: '100%',
-        backgroundColor: colors.statusBar,
-      },
-    });
-  }, [colors, statusBarHeight]);
-};
+const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
+  const { colors } = theme;
 
+  return StyleSheet.create({
+    statusBar: {
+      height: insets.top,
+      width: '100%',
+      backgroundColor: colors.statusBar,
+    },
+  });
+});
 export default ThemedStyles;

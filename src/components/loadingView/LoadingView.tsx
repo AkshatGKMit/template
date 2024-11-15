@@ -11,7 +11,7 @@ const LoadingView = ({ processInfo, invertedStyle }: LoadingViewProps) => {
     theme: { colors },
   } = useContext(ThemeContext);
 
-  const styles = ThemedStyles(colors);
+  const styles = ThemedStyles();
 
   const parentStyle = useMemo(
     () => [styles.loaderView, invertedStyle ? styles.invertedView : null],

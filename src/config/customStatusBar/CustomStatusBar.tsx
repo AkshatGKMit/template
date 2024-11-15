@@ -8,18 +8,17 @@ import ThemedStyles from './styles';
 
 const CustomStatusBar = () => {
   const {
-    theme,
-    safeAreaInsets: { top: topInset },
+    theme: { colors },
   } = useContext(ThemeContext);
 
-  const styles = ThemedStyles(theme, topInset);
+  const styles = ThemedStyles();
 
   return (
     <View style={styles.statusBar}>
       <StatusBar
         animated
         barStyle="light-content"
-        backgroundColor={theme.colors.statusBar}
+        backgroundColor={colors.statusBar}
         translucent={!isIos}
       />
     </View>
