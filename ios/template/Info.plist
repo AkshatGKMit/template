@@ -26,14 +26,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -52,23 +51,41 @@
 	<array>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
-		<string>FontAwesome5_Brands.ttf</string>
-		<string>FontAwesome5_Regular.ttf</string>
-		<string>FontAwesome5_Solid.ttf</string>
-		<string>FontAwesome6_Brands.ttf</string>
-		<string>FontAwesome6_Regular.ttf</string>
-		<string>FontAwesome6_Solid.ttf</string>
-		<string>Foundation.ttf</string>
 		<string>Ionicons.ttf</string>
 		<string>MaterialIcons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
-		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
+		<string>LatoBlack.ttf</string>
+		<string>LatoBlackItalic.ttf</string>
+		<string>LatoBold.ttf</string>
+		<string>LatoBoldItalic.ttf</string>
+		<string>LatoHairline.ttf</string>
+		<string>LatoHairlineItalic.ttf</string>
+		<string>LatoHeavy.ttf</string>
+		<string>LatoHeavyItalic.ttf</string>
+		<string>LatoItalic.ttf</string>
+		<string>LatoLight.ttf</string>
+		<string>LatoLightItalic.ttf</string>
+		<string>LatoMedium.ttf</string>
+		<string>LatoMediumItalic.ttf</string>
+		<string>LatoRegular.ttf</string>
+		<string>LatoSemibold.ttf</string>
+		<string>LatoSemiboldItalic.ttf</string>
+		<string>LatoThin.ttf</string>
+		<string>LatoThinItalic.ttf</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>template</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

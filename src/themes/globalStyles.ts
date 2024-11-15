@@ -1,19 +1,19 @@
 import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
-const ThemedStyles = (theme: ThemeColors) => {
+const GlobalThemedStyles = (theme: ThemeColors) => {
   return useMemo(() => {
     return StyleSheet.create({
       screen: {
         flex: 1,
-        backgroundColor: theme.screenBGColor,
+        backgroundColor: theme.primaryBackground,
       },
-      flexRow: {
+      rowCenter: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
       },
-      flexColumn: {
+      columnCenter: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -22,4 +22,4 @@ const ThemedStyles = (theme: ThemeColors) => {
   }, [theme]);
 };
 
-export default ThemedStyles;
+export default GlobalThemedStyles;

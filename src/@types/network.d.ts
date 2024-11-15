@@ -1,12 +1,7 @@
-type ApiHeaders = {
-  'content-type'?: string;
-};
-
 type ApiCallError = { code: number | string; message: string };
 
-type ApiCallParams<Params = {}> = {
+type ApiCallConfig<Params = {}> = {
   params?: Params;
-  timeout?: number;
 };
 
 type ApiCallSuccess<T> = {
@@ -20,8 +15,3 @@ type ApiCallFailure = {
 };
 
 type ApiCallResponse<T> = ApiCallSuccess<T> | ApiCallFailure;
-
-type ApiError = {
-  code: number | string;
-  message: string;
-};
