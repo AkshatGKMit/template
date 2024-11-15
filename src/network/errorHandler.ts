@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-export const ErrorHandler = (error: AxiosError): ApiError => {
+export const ErrorHandler = (error: AxiosError): ApiCallError => {
   if (!error) {
     throw new Error('Unrecoverable error! Error is null or undefined.');
   }

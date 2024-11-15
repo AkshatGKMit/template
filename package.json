@@ -9,19 +9,17 @@
     "start": "react-native start",
     "test": "jest",
     "clean-node": "rm -rf node_modules package-lock.json yarn.lock Gemfile.lock",
-    "clean-android": "rm -rf android/.gradle android/build",
+    "clean-android": "rm -rf android/.gradle android/build android/app/build android/app/.cxx",
     "clean-ios": "rm -rf ios/Podfile.lock ios/Pods ios/build",
     "clean-all": "npm run clean-node && npm run clean-android && npm run clean-ios",
     "build-node": "npm install",
     "build-android": "cd android && ./gradlew clean",
     "build-ios": "npx pod-install",
-    "build-all": "npm run build-node && npm run build-android && npm run build-ios",
-    "revive-android": "npm run clean-node && npm run clean-android && npm run build-android && npm start -- --reset-cache",
-    "revive-ios": "npm run clean-node && npm run clean-ios && npm run build-ios && npm start -- --reset-cache",
-    "revive-all": "npm run clean-all && npm run build-all && npm start -- --reset-cache"
+    "build-all": "npm run build-node && npm run build-android && npm run build-ios"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.0.0",
+    "@react-native-community/netinfo": "11.4.1",
     "@react-navigation/bottom-tabs": "6.6.1",
     "@react-navigation/drawer": "6.7.2",
     "@react-navigation/native": "6.1.18",
@@ -38,7 +36,8 @@
     "react-native-safe-area-context": "4.13.1",
     "react-native-screens": "3.35.0",
     "react-native-toast-message": "2.2.1",
-    "react-native-vector-icons": "10.2.0"
+    "react-native-vector-icons": "10.2.0",
+    "react-native-webview": "13.12.3"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
@@ -52,6 +51,7 @@
     "@react-native/eslint-config": "0.76.1",
     "@react-native/metro-config": "0.76.1",
     "@react-native/typescript-config": "0.76.1",
+    "@types/node": "22.8.7",
     "@types/react": "18.2.6",
     "@types/react-test-renderer": "18.0.0",
     "babel-eslint": "10.1.0",

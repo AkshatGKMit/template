@@ -1,45 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, Switch, Text } from 'react-native';
+import { Button, SafeAreaView, Switch, Text } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StorageContextProvider } from '@config/context/StorageContext';
-import ConfigContext, { ConfigContextProvider } from '@config/context/ConfigContext';
-import PlatformStatusBar from '@config/components/platformStatusBar';
-import ThemedStyles from '@themes/globalStyles';
+import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
+import CustomStatusBar from '@config/components/customStatusBar';
+import GlobalThemedStyles from '@themes/globalStyles';
 
 const App = () => {
   return (
-    <StorageContextProvider>
-      <ConfigContextProvider>
-        <SafeAreaProvider>
-          <Main />
-        </SafeAreaProvider>
-      </ConfigContextProvider>
-    </StorageContextProvider>
+    <SafeAreaProvider>
+      <ThemeContextProvider>
+        <Main />
+      </ThemeContextProvider>
+    </SafeAreaProvider>
   );
 };
 
 const Main = () => {
-  const { theme, isDark, switchTheme } = useContext(ConfigContext);
-  const styles = ThemedStyles(theme);
+  const { theme, switchThemeMode } = useContext(ThemeContext);
 
-  const [themeSwitcher, setThemeSwitcher] = useState(isDark);
+  const [count, setCOunt] = useState(0);
 
-  useEffect(() => {
-    setThemeSwitcher(isDark);
-  }, [isDark]);
+  const styles = GlobalThemedStyles(theme.colors);
 
-  function _onSwitchTheme(val: boolean) {
-    switchTheme(isDark ? 'light' : 'dark');
-    setThemeSwitcher(val);
+  function _onSwitchTheme() {
+    switchThemeMode(theme.isDark ? 'light' : 'dark');
   }
 
   return (
     <>
-      <PlatformStatusBar />
+      <CustomStatusBar />
       <SafeAreaView style={styles.screen}>
         <Text>React Native Template App</Text>
         <Switch
-          value={themeSwitcher}
+          value={theme.isDark}
           onValueChange={_onSwitchTheme}
         />
       </SafeAreaView>
