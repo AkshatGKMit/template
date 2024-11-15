@@ -1,4 +1,4 @@
-import { Orientation, ThemeMode } from '@constants';
+import { Orientation, ThemeMode, FontFamily } from '@themes';
 
 declare global {
   interface WindowDimensions {
@@ -40,11 +40,11 @@ declare global {
     dark: ThemeColors;
   }
 
-  type Font = (typeof Font)[keyof typeof Font];
+  type FontFamily = (typeof FontFamily)[keyof typeof FontFamily];
 
   interface ThemeConfig {
     colors: ThemeColors;
     isDark: boolean;
-    font: Font;
+    fontFamily: FontFamily;
   }
 }

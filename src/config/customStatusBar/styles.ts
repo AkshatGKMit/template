@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 const ThemedStyles = ({ colors }: ThemeConfig, statusBarHeight: number) => {
   return useMemo(() => {
     return StyleSheet.create({
-      iosStatusBar: {
+      statusBar: {
         height: statusBarHeight,
         width: '100%',
         backgroundColor: colors.statusBar,

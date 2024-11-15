@@ -8,7 +8,7 @@ declare global {
   interface ThemeContextValues {
     theme: ThemeConfig;
     switchThemeMode: (themeMode: ThemeMode) => void;
-    changeFont: (font: Font) => void;
+    changeFont: (fontFamily: FontFamily) => void;
     orientation: Orientation;
     dimensions: WindowDimensions;
     safeAreaInsets: SafeAreaInsets;

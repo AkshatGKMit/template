@@ -1,9 +1,10 @@
-import { Font, Orientation, StorageKey, ThemeMode } from '@constants';
-import { ThemeColorModes } from '@themes';
-import { StorageManager } from '@utility/helpers';
 import { createContext, useEffect, useState } from 'react';
 import { Appearance, Dimensions, ScaledSize, useColorScheme } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { StorageKey } from '@constants';
+import { FontFamily, Orientation, ThemeColorModes, ThemeMode } from '@themes';
+import { StorageManager } from '@utility/helpers';
 
 const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
 
@@ -12,7 +13,7 @@ const currentColorScheme = Appearance.getColorScheme();
 const defaultThemeConfigValue: ThemeConfig = {
   colors: ThemeColorModes[currentColorScheme ?? ThemeMode.light],
   isDark: currentColorScheme === ThemeMode.dark,
-  font: Font.default,
+  fontFamily: FontFamily.default,
 };
 
 const defaultContextValue: ThemeContextValues = {
@@ -60,15 +61,16 @@ export const ThemeContextProvider = ({ children }: ContextProviderProps) => {
     await StorageManager.saveStoreValue(StorageKey.themeMode, JSON.stringify(themeMode));
   };
 
-  const changeFont = async (newFont: Font) => {
-    setTheme((prevTheme) => ({ ...prevTheme, font: newFont }));
+  const changeFont = async (newFont: FontFamily) => {
+    setTheme((prevTheme) => ({ ...prevTheme, fontFamily: newFont }));
 
-    await StorageManager.saveStoreValue(StorageKey.font, JSON.stringify(newFont));
+    await StorageManager.saveStoreValue(StorageKey.fontFamily, JSON.stringify(newFont));
   };
 
   const loadStore = async () => {
     const storedFont =
-      (await StorageManager.getStoreValue<Font>(StorageKey.font)) ?? defaultTheme.font;
+      (await StorageManager.getStoreValue<FontFamily>(StorageKey.fontFamily)) ??
+      defaultTheme.fontFamily;
 
     const storedThemeMode =
       (await StorageManager.getStoreValue<ThemeMode>(StorageKey.themeMode)) ??
@@ -78,7 +80,7 @@ export const ThemeContextProvider = ({ children }: ContextProviderProps) => {
     const colors: ThemeColors = ThemeColorModes[storedThemeMode];
     const isDark = storedThemeMode === ThemeMode.dark;
 
-    setTheme({ colors, isDark, font: storedFont });
+    setTheme({ colors, isDark, fontFamily: storedFont });
   };
 
   useEffect(() => {

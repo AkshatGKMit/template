@@ -15,7 +15,7 @@ const CustomStatusBar = () => {
   const styles = ThemedStyles(theme, topInset);
 
   return (
-    <View style={isIos ? styles.iosStatusBar : null}>
+    <View style={styles.statusBar}>
       <StatusBar
         animated
         barStyle="light-content"

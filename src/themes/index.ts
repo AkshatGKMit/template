@@ -1,5 +1,7 @@
 import { colorWithOpacity } from '@utility/helpers';
+
 import { Colors } from './colors';
+import { FontFamily, FontSize, FontWeight } from './font';
 
 const lightTheme = {
   accent: Colors.accent.light,
@@ -45,3 +47,15 @@ export const ThemeColorModes: ThemeColorModes = {
     inverted: lightTheme,
   },
 };
+
+export const ThemeMode = {
+  light: 'light',
+  dark: 'dark',
+} as const;
+
+export const Orientation = {
+  portrait: 'portrait',
+  landscape: 'landscape',
+} as const;
+
+export { FontFamily, FontSize, FontWeight, Colors };

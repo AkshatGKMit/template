@@ -4,7 +4,7 @@ export const isIos = Platform.OS === 'ios';
 
 export const StorageKey = {
   themeMode: 'ThemeMode',
-  font: 'font',
+  fontFamily: 'fontFamily',
 };
 
 export const Errors = {
@@ -12,16 +12,4 @@ export const Errors = {
   runtimeError: 'Unexpected error occurred',
 } as const;
 
-export const ThemeMode = {
-  light: 'light',
-  dark: 'dark',
-} as const;
-
-export const Orientation = {
-  portrait: 'portrait',
-  landscape: 'landscape',
-} as const;
-
-export const Font = {
-  default: 'Default',
-} as const;
+export const Images = {};
