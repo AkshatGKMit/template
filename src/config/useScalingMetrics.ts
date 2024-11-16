@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { PixelRatio, useWindowDimensions } from 'react-native';
 
 const useScalingMetrics = (): ScalingMetrics => {
@@ -37,11 +38,14 @@ const useScalingMetrics = (): ScalingMetrics => {
   // Use when you want to set the width of elements as a percentage of the screen width (e.g., boxes, layouts, images, views, button widths)
 
   // Convert height percentage to pixels
-  const hp = (heightPercent: number | string) => {
-    const elemHeight =
-      typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
-    return PixelRatio.roundToNearestPixel((screenHeight * elemHeight) / 100);
-  };
+  const hp = useCallback(
+    (heightPercent: number | string) => {
+      const elemHeight =
+        typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
+      return PixelRatio.roundToNearestPixel((screenHeight * elemHeight) / 100);
+    },
+    [screenHeight],
+  );
   // Use when you want to set the height of elements as a percentage of the screen height(e.g., boxes, layouts, images, views, button heights)
 
   return {
