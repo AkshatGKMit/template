@@ -67,4 +67,5 @@ export const StyleValues = {
   headerHeight: 50,
 };
 
+export * from './globalStyles';
 export { FontFamily, FontSize, FontWeight, Colors };

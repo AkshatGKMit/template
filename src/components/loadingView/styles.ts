@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native';
-
-import { createThemedStyles } from '@config/useStyles';
+import { createStyles, createThemedStyles } from '@config/useStyles';
 import { FontSize } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
 
 const ThemedStyles = createThemedStyles((theme) => {
   const { colors } = theme;
 
-  return StyleSheet.create({
+  return createStyles({
     loaderView: {
       position: 'absolute',
       top: 0,

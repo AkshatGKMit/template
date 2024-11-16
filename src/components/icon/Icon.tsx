@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { memo } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
@@ -38,4 +38,4 @@ const Icon = ({ family, name, style }: IconProps) => {
   );
 };
 
-export default Icon;
+export default memo(Icon);

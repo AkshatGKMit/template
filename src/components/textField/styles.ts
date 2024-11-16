@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native';
-
-import { createThemedStyles } from '@config/useStyles';
-import { colorWithOpacity } from '@utility/helpers';
+import { createStyles, createThemedStyles } from '@config/useStyles';
 import { FontSize, FontWeight, StyleValues } from '@themes';
+import { colorWithOpacity } from '@utility/helpers';
 
 const styles = createThemedStyles((theme) => {
   const { colors } = theme;
 
-  return StyleSheet.create({
+  return createStyles({
     textfieldWrapper: {
       flexDirection: 'column',
       gap: 3,

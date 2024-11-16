@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { View, StatusBar } from 'react-native';
 
 import ThemeContext from '@config/ThemeContext';

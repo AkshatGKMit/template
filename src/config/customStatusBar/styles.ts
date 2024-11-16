@@ -1,11 +1,9 @@
-import { createThemedStyles } from '@config/useStyles';
-import { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { createStyles, createThemedStyles } from '@config/useStyles';
 
 const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
   const { colors } = theme;
 
-  return StyleSheet.create({
+  return createStyles({
     statusBar: {
       height: insets.top,
       width: '100%',

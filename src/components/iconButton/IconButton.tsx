@@ -1,9 +1,8 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { TouchableHighlight } from 'react-native';
 
 import Icon from '@components/icon';
 import ThemeContext from '@config/ThemeContext';
-import { colorWithOpacity } from '@utility/helpers';
 
 import styles from './styles';
 
@@ -36,4 +35,4 @@ const IconButton = ({
   );
 };
 
-export default IconButton;
+export default memo(IconButton);

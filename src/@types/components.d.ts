@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import {
   EnterKeyHintTypeOptions,
   GestureResponderEvent,
@@ -14,7 +15,6 @@ import {
 } from 'react-native';
 
 import { IconFamily } from '@constants';
-import { RefObject } from 'react';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];

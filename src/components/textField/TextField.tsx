@@ -64,7 +64,7 @@ const TextField = ({
 
   const textInputStyles = useMemo(
     () => [styles.textInput, textInputStyle, multiline && { paddingBottom: 5 }],
-    [textInputStyle, multiline],
+    [styles, textInputStyle, multiline],
   );
 
   const Label = () => (
