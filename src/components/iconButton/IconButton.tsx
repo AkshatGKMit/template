@@ -19,7 +19,7 @@ const IconButton = ({
     theme: { colors },
   } = useContext(ThemeContext);
 
-  const highlightUnderlayColor = underlayColor ?? colorWithOpacity(colors.underlay, 0.25);
+  const highlightUnderlayColor = underlayColor ?? colors.underlay;
 
   return (
     <TouchableHighlight

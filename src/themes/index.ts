@@ -3,7 +3,8 @@ import { colorWithOpacity } from '@utility/helpers';
 import { Colors } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
 
-const lightTheme = {
+const lightTheme: InvertedOmittedThemeColors = {
+  main: Colors.white,
   accent: Colors.accent.light,
   accentText: Colors.greyShades.shade600,
   defaultIcon: Colors.black,
@@ -18,9 +19,11 @@ const lightTheme = {
   text: Colors.black,
   secondaryText: Colors.greyShades.shade600,
   underlay: colorWithOpacity(Colors.greyShades.shade800, 0.25),
+  error: Colors.error.light,
 };
 
-const darkTheme = {
+const darkTheme: InvertedOmittedThemeColors = {
+  main: Colors.black,
   accent: Colors.accent.dark,
   accentText: Colors.greyShades.shade400,
   defaultIcon: Colors.white,
@@ -35,6 +38,7 @@ const darkTheme = {
   text: Colors.white,
   secondaryText: Colors.greyShades.shade400,
   underlay: colorWithOpacity(Colors.greyShades.shade200, 0.25),
+  error: Colors.error.dark,
 };
 
 export const ThemeColorModes: ThemeColorModes = {
@@ -57,5 +61,10 @@ export const Orientation = {
   portrait: 'portrait',
   landscape: 'landscape',
 } as const;
+
+export const StyleValues = {
+  textfieldHeight: 40,
+  headerHeight: 50,
+};
 
 export { FontFamily, FontSize, FontWeight, Colors };

@@ -11,6 +11,10 @@ export const Colors = {
     dark: '#d9fff9',
     light: '#00716e',
   },
+  error: {
+    dark: '#DF2020',
+    light: '#C00020',
+  },
   greyShades: {
     shade50: '#FAFAFA',
     shade100: '#F5F5F5',

@@ -1,6 +1,20 @@
-import { GestureResponderEvent, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import {
+  EnterKeyHintTypeOptions,
+  GestureResponderEvent,
+  InputModeOptions,
+  KeyboardTypeOptions,
+  NativeSyntheticEvent,
+  StyleProp,
+  TextInput,
+  TextInputEndEditingEventData,
+  TextInputProps,
+  TextInputSubmitEditingEventData,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 
 import { IconFamily } from '@constants';
+import { RefObject } from 'react';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -33,5 +47,27 @@ declare global {
   interface LoadingViewProps {
     processInfo?: string;
     invertedStyle?: boolean;
+  }
+
+  interface TextFieldProps {
+    value: string;
+    onChangeText: (text: string) => void;
+    label?: string;
+    placeholder?: string;
+    ref?: RefObject<TextInput>;
+    keyboardType?: KeyboardTypeOptions;
+    inputMode?: InputModeOptions;
+    enterKeyHint?: EnterKeyHintTypeOptions;
+    onEndEditing?: (e?: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
+    onSubmitEditing?: (e?: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
+    autoFocus?: boolean;
+    prefixIcon?: IconProps;
+    suffixIconButton?: IconBtnProps;
+    secureText?: boolean;
+    containerStyle?: StyleProp<ViewStyle>;
+    textInputStyle?: StyleProp<TextStyle>;
+    errorMsg?: string;
+    multiline?: boolean;
+    addOns?: TextInputProps;
   }
 }
