@@ -3,7 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import ThemeContext from '@config/ThemeContext';
-import { GlobalThemedStyles } from '@themes';
+import { GlobalThemedStyles } from '@themes/globalStyles';
 
 const GradientScreen = ({ children, style }: GradientScreenProps) => {
   const {

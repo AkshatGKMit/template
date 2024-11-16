@@ -35,7 +35,7 @@ declare global {
   }
 
   interface GradientScreenProps {
-    children: ReactNode;
+    children?: ReactNode;
     style?: StyleProp<ViewStyle>;
   }
 
