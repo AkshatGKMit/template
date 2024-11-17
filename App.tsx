@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
 import GradientScreen from '@components/gradientScreen';
-import { BottomSheet } from '@components/bottomSheet';
+import BottomSheet from '@components/bottomSheet';
 import Toast from 'react-native-toast-message';
 
 const App = () => {

@@ -1,7 +1,4 @@
-import ThemeContext from '@config/ThemeContext';
-import useBottomSheet from '@config/useBottomSheet';
-import useScalingMetrics from '@config/useScalingMetrics';
-import React, {
+import {
   useContext,
   useState,
   useRef,
@@ -9,26 +6,33 @@ import React, {
   useImperativeHandle,
   useCallback,
   useEffect,
+  forwardRef,
 } from 'react';
-import { View, Animated, PanResponder, Pressable } from 'react-native';
+import { View, Animated, PanResponder, Pressable, BackHandler } from 'react-native';
+
+import ThemeContext from '@config/ThemeContext';
+import useBottomSheet from '@config/useBottomSheet';
+import useScalingMetrics from '@config/useScalingMetrics';
+
 import ThemedStyles from './styles';
 
-const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
+const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const { hp, wp } = useScalingMetrics();
+  const { show, hide, isVisible, data } = useBottomSheet();
 
-  const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
+  const { dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
 
   const [modalHeight, setModalHeight] = useState(0);
 
-  const originalPositionRef = useRef(dimensions.height);
+  const modalOriginalPositionRef = useRef(dimensions.height);
   const modalSheetRef = useRef<View>(null);
 
   const overlayOpacityAnim = useRef(new Animated.Value(0)).current;
-  const sheetSlideAnim = useRef(new Animated.Value(dimensions.height)).current;
+  const slideSheetAnim = useRef(new Animated.Value(dimensions.height)).current;
 
   const styles = ThemedStyles();
 
-  const opacityAnimDuration = 1000;
+  const opacityAnimDuration = 100;
   const sheetAnimDuration = 250;
 
   const minModalHeight = useMemo(
@@ -39,8 +43,6 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
     () => dimensions.height - modalHeight,
     [modalHeight, dimensions.height],
   );
-
-  const { show, hide, isVisible, data } = useBottomSheet();
 
   useImperativeHandle(
     ref,
@@ -53,9 +55,9 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
     ),
   );
 
-  function openBottomSheet() {
-    sheetSlideAnim.setValue(dimensions.height);
-    sheetSlideAnim.flattenOffset();
+  function openBottomSheetAnim() {
+    slideSheetAnim.setValue(dimensions.height);
+    slideSheetAnim.flattenOffset();
 
     const overlayAnim = Animated.timing(overlayOpacityAnim, {
       toValue: 1,
@@ -63,7 +65,7 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
       useNativeDriver: true,
     });
 
-    const slideBottomSheetAnim = Animated.timing(sheetSlideAnim, {
+    const slideBottomSheetAnim = Animated.timing(slideSheetAnim, {
       toValue: sheetFinalPositionY,
       duration: sheetAnimDuration,
       useNativeDriver: true,
@@ -72,10 +74,10 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
     Animated.parallel([overlayAnim, slideBottomSheetAnim]).start();
   }
 
-  function closeBottomSheet() {
-    sheetSlideAnim.flattenOffset();
+  function closeBottomSheetAnim() {
+    slideSheetAnim.flattenOffset();
 
-    const slideBottomSheetAnim = Animated.timing(sheetSlideAnim, {
+    const slideBottomSheetAnim = Animated.timing(slideSheetAnim, {
       toValue: dimensions.height,
       duration: sheetAnimDuration,
       useNativeDriver: true,
@@ -98,30 +100,41 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
     }
   }, [dimensions.height, orientation, data.child]);
 
+  const handleHardwareBackPress = () => {
+    closeBottomSheetAnim();
+    return true;
+  };
+
   useEffect(() => {
-    openBottomSheet();
+    openBottomSheetAnim();
   }, [modalHeight, isVisible]);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleHardwareBackPress);
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleHardwareBackPress);
+  }, []);
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: (evt) => true,
       onPanResponderGrant: () => {
-        sheetSlideAnim.extractOffset();
-        originalPositionRef.current = sheetSlideAnim.__getValue();
+        slideSheetAnim.extractOffset();
+        modalOriginalPositionRef.current = slideSheetAnim.__getValue();
       },
       onPanResponderMove: (_, gesture) => {
         if (gesture.dy > 0) {
-          Animated.event([null, { dy: sheetSlideAnim }], {
+          Animated.event([null, { dy: slideSheetAnim }], {
             useNativeDriver: false,
           })(_, gesture);
         }
       },
-      onPanResponderRelease: (_, gesture) => {
-        if (gesture.dy > 40) closeBottomSheet();
+      onPanResponderRelease: (_, { dy }) => {
+        if (dy > 40) closeBottomSheetAnim();
         else {
-          sheetSlideAnim.flattenOffset();
-          Animated.timing(sheetSlideAnim, {
-            toValue: originalPositionRef.current,
+          slideSheetAnim.flattenOffset();
+          Animated.timing(slideSheetAnim, {
+            toValue: modalOriginalPositionRef.current,
             duration: sheetAnimDuration / 10,
             useNativeDriver: true,
           }).start();
@@ -136,7 +149,7 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
     <>
       <Animated.View style={[styles.overlay, { opacity: overlayOpacityAnim }]}>
         <Pressable
-          onPress={closeBottomSheet}
+          onPress={closeBottomSheetAnim}
           style={{ flex: 1 }}
         />
       </Animated.View>
@@ -145,7 +158,7 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
         style={[
           styles.sheet,
           {
-            transform: [{ translateY: sheetSlideAnim }],
+            transform: [{ translateY: slideSheetAnim }],
             maxHeight: minModalHeight,
           },
         ]}
@@ -156,16 +169,6 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
         >
           <View style={[styles.pill, { width: wp(100) / 5 }]} />
         </View>
-        {/* <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
-          {Array.from({ length: 10 }).map((_: unknown, i) => (
-            <Text
-              key={i}
-              style={{ color: theme.colors.text }}
-            >
-              {i}
-            </Text>
-          ))}
-        </ScrollView> */}
         {data.child}
       </Animated.View>
     </>

@@ -20,7 +20,7 @@ function getRef() {
   return activeRef ? activeRef.current : null;
 }
 
-export function BottomSheet(props: any) {
+function BottomSheet() {
   const bottomSheetRef = useRef<BottomSheetRef | null>(null);
 
   const setRef = useCallback((ref: BottomSheetRef | null) => {
@@ -32,12 +32,7 @@ export function BottomSheet(props: any) {
     }
   }, []);
 
-  return (
-    <BottomSheetContainer
-      ref={setRef}
-      {...props}
-    />
-  );
+  return <BottomSheetContainer ref={setRef} />;
 }
 
 BottomSheet.show = (params: BottomSheetParams) => {
@@ -47,3 +42,5 @@ BottomSheet.show = (params: BottomSheetParams) => {
 BottomSheet.hide = (params: BottomSheetParams) => {
   getRef()?.hide(params);
 };
+
+export default BottomSheet;
