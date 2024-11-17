@@ -73,6 +73,13 @@ declare global {
 
   interface BottomSheetDataParams {
     child: React.JSX.Element | null;
+    /**
+     * @params Points must lie between 0.15 to 0.85
+     */
+    snap?: {
+      points: number[];
+      closingPoint: number;
+    };
     backgroundColor?: string;
     borderRadius?: number;
     isDismissible?: boolean;

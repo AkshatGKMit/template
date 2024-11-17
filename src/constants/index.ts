@@ -26,3 +26,12 @@ export const IconFamily = {
 } as const;
 
 export const Images = {};
+
+export const BottomSheetConstants = {
+  sheetSlideAnimDuration: 250,
+  overlayOpacityAnimDuration: 100,
+  maxClosingSnapPointThreshold: 0.85,
+  minClosingSnapPointThreshold: 0.15,
+  maxSnapPointThreshold: 0.85,
+  minSnapPointThreshold: 0.15,
+};

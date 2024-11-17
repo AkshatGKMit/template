@@ -18,28 +18,22 @@ function useBottomSheet() {
 
   const hide = useCallback(() => {
     setIsVisible(false);
+    setData(defaultData);
+    setOptions(defaultOptions);
     options.onHide?.();
   }, [options]);
 
-  const show = useCallback(
-    (params: BottomSheetParams) => {
-      const {
-        child = defaultData.child,
-        onShow = initialOptions.onShow,
-        onHide = initialOptions.onHide,
-      } = params;
+  const show = useCallback((params: BottomSheetParams) => {
+    const { child = defaultData.child, snap, onShow } = params;
 
-      setData({ child });
-      setOptions({
-        onShow,
-        onHide,
-      });
-      setIsVisible(true);
+    console.log('Show Snap: ', snap);
 
-      onShow?.();
-    },
-    [initialOptions],
-  );
+    setData({ child, snap });
+    setOptions(params);
+    setIsVisible(true);
+
+    onShow?.();
+  }, []);
 
   return {
     isVisible,

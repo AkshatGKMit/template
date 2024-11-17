@@ -51,6 +51,10 @@ const Main = () => {
                 ))}
               </ScrollView>
             ),
+            snap: {
+              closingPoint: 0.8,
+              points: [0.1, 0.25, 0.5, 0.75],
+            },
           })
         }
       />
