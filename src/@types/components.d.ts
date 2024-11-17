@@ -70,4 +70,18 @@ declare global {
     multiline?: boolean;
     addOns?: TextInputProps;
   }
+
+  interface BottomSheetDataParams {
+    child: React.JSX.Element | null;
+    backgroundColor?: string;
+    borderRadius?: number;
+    isDismissible?: boolean;
+  }
+
+  interface BottomSHeetOptionParams {
+    onShow?: () => void;
+    onHide?: () => void;
+  }
+
+  type BottomSheetParams = BottomSheetDataParams & BottomSHeetOptionParams;
 }

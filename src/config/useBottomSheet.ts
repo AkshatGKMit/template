@@ -1,52 +1,42 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
-export const DEFAULT_DATA: { child: React.ReactNode | null } = {
+const defaultData: BottomSheetDataParams = {
   child: null,
 };
 
-export const DEFAULT_OPTIONS = {
-  type: 'success',
+const defaultOptions: BottomSHeetOptionParams = {
   onShow: () => undefined,
   onHide: () => undefined,
 };
 
-export function useBottomSheet() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [data, setData] = useState(DEFAULT_DATA);
+function useBottomSheet() {
+  const initialOptions = defaultOptions;
 
-  const initialOptions = DEFAULT_OPTIONS;
+  const [isVisible, setIsVisible] = useState(false);
+  const [data, setData] = useState(defaultData);
   const [options, setOptions] = useState(initialOptions);
 
-  const onAutoHide = useCallback(() => {
-    setIsVisible(false);
-    options.onHide();
-  }, [options]);
-
   const hide = useCallback(() => {
-    console.log('Hidden');
     setIsVisible(false);
-    options.onHide();
+    options.onHide?.();
   }, [options]);
 
   const show = useCallback(
-    (params: any) => {
-      console.log('Showing Bottom Sheet');
+    (params: BottomSheetParams) => {
       const {
-        child = params?.child ?? DEFAULT_DATA.child,
-        type = initialOptions.type,
+        child = defaultData.child,
         onShow = initialOptions.onShow,
         onHide = initialOptions.onHide,
       } = params;
+
       setData({ child });
       setOptions({
-        type,
         onShow,
         onHide,
       });
-      // TODO: validate input
-      // TODO: use a queue when Toast is already visible
       setIsVisible(true);
-      onShow();
+
+      onShow?.();
     },
     [initialOptions],
   );
@@ -59,3 +49,5 @@ export function useBottomSheet() {
     hide,
   };
 }
+
+export default useBottomSheet;

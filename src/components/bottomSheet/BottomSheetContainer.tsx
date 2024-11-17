@@ -1,5 +1,5 @@
 import ThemeContext from '@config/ThemeContext';
-import { useBottomSheet } from '@config/useBottomSheet';
+import useBottomSheet from '@config/useBottomSheet';
 import useScalingMetrics from '@config/useScalingMetrics';
 import React, {
   useContext,
@@ -10,15 +10,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import {
-  View,
-  Animated,
-  PanResponder,
-  GestureResponderEvent,
-  PanResponderGestureState,
-  Text,
-  Pressable,
-} from 'react-native';
+import { View, Animated, PanResponder, Pressable } from 'react-native';
 import ThemedStyles from './styles';
 
 const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
@@ -36,7 +28,7 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
 
   const styles = ThemedStyles();
 
-  const opacityAnimDuration = 100;
+  const opacityAnimDuration = 1000;
   const sheetAnimDuration = 250;
 
   const minModalHeight = useMemo(
@@ -49,8 +41,6 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
   );
 
   const { show, hide, isVisible, data } = useBottomSheet();
-
-  console.log('Visible: ', isVisible);
 
   useImperativeHandle(
     ref,
@@ -119,24 +109,24 @@ const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
         sheetSlideAnim.extractOffset();
         originalPositionRef.current = sheetSlideAnim.__getValue();
       },
-      onPanResponderMove: (event: GestureResponderEvent, gesture: PanResponderGestureState) => {
-        // if (gesture.dy > 0) {
-        Animated.event([null, { dy: sheetSlideAnim }], {
-          useNativeDriver: false,
-        })(event, gesture);
-        // }
+      onPanResponderMove: (_, gesture) => {
+        if (gesture.dy > 0) {
+          Animated.event([null, { dy: sheetSlideAnim }], {
+            useNativeDriver: false,
+          })(_, gesture);
+        }
       },
-      // onPanResponderRelease: (_, gesture) => {
-      //   if (gesture.dy > 40) closeBottomSheet();
-      //   else {
-      //     sheetSlideAnim.flattenOffset();
-      //     Animated.timing(sheetSlideAnim, {
-      //       toValue: originalPositionRef.current,
-      //       duration: sheetAnimDuration / 10,
-      //       useNativeDriver: true,
-      //     }).start();
-      //   }
-      // },
+      onPanResponderRelease: (_, gesture) => {
+        if (gesture.dy > 40) closeBottomSheet();
+        else {
+          sheetSlideAnim.flattenOffset();
+          Animated.timing(sheetSlideAnim, {
+            toValue: originalPositionRef.current,
+            duration: sheetAnimDuration / 10,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
     }),
   ).current;
 

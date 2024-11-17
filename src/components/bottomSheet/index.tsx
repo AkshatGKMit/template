@@ -40,11 +40,10 @@ export function BottomSheet(props: any) {
   );
 }
 
-BottomSheet.show = (params: any) => {
-  console.log('Params: ', params);
-
+BottomSheet.show = (params: BottomSheetParams) => {
   getRef()?.show(params);
 };
-BottomSheet.hide = (params: any) => {
+
+BottomSheet.hide = (params: BottomSheetParams) => {
   getRef()?.hide(params);
 };

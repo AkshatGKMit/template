@@ -9,24 +9,20 @@ import Toast from 'react-native-toast-message';
 
 const App = () => {
   return (
-    <>
-      <SafeAreaProvider>
-        <ThemeContextProvider>
-          <GestureHandlerRootView>
-            <Main />
-            <Toast />
-            <BottomSheet />
-          </GestureHandlerRootView>
-        </ThemeContextProvider>
-      </SafeAreaProvider>
-    </>
+    <SafeAreaProvider>
+      <ThemeContextProvider>
+        <GestureHandlerRootView>
+          <Main />
+          <Toast />
+          <BottomSheet />
+        </GestureHandlerRootView>
+      </ThemeContextProvider>
+    </SafeAreaProvider>
   );
 };
 
 const Main = () => {
   const { theme, switchThemeMode, safeAreaInsets: insets } = useContext(ThemeContext);
-
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   function _onSwitchTheme() {
     switchThemeMode(theme.isDark ? 'light' : 'dark');
