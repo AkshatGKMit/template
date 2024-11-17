@@ -66,15 +66,11 @@ const Main = () => {
             child: (
               <>
                 {Array.from({ length: 10 }).map((_: unknown, i) => (
-                  <Text
-                    key={i}
-                    style={{ color: theme.colors.text }}
-                  >
-                    {i}
-                  </Text>
+                  <Text style={{ color: theme.colors.text }}>{i}</Text>
                 ))}
               </>
             ),
+            borderRadius: 12,
           })
         }
       />

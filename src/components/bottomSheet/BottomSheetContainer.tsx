@@ -30,7 +30,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const { hp, wp } = useScalingMetrics();
   const { show, hide, isVisible, data } = useBottomSheet();
 
-  const { dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
+  const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
 
   const [sheetHeight, setSheetHeight] = useState(0);
 
@@ -99,7 +99,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   }
 
   const handleHardwareBackPress = () => {
-    closeBottomSheetAnim();
+    if (data.isDismissible) closeBottomSheetAnim();
     return true;
   };
 
@@ -210,11 +210,20 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
 
   return (
     <>
-      <Animated.View style={[styles.overlay, { opacity: overlayOpacityAnim }]}>
-        <Pressable
-          onPress={() => closeBottomSheetAnim()}
-          style={{ flex: 1 }}
-        />
+      <Animated.View
+        style={[
+          styles.overlay,
+          {
+            opacity: overlayOpacityAnim,
+          },
+        ]}
+      >
+        {data.isDismissible && (
+          <Pressable
+            onPress={() => closeBottomSheetAnim()}
+            style={{ flex: 1 }}
+          />
+        )}
       </Animated.View>
       <Animated.View
         ref={sheetRef}
@@ -223,6 +232,9 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
           {
             transform: [{ translateY: sheetPosYAnim }],
             maxHeight: minSheetHeight,
+            borderTopLeftRadius: data.borderRadius,
+            borderTopRightRadius: data.borderRadius,
+            backgroundColor: data.backgroundColor ?? theme.colors.primaryBackground,
           },
         ]}
       >

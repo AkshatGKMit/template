@@ -80,9 +80,9 @@ declare global {
       points: number[];
       closingPoint: number;
     };
+    isDismissible?: boolean;
     backgroundColor?: string;
     borderRadius?: number;
-    isDismissible?: boolean;
   }
 
   interface BottomSHeetOptionParams {

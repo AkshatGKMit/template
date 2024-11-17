@@ -1,5 +1,5 @@
 import { createStyles, createThemedStyles } from '@config/useStyles';
-import { Orientation } from '@themes';
+import { Colors, Orientation } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
 
 const ThemedStyles = createThemedStyles((theme, dimensions, orientation, insets) => {
@@ -20,7 +20,6 @@ const ThemedStyles = createThemedStyles((theme, dimensions, orientation, insets)
       backgroundColor: theme.colors.primaryBackground,
       position: 'absolute',
       alignSelf: 'center',
-      paddingHorizontal: 5,
       paddingBottom: insets.bottom,
       zIndex: 11,
       alignContent: 'center',
@@ -29,6 +28,7 @@ const ThemedStyles = createThemedStyles((theme, dimensions, orientation, insets)
       width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: Colors.transparent,
     },
     pill: {
       height: 8,

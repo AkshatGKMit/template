@@ -24,9 +24,9 @@ function useBottomSheet() {
   }, [options]);
 
   const show = useCallback((params: BottomSheetParams) => {
-    const { child = defaultData.child, snap, onShow } = params;
+    const { child = defaultData.child, isDismissible = true, snap, onShow } = params;
 
-    setData({ child, snap });
+    setData({ ...params, child, isDismissible, snap });
     setOptions(params);
     setIsVisible(true);
 
