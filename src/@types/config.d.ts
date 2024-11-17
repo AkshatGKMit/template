@@ -11,4 +11,13 @@ declare global {
     hp: (heightPercent: number | string) => number;
     scaleSize: (size: number, factor?: number) => number;
   };
+
+  type BottomSheetRef = {
+    show: (params: any) => void;
+    hide: (params: any) => void;
+  };
+
+  type BottomSheetRefObj = {
+    current: BottomSheetRef | null;
+  };
 }

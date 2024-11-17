@@ -8,13 +8,35 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import ThemeContext from '@config/ThemeContext';
 import useScalingMetrics from '@config/useScalingMetrics';
 import ThemedStyles from './styles';
+import { useBottomSheet } from '@config/useBottomSheet';
 
-const BottomSheet = () => {
+let refs: BottomSheetRefObj[] = [];
+
+function addNewRef(newRef: BottomSheetRef) {
+  refs.push({
+    current: newRef,
+  });
+}
+
+function removeOldRef(oldRef: BottomSheetRef | null) {
+  refs = refs.filter((r) => r.current !== oldRef);
+}
+
+const BottomSheet = React.forwardRef((props: any, ref: any) => {
   const { hp, wp } = useScalingMetrics();
 
   const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
@@ -22,7 +44,6 @@ const BottomSheet = () => {
   const [modalHeight, setModalHeight] = useState(0);
 
   const originalPositionRef = useRef(dimensions.height);
-
   const modalSheetRef = useRef<View>(null);
 
   const overlayOpacityAnim = useRef(new Animated.Value(0)).current;
@@ -40,6 +61,21 @@ const BottomSheet = () => {
   const sheetFinalPositionY = useMemo(
     () => dimensions.height - modalHeight,
     [modalHeight, dimensions.height],
+  );
+
+  const { show, hide, isVisible, data } = useBottomSheet();
+
+  console.log('Visible: ', isVisible);
+
+  useImperativeHandle(
+    ref,
+    useCallback(
+      () => ({
+        show,
+        hide,
+      }),
+      [hide, show],
+    ),
   );
 
   function openBottomSheet() {
@@ -76,21 +112,20 @@ const BottomSheet = () => {
       useNativeDriver: true,
     });
 
-    Animated.parallel([slideBottomSheetAnim, overlayAnim]).start();
+    Animated.parallel([slideBottomSheetAnim, overlayAnim]).start(() => hide());
   }
 
   useEffect(() => {
     if (modalSheetRef.current) {
       modalSheetRef.current.measureInWindow((_, __, ___, height) => {
-        if (height > minModalHeight) setModalHeight(minModalHeight);
-        else setModalHeight(height);
+        setModalHeight(Math.min(height, minModalHeight));
       });
     }
-  }, [dimensions.height, orientation]);
+  }, [dimensions.height, orientation, data.child]);
 
   useEffect(() => {
     openBottomSheet();
-  }, [modalHeight]);
+  }, [modalHeight, isVisible]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -100,34 +135,31 @@ const BottomSheet = () => {
         originalPositionRef.current = sheetSlideAnim.__getValue();
       },
       onPanResponderMove: (event: GestureResponderEvent, gesture: PanResponderGestureState) => {
-        if (gesture.dy > 0) {
-          Animated.event([null, { dy: sheetSlideAnim }], {
-            useNativeDriver: false,
-          })(event, gesture);
-        }
+        // if (gesture.dy > 0) {
+        Animated.event([null, { dy: sheetSlideAnim }], {
+          useNativeDriver: false,
+        })(event, gesture);
+        // }
       },
-      onPanResponderRelease: (_, gesture) => {
-        if (gesture.dy > 40) closeBottomSheet();
-        else {
-          sheetSlideAnim.flattenOffset();
-          Animated.timing(sheetSlideAnim, {
-            toValue: originalPositionRef.current,
-            duration: sheetAnimDuration / 10,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
+      // onPanResponderRelease: (_, gesture) => {
+      //   if (gesture.dy > 40) closeBottomSheet();
+      //   else {
+      //     sheetSlideAnim.flattenOffset();
+      //     Animated.timing(sheetSlideAnim, {
+      //       toValue: originalPositionRef.current,
+      //       duration: sheetAnimDuration / 10,
+      //       useNativeDriver: true,
+      //     }).start();
+      //   }
+      // },
     }),
   ).current;
 
+  if (!isVisible) return <Text>Bottom Sheet is not visible</Text>;
+
   return (
     <>
-      <Animated.View
-        style={[
-          styles.overlay,
-          { opacity: overlayOpacityAnim, maxHeight: dimensions.height - hp(5) - insets.top },
-        ]}
-      >
+      <Animated.View style={[styles.overlay, { opacity: overlayOpacityAnim }]}>
         <Pressable
           onPress={closeBottomSheet}
           style={{ flex: 1 }}
@@ -149,7 +181,7 @@ const BottomSheet = () => {
         >
           <View style={[styles.pill, { width: wp(100) / 5 }]} />
         </View>
-        <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
+        {/* <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
           {Array.from({ length: 10 }).map((_: unknown, i) => (
             <Text
               key={i}
@@ -158,10 +190,49 @@ const BottomSheet = () => {
               {i}
             </Text>
           ))}
-        </ScrollView>
+        </ScrollView> */}
+        {data.child}
       </Animated.View>
     </>
   );
+});
+
+export function BottomSheetRoot(props: any) {
+  const bottomSheetRef = useRef<BottomSheetRef | null>(null);
+
+  const setRef = useCallback((ref: BottomSheetRef | null) => {
+    if (ref) {
+      bottomSheetRef.current = ref;
+      addNewRef(ref);
+    } else {
+      removeOldRef(bottomSheetRef.current);
+    }
+  }, []);
+
+  console.log('Root Props: ', props);
+
+  return (
+    <BottomSheet
+      ref={setRef}
+      {...props}
+    />
+  );
+}
+
+function getRef() {
+  const reversePriority = [...refs].reverse();
+  const activeRef = reversePriority.find((ref) => ref?.current !== null);
+  console.log('Active Ref:', activeRef);
+  return activeRef ? activeRef.current : null;
+}
+
+BottomSheetRoot.show = (params: any) => {
+  console.log('Params: ', params);
+
+  getRef()?.show(params);
+};
+BottomSheetRoot.hide = (params: any) => {
+  getRef()?.hide(params);
 };
 
 export default BottomSheet;

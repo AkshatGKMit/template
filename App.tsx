@@ -1,20 +1,25 @@
 import { useContext, useState } from 'react';
-import { Button, Switch } from 'react-native';
+import { Button, ScrollView, Switch, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
 import GradientScreen from '@components/gradientScreen';
-import BottomSheet from '@config/bottomSheet/BottomSheet';
+import { BottomSheetRoot } from '@config/bottomSheet/BottomSheet';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <ThemeContextProvider>
-        <GestureHandlerRootView>
-          <Main />
-        </GestureHandlerRootView>
-      </ThemeContextProvider>
-    </SafeAreaProvider>
+    <>
+      <SafeAreaProvider>
+        <ThemeContextProvider>
+          <GestureHandlerRootView>
+            <Main />
+            <Toast />
+            <BottomSheetRoot />
+          </GestureHandlerRootView>
+        </ThemeContextProvider>
+      </SafeAreaProvider>
+    </>
   );
 };
 
@@ -35,11 +40,51 @@ const Main = () => {
       />
 
       <Button
-        title="Show Bottom Sheet"
-        onPress={() => setShowBottomSheet(true)}
+        title="Show Scrolling Bottom Sheet"
+        onPress={() =>
+          BottomSheetRoot.show({
+            child: (
+              <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
+                {Array.from({ length: 10 }).map((_: unknown, i) => (
+                  <Text
+                    key={i}
+                    style={{ color: theme.colors.text }}
+                  >
+                    {i}
+                  </Text>
+                ))}
+              </ScrollView>
+            ),
+          })
+        }
       />
 
-      {showBottomSheet && <BottomSheet />}
+      <Button
+        title="Show Normal Bottom Sheet"
+        onPress={() =>
+          BottomSheetRoot.show({
+            child: (
+              <>
+                {Array.from({ length: 10 }).map((_: unknown, i) => (
+                  <Text
+                    key={i}
+                    style={{ color: theme.colors.text }}
+                  >
+                    {i}
+                  </Text>
+                ))}
+              </>
+            ),
+          })
+        }
+      />
+
+      <Button
+        title="Toast"
+        onPress={() => Toast.show({ text1: 'This is toast' })}
+      />
+
+      {/* {showBottomSheet && <BottomSheet />} */}
     </GradientScreen>
   );
 };
