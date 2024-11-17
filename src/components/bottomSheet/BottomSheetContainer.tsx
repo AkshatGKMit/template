@@ -1,42 +1,27 @@
+import ThemeContext from '@config/ThemeContext';
+import { useBottomSheet } from '@config/useBottomSheet';
+import useScalingMetrics from '@config/useScalingMetrics';
+import React, {
+  useContext,
+  useState,
+  useRef,
+  useMemo,
+  useImperativeHandle,
+  useCallback,
+  useEffect,
+} from 'react';
 import {
   View,
-  Text,
   Animated,
-  GestureResponderEvent,
   PanResponder,
+  GestureResponderEvent,
   PanResponderGestureState,
+  Text,
   Pressable,
-  ScrollView,
 } from 'react-native';
-import React, {
-  forwardRef,
-  useCallback,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-
-import ThemeContext from '@config/ThemeContext';
-import useScalingMetrics from '@config/useScalingMetrics';
 import ThemedStyles from './styles';
-import { useBottomSheet } from '@config/useBottomSheet';
 
-let refs: BottomSheetRefObj[] = [];
-
-function addNewRef(newRef: BottomSheetRef) {
-  refs.push({
-    current: newRef,
-  });
-}
-
-function removeOldRef(oldRef: BottomSheetRef | null) {
-  refs = refs.filter((r) => r.current !== oldRef);
-}
-
-const BottomSheet = React.forwardRef((props: any, ref: any) => {
+const BottomSheetContainer = React.forwardRef((props: any, ref: any) => {
   const { hp, wp } = useScalingMetrics();
 
   const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
@@ -155,7 +140,7 @@ const BottomSheet = React.forwardRef((props: any, ref: any) => {
     }),
   ).current;
 
-  if (!isVisible) return <Text>Bottom Sheet is not visible</Text>;
+  if (!isVisible) return <></>;
 
   return (
     <>
@@ -197,42 +182,4 @@ const BottomSheet = React.forwardRef((props: any, ref: any) => {
   );
 });
 
-export function BottomSheetRoot(props: any) {
-  const bottomSheetRef = useRef<BottomSheetRef | null>(null);
-
-  const setRef = useCallback((ref: BottomSheetRef | null) => {
-    if (ref) {
-      bottomSheetRef.current = ref;
-      addNewRef(ref);
-    } else {
-      removeOldRef(bottomSheetRef.current);
-    }
-  }, []);
-
-  console.log('Root Props: ', props);
-
-  return (
-    <BottomSheet
-      ref={setRef}
-      {...props}
-    />
-  );
-}
-
-function getRef() {
-  const reversePriority = [...refs].reverse();
-  const activeRef = reversePriority.find((ref) => ref?.current !== null);
-  console.log('Active Ref:', activeRef);
-  return activeRef ? activeRef.current : null;
-}
-
-BottomSheetRoot.show = (params: any) => {
-  console.log('Params: ', params);
-
-  getRef()?.show(params);
-};
-BottomSheetRoot.hide = (params: any) => {
-  getRef()?.hide(params);
-};
-
-export default BottomSheet;
+export default BottomSheetContainer;

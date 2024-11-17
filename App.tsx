@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
 import GradientScreen from '@components/gradientScreen';
-import { BottomSheetRoot } from '@config/bottomSheet/BottomSheet';
+import { BottomSheet } from '@components/bottomSheet';
 import Toast from 'react-native-toast-message';
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
           <GestureHandlerRootView>
             <Main />
             <Toast />
-            <BottomSheetRoot />
+            <BottomSheet />
           </GestureHandlerRootView>
         </ThemeContextProvider>
       </SafeAreaProvider>
@@ -42,10 +42,10 @@ const Main = () => {
       <Button
         title="Show Scrolling Bottom Sheet"
         onPress={() =>
-          BottomSheetRoot.show({
+          BottomSheet.show({
             child: (
               <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
-                {Array.from({ length: 10 }).map((_: unknown, i) => (
+                {Array.from({ length: 100 }).map((_: unknown, i) => (
                   <Text
                     key={i}
                     style={{ color: theme.colors.text }}
@@ -62,7 +62,7 @@ const Main = () => {
       <Button
         title="Show Normal Bottom Sheet"
         onPress={() =>
-          BottomSheetRoot.show({
+          BottomSheet.show({
             child: (
               <>
                 {Array.from({ length: 10 }).map((_: unknown, i) => (
