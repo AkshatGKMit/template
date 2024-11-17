@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Animated } from 'react-native';
 
 export function colorWithOpacity(color: string, alpha: string | number): string {
   if (!/^#[0-9a-fA-F]{6}$/.test(color)) {
@@ -43,5 +44,20 @@ export namespace StorageManager {
 
   export async function saveStoreValue(key: StorageKey, value: string) {
     await AsyncStorage.setItem(key, value);
+  }
+}
+
+export namespace Animation {
+  export function timing(
+    animatedValue: Animated.Value,
+    toValue: number,
+    duration?: number,
+    config?: Omit<Animated.TimingAnimationConfig, 'toValue' | 'duration' | 'useNativeDriver'>,
+  ): Animated.CompositeAnimation {
+    return Animated.timing(animatedValue, {
+      toValue,
+      duration: duration,
+      useNativeDriver: true,
+    });
   }
 }

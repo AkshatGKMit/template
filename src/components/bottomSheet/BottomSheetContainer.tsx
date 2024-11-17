@@ -16,6 +16,7 @@ import useScalingMetrics from '@config/useScalingMetrics';
 import { BottomSheetConstants } from '@constants';
 
 import ThemedStyles from './styles';
+import { Animation } from '@utility/helpers';
 
 const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const { hp, wp } = useScalingMetrics();
@@ -38,7 +39,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const closingSnapPoint = useRef<number>(maxClosingSnapPointThreshold);
 
   const isOriginalPositionSet = useRef<boolean>(false);
-  const modalOriginalPositionRef = useRef(dimensions.height);
+  const modalOriginalPositionRef = useRef<number>(dimensions.height);
   const modalSheetRef = useRef<View | null>(null);
 
   const overlayOpacityAnim = useRef(new Animated.Value(0)).current;
@@ -50,7 +51,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     () => dimensions.height - insets.top - hp(5),
     [dimensions, insets],
   );
-  const sheetFinalPositionY = useMemo(
+  const sheetFinalPosY = useMemo(
     () => dimensions.height - modalHeight,
     [modalHeight, dimensions.height],
   );
@@ -71,23 +72,19 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     closingSnapPoint.current = maxClosingSnapPointThreshold;
     modalOriginalPositionRef.current = dimensions.height;
     modalSheetRef.current = null;
+    isOriginalPositionSet.current = false;
   }
 
   function openBottomSheetAnim() {
     slideSheetAnim.setValue(dimensions.height);
     slideSheetAnim.flattenOffset();
 
-    const overlayAnim = Animated.timing(overlayOpacityAnim, {
-      toValue: 1,
-      duration: overlayOpacityAnimDuration,
-      useNativeDriver: true,
-    });
-
-    const slideBottomSheetAnim = Animated.timing(slideSheetAnim, {
-      toValue: sheetFinalPositionY,
-      duration: sheetSlideAnimDuration,
-      useNativeDriver: true,
-    });
+    const overlayAnim = Animation.timing(overlayOpacityAnim, 1, overlayOpacityAnimDuration);
+    const slideBottomSheetAnim = Animation.timing(
+      slideSheetAnim,
+      sheetFinalPosY,
+      sheetSlideAnimDuration,
+    );
 
     Animated.parallel([overlayAnim, slideBottomSheetAnim]).start();
   }
@@ -95,17 +92,17 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   function closeBottomSheetAnim(duration?: number) {
     slideSheetAnim.flattenOffset();
 
-    const slideBottomSheetAnim = Animated.timing(slideSheetAnim, {
-      toValue: dimensions.height,
-      duration: duration ?? sheetSlideAnimDuration,
-      useNativeDriver: true,
-    });
+    const slideBottomSheetAnim = Animation.timing(
+      slideSheetAnim,
+      dimensions.height,
+      duration ?? sheetSlideAnimDuration,
+    );
 
-    const overlayAnim = Animated.timing(overlayOpacityAnim, {
-      toValue: 0,
-      duration: duration ?? overlayOpacityAnimDuration,
-      useNativeDriver: true,
-    });
+    const overlayAnim = Animation.timing(
+      overlayOpacityAnim,
+      0,
+      duration ?? overlayOpacityAnimDuration,
+    );
 
     Animated.parallel([slideBottomSheetAnim, overlayAnim]).start(() => {
       resetRef();
@@ -215,11 +212,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
         }
 
         slideSheetAnim.flattenOffset();
-        Animated.timing(slideSheetAnim, {
-          toValue: snapPoint,
-          duration: sheetSlideAnimDuration / 10,
-          useNativeDriver: true,
-        }).start();
+        Animation.timing(slideSheetAnim, snapPoint, sheetSlideAnimDuration / 10).start();
       },
     }),
   ).current;
