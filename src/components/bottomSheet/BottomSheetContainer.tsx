@@ -14,46 +14,46 @@ import ThemeContext from '@config/ThemeContext';
 import useBottomSheet from '@config/useBottomSheet';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { BottomSheetConstants } from '@constants';
-
-import ThemedStyles from './styles';
 import { Animation } from '@utility/helpers';
 
+import ThemedStyles from './styles';
+
 const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
-  const { hp, wp } = useScalingMetrics();
-  const { show, hide, isVisible, data } = useBottomSheet();
-
-  const { dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
-
-  const [modalHeight, setModalHeight] = useState(0);
-
   const {
     sheetSlideAnimDuration,
     overlayOpacityAnimDuration,
     maxClosingSnapPointThreshold,
     minClosingSnapPointThreshold,
     maxSnapPointThreshold,
-    minSnapPointThreshold,
   } = BottomSheetConstants;
+
+  const { hp, wp } = useScalingMetrics();
+  const { show, hide, isVisible, data } = useBottomSheet();
+
+  const { dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
+
+  const [sheetHeight, setSheetHeight] = useState(0);
+
+  const sheetRef = useRef<View | null>(null);
 
   const snapPointsRef = useRef<number[] | null>(null);
   const closingSnapPoint = useRef<number>(maxClosingSnapPointThreshold);
 
   const isOriginalPositionSet = useRef<boolean>(false);
-  const modalOriginalPositionRef = useRef<number>(dimensions.height);
-  const modalSheetRef = useRef<View | null>(null);
+  const sheetOriginalPositionRef = useRef<number>(dimensions.height);
 
   const overlayOpacityAnim = useRef(new Animated.Value(0)).current;
-  const slideSheetAnim = useRef(new Animated.Value(dimensions.height)).current;
+  const sheetPosYAnim = useRef(new Animated.Value(dimensions.height)).current;
 
   const styles = ThemedStyles();
 
-  const minModalHeight = useMemo(
+  const minSheetHeight = useMemo(
     () => dimensions.height - insets.top - hp(5),
     [dimensions, insets],
   );
-  const sheetFinalPosY = useMemo(
-    () => dimensions.height - modalHeight,
-    [modalHeight, dimensions.height],
+  const finalSheetPosY = useMemo(
+    () => dimensions.height - sheetHeight,
+    [sheetHeight, dimensions.height],
   );
 
   useImperativeHandle(
@@ -67,56 +67,36 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     ),
   );
 
-  function resetRef() {
+  function resetValues() {
     snapPointsRef.current = null;
     closingSnapPoint.current = maxClosingSnapPointThreshold;
-    modalOriginalPositionRef.current = dimensions.height;
-    modalSheetRef.current = null;
+    sheetOriginalPositionRef.current = dimensions.height;
+    sheetRef.current = null;
     isOriginalPositionSet.current = false;
+    setSheetHeight(0);
   }
 
   function openBottomSheetAnim() {
-    slideSheetAnim.setValue(dimensions.height);
-    slideSheetAnim.flattenOffset();
+    sheetPosYAnim.setValue(dimensions.height);
+    sheetPosYAnim.flattenOffset();
 
-    const overlayAnim = Animation.timing(overlayOpacityAnim, 1, overlayOpacityAnimDuration);
-    const slideBottomSheetAnim = Animation.timing(
-      slideSheetAnim,
-      sheetFinalPosY,
-      sheetSlideAnimDuration,
-    );
-
-    Animated.parallel([overlayAnim, slideBottomSheetAnim]).start();
+    Animated.parallel([
+      Animation.timing(overlayOpacityAnim, 1, overlayOpacityAnimDuration),
+      Animation.timing(sheetPosYAnim, finalSheetPosY, sheetSlideAnimDuration),
+    ]).start();
   }
 
   function closeBottomSheetAnim(duration?: number) {
-    slideSheetAnim.flattenOffset();
+    sheetPosYAnim.flattenOffset();
 
-    const slideBottomSheetAnim = Animation.timing(
-      slideSheetAnim,
-      dimensions.height,
-      duration ?? sheetSlideAnimDuration,
-    );
-
-    const overlayAnim = Animation.timing(
-      overlayOpacityAnim,
-      0,
-      duration ?? overlayOpacityAnimDuration,
-    );
-
-    Animated.parallel([slideBottomSheetAnim, overlayAnim]).start(() => {
-      resetRef();
+    Animated.parallel([
+      Animation.timing(sheetPosYAnim, dimensions.height, duration ?? sheetSlideAnimDuration),
+      Animation.timing(overlayOpacityAnim, 0, duration ?? overlayOpacityAnimDuration),
+    ]).start(() => {
+      resetValues();
       hide();
     });
   }
-
-  useEffect(() => {
-    if (modalSheetRef.current) {
-      modalSheetRef.current.measureInWindow((_, __, ___, height) => {
-        setModalHeight(Math.min(height, minModalHeight));
-      });
-    }
-  }, [dimensions.height, orientation, data.child]);
 
   const handleHardwareBackPress = () => {
     closeBottomSheetAnim();
@@ -124,15 +104,32 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   };
 
   useEffect(() => {
-    openBottomSheetAnim();
-  }, [modalHeight, isVisible]);
+    BackHandler.addEventListener('hardwareBackPress', handleHardwareBackPress);
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', handleHardwareBackPress);
+  }, []);
+
+  useEffect(() => {
+    if (sheetRef.current) {
+      sheetRef.current.measureInWindow((_, __, ___, height) => {
+        const newHeight = Math.min(height, minSheetHeight);
+        if (sheetHeight !== newHeight) {
+          setSheetHeight(newHeight);
+        }
+      });
+    }
+  }, [dimensions.height, orientation, data.child]);
+
+  useEffect(() => {
+    if (isVisible) openBottomSheetAnim();
+  }, [sheetHeight, isVisible]);
 
   useEffect(() => {
     const { snap } = data;
     if (snap) {
       const { closingPoint, points } = snap;
 
-      const originalSnapPoint = (dimensions.height - modalHeight) / dimensions.height;
+      const originalSnapPoint = (dimensions.height - sheetHeight) / dimensions.height;
       points.push(originalSnapPoint);
 
       const validSnapPoints = points.filter(
@@ -147,31 +144,23 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
         closingSnapPoint.current = closingPoint;
       }
     }
-  }, [data.snap, modalHeight]);
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleHardwareBackPress);
-
-    return () => BackHandler.removeEventListener('hardwareBackPress', handleHardwareBackPress);
-  }, []);
+  }, [data.snap, sheetHeight]);
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: (evt) => true,
       onPanResponderGrant: () => {
-        slideSheetAnim.extractOffset();
+        sheetPosYAnim.extractOffset();
         if (!isOriginalPositionSet.current) {
-          modalOriginalPositionRef.current = slideSheetAnim.__getValue();
+          sheetOriginalPositionRef.current = sheetPosYAnim.__getValue();
           isOriginalPositionSet.current = true;
         }
       },
       onPanResponderMove: (_, gesture) => {
-        const newY = slideSheetAnim.__getValue() + gesture.dy;
+        const newY = sheetPosYAnim.__getValue() + gesture.dy;
 
-        if (newY > modalOriginalPositionRef.current) {
-          Animated.event([null, { dy: slideSheetAnim }], {
-            useNativeDriver: false,
-          })(_, gesture);
+        if (newY > sheetOriginalPositionRef.current) {
+          Animated.event([null, { dy: sheetPosYAnim }], { useNativeDriver: false })(_, gesture);
         }
       },
       onPanResponderRelease: (_, { dy, moveY, vy }) => {
@@ -180,7 +169,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
           return;
         }
 
-        let snapPoint = modalOriginalPositionRef.current;
+        let snapPoint = sheetOriginalPositionRef.current;
         if (snapPointsRef.current && closingSnapPoint.current) {
           const points = snapPointsRef.current;
           const pointsPos = points.map((point) => hp(point * 100));
@@ -211,8 +200,8 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
           return;
         }
 
-        slideSheetAnim.flattenOffset();
-        Animation.timing(slideSheetAnim, snapPoint, sheetSlideAnimDuration / 10).start();
+        sheetPosYAnim.flattenOffset();
+        Animation.timing(sheetPosYAnim, snapPoint, sheetSlideAnimDuration / 10).start();
       },
     }),
   ).current;
@@ -228,12 +217,12 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
         />
       </Animated.View>
       <Animated.View
-        ref={modalSheetRef}
+        ref={sheetRef}
         style={[
           styles.sheet,
           {
-            transform: [{ translateY: slideSheetAnim }],
-            maxHeight: minModalHeight,
+            transform: [{ translateY: sheetPosYAnim }],
+            maxHeight: minSheetHeight,
           },
         ]}
       >
