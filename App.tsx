@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import Splash from '@screens/splash/Splash';
 import { Colors } from '@themes';
+import Onboarding from '@screens/onboarding/Onboarding';
 
 const App = () => {
   return (
@@ -28,8 +29,6 @@ const App = () => {
 const Main = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
-  const [s, SS] = useState(false);
-
   useEffect(() => {
     setTimeout(() => {
       setShowSplashScreen(false);
@@ -39,18 +38,9 @@ const Main = () => {
   const globalStyles = GlobalThemedStyles();
 
   return (
-    <GradientScreen showStatusBar={s}>
-      <NavigationContainer>
-        {showSplashScreen ? (
-          <Splash />
-        ) : (
-          <Switch
-            value={s}
-            onValueChange={SS}
-          />
-        )}
-      </NavigationContainer>
-    </GradientScreen>
+    <View style={globalStyles.flex1}>
+      <NavigationContainer>{showSplashScreen ? <Splash /> : <Onboarding />}</NavigationContainer>
+    </View>
   );
 };
 
