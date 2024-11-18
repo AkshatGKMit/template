@@ -37,6 +37,7 @@ declare global {
   interface GradientScreenProps {
     children?: ReactNode;
     style?: StyleProp<ViewStyle>;
+    showStatusBar?: boolean;
   }
 
   type LoaderProps = {
