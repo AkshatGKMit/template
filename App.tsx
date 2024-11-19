@@ -11,6 +11,7 @@ import { GlobalThemedStyles } from '@themes/globalStyles';
 import Splash from '@screens/splash/Splash';
 import { Colors } from '@themes';
 import Onboarding from '@screens/onboarding/Onboarding';
+import Dropdown from '@components/dropdown';
 
 const App = () => {
   return (
@@ -38,27 +39,10 @@ const Main = () => {
   const globalStyles = GlobalThemedStyles();
 
   return (
-    <SafeAreaView style={globalStyles.flex1}>
-      <Button
-        title="Sheet"
-        onPress={() => {
-          BottomSheet.show({
-            child: (
-              <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
-                {Array.from({ length: 100 }).map((_: unknown, i) => (
-                  <Text
-                    key={i}
-                    style={{ color: 'black' }}
-                  >
-                    {i}
-                  </Text>
-                ))}
-              </ScrollView>
-            ),
-          });
-        }}
-      />
-      {/* <NavigationContainer>{showSplashScreen ? <Splash /> : <Onboarding />}</NavigationContainer> */}
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ padding: 30, flex: 1 }}>
+        <Dropdown />
+      </View>
     </SafeAreaView>
   );
 };
