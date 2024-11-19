@@ -34,20 +34,17 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
 
   const [sheetHeight, setSheetHeight] = useState(0);
 
-  const sheetRef = useRef<View | null>(null);
-
   const snapPointsRef = useRef<number[] | null>(null);
   const closingSnapPoint = useRef<number>(maxClosingSnapPointThreshold);
 
-  const isOriginalPositionSet = useRef<boolean>(false);
-  const sheetOriginalPositionRef = useRef<number>(dimensions.height);
+  const sheetOriginalPositionRef = useRef<number | null>(null);
 
   const overlayOpacityAnim = useRef(new Animated.Value(0)).current;
   const sheetPosYAnim = useRef(new Animated.Value(dimensions.height)).current;
 
   const styles = ThemedStyles();
 
-  const minSheetHeight = useMemo(
+  const maxSheetHeight = useMemo(
     () => dimensions.height - insets.top - hp(5),
     [dimensions, insets],
   );
@@ -71,8 +68,6 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     snapPointsRef.current = null;
     closingSnapPoint.current = maxClosingSnapPointThreshold;
     sheetOriginalPositionRef.current = dimensions.height;
-    sheetRef.current = null;
-    isOriginalPositionSet.current = false;
     setSheetHeight(0);
   }
 
@@ -110,15 +105,9 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   }, []);
 
   useEffect(() => {
-    if (sheetRef.current) {
-      sheetRef.current.measureInWindow((_, __, ___, height) => {
-        const newHeight = Math.min(height, minSheetHeight);
-        if (sheetHeight !== newHeight) {
-          setSheetHeight(newHeight);
-        }
-      });
-    }
-  }, [dimensions.height, orientation, data.child]);
+    sheetOriginalPositionRef.current =
+      dimensions.height - (sheetHeight > dimensions.height ? maxSheetHeight : sheetHeight);
+  }, [sheetHeight, dimensions.height, orientation]);
 
   useEffect(() => {
     if (isVisible) openBottomSheetAnim();
@@ -151,15 +140,11 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
       onStartShouldSetPanResponder: (evt) => true,
       onPanResponderGrant: () => {
         sheetPosYAnim.extractOffset();
-        if (!isOriginalPositionSet.current) {
-          sheetOriginalPositionRef.current = sheetPosYAnim.__getValue();
-          isOriginalPositionSet.current = true;
-        }
       },
       onPanResponderMove: (_, gesture) => {
-        const newY = sheetPosYAnim.__getValue() + gesture.dy;
+        const newY = Animation.getAnimatedValue(sheetPosYAnim) + gesture.dy;
 
-        if (newY > sheetOriginalPositionRef.current) {
+        if (newY > sheetOriginalPositionRef.current!) {
           Animated.event([null, { dy: sheetPosYAnim }], { useNativeDriver: false })(_, gesture);
         }
       },
@@ -169,7 +154,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
           return;
         }
 
-        let snapPoint = sheetOriginalPositionRef.current;
+        let snapPoint = sheetOriginalPositionRef.current!;
         if (snapPointsRef.current && closingSnapPoint.current) {
           const points = snapPointsRef.current;
           const pointsPos = points.map((point) => hp(point * 100));
@@ -226,12 +211,15 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
         )}
       </Animated.View>
       <Animated.View
-        ref={sheetRef}
+        onLayout={(e) => {
+          const { height, y } = e.nativeEvent.layout;
+          setSheetHeight(height);
+        }}
         style={[
           styles.sheet,
           {
             transform: [{ translateY: sheetPosYAnim }],
-            maxHeight: minSheetHeight,
+            maxHeight: maxSheetHeight,
             borderTopLeftRadius: data.borderRadius,
             borderTopRightRadius: data.borderRadius,
             backgroundColor: data.backgroundColor ?? theme.colors.primaryBackground,

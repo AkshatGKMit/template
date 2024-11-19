@@ -60,4 +60,6 @@ export namespace Animation {
       useNativeDriver: true,
     });
   }
+
+  export const getAnimatedValue = (value: Animated.value) => value.__getValue();
 }
