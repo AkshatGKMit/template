@@ -1,24 +1,9 @@
 import { useCallback, useRef } from 'react';
 
 import BottomSheetContainer from './BottomSheetContainer';
+import RefManager from '@utility/RefManager';
 
-let refs: BottomSheetRefObj[] = [];
-
-function addNewRef(newRef: BottomSheetRef) {
-  refs.push({
-    current: newRef,
-  });
-}
-
-function removeOldRef(oldRef: BottomSheetRef | null) {
-  refs = refs.filter((r) => r.current !== oldRef);
-}
-
-function getRef() {
-  const reversePriority = [...refs].reverse();
-  const activeRef = reversePriority.find((ref) => ref?.current !== null);
-  return activeRef ? activeRef.current : null;
-}
+const refManager = new RefManager<BottomSheetRef>();
 
 function BottomSheet() {
   const bottomSheetRef = useRef<BottomSheetRef | null>(null);
@@ -26,9 +11,9 @@ function BottomSheet() {
   const setRef = useCallback((ref: BottomSheetRef | null) => {
     if (ref) {
       bottomSheetRef.current = ref;
-      addNewRef(ref);
+      refManager.addNewRef(ref);
     } else {
-      removeOldRef(bottomSheetRef.current);
+      refManager.removeOldRef(bottomSheetRef.current);
     }
   }, []);
 
@@ -36,11 +21,11 @@ function BottomSheet() {
 }
 
 BottomSheet.show = (params: BottomSheetParams) => {
-  getRef()?.show(params);
+  refManager.getRef()?.show(params);
 };
 
 BottomSheet.hide = (params: BottomSheetParams) => {
-  getRef()?.hide(params);
+  refManager.getRef()?.hide(params);
 };
 
 export default BottomSheet;
