@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button, ScrollView, StatusBar, Switch, Text, View } from 'react-native';
+import { Button, SafeAreaView, ScrollView, StatusBar, Switch, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
@@ -38,9 +38,28 @@ const Main = () => {
   const globalStyles = GlobalThemedStyles();
 
   return (
-    <View style={globalStyles.flex1}>
-      <NavigationContainer>{showSplashScreen ? <Splash /> : <Onboarding />}</NavigationContainer>
-    </View>
+    <SafeAreaView style={globalStyles.flex1}>
+      <Button
+        title="Sheet"
+        onPress={() => {
+          BottomSheet.show({
+            child: (
+              <ScrollView style={{ backgroundColor: 'red', width: '100%' }}>
+                {Array.from({ length: 100 }).map((_: unknown, i) => (
+                  <Text
+                    key={i}
+                    style={{ color: 'black' }}
+                  >
+                    {i}
+                  </Text>
+                ))}
+              </ScrollView>
+            ),
+          });
+        }}
+      />
+      {/* <NavigationContainer>{showSplashScreen ? <Splash /> : <Onboarding />}</NavigationContainer> */}
+    </SafeAreaView>
   );
 };
 

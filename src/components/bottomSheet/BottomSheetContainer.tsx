@@ -135,63 +135,65 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     }
   }, [data.snap, sheetHeight]);
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: (evt) => true,
-      onPanResponderGrant: () => {
-        sheetPosYAnim.extractOffset();
-      },
-      onPanResponderMove: (_, gesture) => {
-        const newY = Animation.getAnimatedValue(sheetPosYAnim) + gesture.dy;
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: (evt) => true,
+        onPanResponderGrant: () => {
+          sheetPosYAnim.extractOffset();
+        },
+        onPanResponderMove: (_, gesture) => {
+          const newY = Animation.getAnimatedValue(sheetPosYAnim) + gesture.dy;
 
-        if (newY > sheetOriginalPositionRef.current!) {
-          Animated.event([null, { dy: sheetPosYAnim }], { useNativeDriver: false })(_, gesture);
-        }
-      },
-      onPanResponderRelease: (_, { dy, moveY, vy }) => {
-        if (vy > 1) {
-          closeBottomSheetAnim(vy * 10);
-          return;
-        }
+          if (newY > sheetOriginalPositionRef.current!) {
+            Animated.event([null, { dy: sheetPosYAnim }], { useNativeDriver: false })(_, gesture);
+          }
+        },
+        onPanResponderRelease: (_, { dy, moveY, vy }) => {
+          if (vy > 1) {
+            closeBottomSheetAnim(vy * 10);
+            return;
+          }
 
-        let snapPoint = sheetOriginalPositionRef.current!;
-        if (snapPointsRef.current && closingSnapPoint.current) {
-          const points = snapPointsRef.current;
-          const pointsPos = points.map((point) => hp(point * 100));
-          const closePointPos = hp(closingSnapPoint.current * 100);
+          let snapPoint = sheetOriginalPositionRef.current!;
+          if (snapPointsRef.current && closingSnapPoint.current) {
+            const points = snapPointsRef.current;
+            const pointsPos = points.map((point) => hp(point * 100));
+            const closePointPos = hp(closingSnapPoint.current * 100);
 
-          if (moveY > closePointPos) {
+            if (moveY > closePointPos) {
+              closeBottomSheetAnim();
+              return;
+            }
+
+            let targetSnapPoint;
+
+            if (dy > 0) {
+              targetSnapPoint = pointsPos.find((point) => point >= moveY);
+              if (!targetSnapPoint) {
+                targetSnapPoint = pointsPos[pointsPos.length - 1];
+              }
+            } else {
+              targetSnapPoint = [...pointsPos].reverse().find((point) => point <= moveY);
+              if (!targetSnapPoint) {
+                targetSnapPoint = pointsPos[0];
+              }
+            }
+
+            snapPoint = targetSnapPoint;
+          } else if (moveY > hp(80)) {
             closeBottomSheetAnim();
             return;
           }
 
-          let targetSnapPoint;
+          sheetPosYAnim.flattenOffset();
+          Animation.timing(sheetPosYAnim, snapPoint, sheetSlideAnimDuration / 10).start();
+        },
+      }),
+    [dimensions.height],
+  );
 
-          if (dy > 0) {
-            targetSnapPoint = pointsPos.find((point) => point >= moveY);
-            if (!targetSnapPoint) {
-              targetSnapPoint = pointsPos[pointsPos.length - 1];
-            }
-          } else {
-            targetSnapPoint = [...pointsPos].reverse().find((point) => point <= moveY);
-            if (!targetSnapPoint) {
-              targetSnapPoint = pointsPos[0];
-            }
-          }
-
-          snapPoint = targetSnapPoint;
-        } else if (moveY > hp(80)) {
-          closeBottomSheetAnim();
-          return;
-        }
-
-        sheetPosYAnim.flattenOffset();
-        Animation.timing(sheetPosYAnim, snapPoint, sheetSlideAnimDuration / 10).start();
-      },
-    }),
-  ).current;
-
-  if (!isVisible) return <></>;
+  if (!isVisible) return null;
 
   return (
     <>
