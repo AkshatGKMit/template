@@ -17,8 +17,6 @@ declare global {
 
   type ThemeMode = (typeof ThemeMode)[keyof typeof ThemeMode];
 
-  type InvertedOmittedThemeColors = Omit<ThemeColors, 'inverted'>;
-
   interface ThemeColors {
     main: string;
     primary: string;
@@ -32,12 +30,14 @@ declare global {
     secondaryText: string;
     accentText: string;
     defaultIcon: string;
-    underlay: string;
-    divider: string;
-    placeholder: string;
+    divider: (opacity?: number) => string;
+    underlay: (opacity?: number) => string;
+    placeholder: (opacity?: number) => string;
     error: string;
     inverted: InvertedOmittedThemeColors;
   }
+
+  type InvertedOmittedThemeColors = Omit<ThemeColors, 'inverted'>;
 
   interface ThemeColorModes {
     light: ThemeColors;

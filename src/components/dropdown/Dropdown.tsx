@@ -16,6 +16,8 @@ import {
   Animated,
   LayoutChangeEvent,
 } from 'react-native';
+import ThemedStyles from './styles';
+import { GlobalThemedStyles } from '@themes/globalStyles';
 
 const Dropdown = ({
   value,
@@ -41,8 +43,10 @@ const Dropdown = ({
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
   const [listLayout, setListLayout] = useState(defaultLayout);
 
-  const { height: H, width: W } = dimensions;
+  const globalStyles = GlobalThemedStyles();
+  const styles = ThemedStyles();
 
+  const { height: H, width: W } = dimensions;
   const extraGap = 4;
   const maxDropdownHeight = H / 3;
 
@@ -116,23 +120,15 @@ const Dropdown = ({
 
         return (
           <TouchableHighlight
-            underlayColor={theme.colors.underlay}
+            underlayColor={theme.colors.underlay(0.1)}
             onPress={() => {
               setFocus(false);
               onSelect?.(item, index);
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                gap: 10,
-                paddingLeft: 12,
-                paddingVertical: 10,
-                paddingRight: 30,
-              }}
-            >
+            <View style={styles.item}>
               {startNode && <Icon {...startNode} />}
-              <Text>{label}</Text>
+              <Text style={styles.itemLabel}>{label}</Text>
             </View>
           </TouchableHighlight>
         );
@@ -156,52 +152,23 @@ const Dropdown = ({
 
     const ListSeparator = () => {
       if (!showSeparator) return null;
-
-      return (
-        <View
-          style={{
-            width: 'auto',
-            height: 0.75,
-            backgroundColor: theme.colors.divider,
-            marginHorizontal: 12,
-            marginVertical: 1,
-          }}
-        />
-      );
+      return <View style={styles.listSeparator} />;
     };
 
+    const listViewStyles = [styles.listView, { opacity: opacityAnim }];
+    const listStyles = [styles.list, { top, left, minWidth, maxHeight }];
+
     return (
-      <Animated.View
-        style={{
-          opacity: opacityAnim,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowOpacity: 0.5,
-          shadowRadius: 3,
-          elevation: 3,
-        }}
-      >
+      <Animated.View style={listViewStyles}>
         <FlatList
-          onLayout={_measureList}
-          style={{
-            backgroundColor: '#eeeeee',
-            position: 'absolute',
-            zIndex: 10,
-            top,
-            left,
-            minWidth,
-            maxHeight,
-            paddingVertical: 4,
-          }}
           data={items}
           keyExtractor={({ id }) => id.toString()}
           renderItem={_renderItem()}
+          ItemSeparatorComponent={ListSeparator}
           scrollEnabled={items.length > 7}
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={ListSeparator}
+          onLayout={_measureList}
+          style={listStyles}
         />
       </Animated.View>
     );
@@ -217,14 +184,7 @@ const Dropdown = ({
         onRequestClose={showOrClose}
       >
         <Pressable
-          style={{
-            backgroundColor: Colors.transparent,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          }}
+          style={globalStyles.flex1}
           onPress={() => setFocus(false)}
           children={_renderList()}
         />
@@ -233,31 +193,24 @@ const Dropdown = ({
     [isFocus, showOrClose],
   );
 
+  const buttonStyles = [
+    styles.button,
+    { borderColor: isFocus ? theme.colors.primary : Colors.transparent },
+  ];
+  const buttonTextStyles = [
+    styles.buttonText,
+    { color: value ? theme.colors.text : theme.colors.placeholder() },
+  ];
+
   return (
     <>
       <Pressable
         onPress={() => setFocus((prevFocus) => !prevFocus)}
         onLayout={_measureButton}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#eeeeee',
-            padding: 12,
-            gap: 10,
-            borderWidth: 1,
-            borderColor: isFocus ? theme.colors.primary : Colors.transparent,
-          }}
-        >
+        <View style={buttonStyles}>
           {leftIcon && <Icon {...leftIcon} />}
-          <Text
-            style={{
-              marginRight: 'auto',
-              color: value ? theme.colors.text : theme.colors.placeholder,
-            }}
-          >
-            {value ? value.label : hint}
-          </Text>
+          <Text style={buttonTextStyles}>{value ? value.label : hint}</Text>
           {rightIcon ? (
             <Icon {...rightIcon} />
           ) : (

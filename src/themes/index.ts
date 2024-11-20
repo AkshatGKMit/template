@@ -2,14 +2,15 @@ import { colorWithOpacity } from '@utility/helpers';
 
 import { Colors } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
+import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 const lightTheme: InvertedOmittedThemeColors = {
   main: Colors.white,
   accent: Colors.accent.light,
   accentText: Colors.greyShades.shade600,
   defaultIcon: Colors.black,
-  divider: colorWithOpacity(Colors.black, 0.2),
-  placeholder: Colors.greyShades.shade400,
+  divider: (opacity) => colorWithOpacity(Colors.black, opacity ?? 0.2),
+  placeholder: (opacity) => colorWithOpacity(Colors.black, opacity ?? 0.45),
   primary: Colors.primary.light,
   primaryText: Colors.primary.light,
   primaryBackground: Colors.white,
@@ -18,7 +19,7 @@ const lightTheme: InvertedOmittedThemeColors = {
   statusBar: Colors.primary.light,
   text: Colors.black,
   secondaryText: Colors.greyShades.shade600,
-  underlay: colorWithOpacity(Colors.greyShades.shade800, 0.25),
+  underlay: (opacity) => colorWithOpacity(Colors.greyShades.shade800, opacity ?? 0.25),
   error: Colors.error.light,
 };
 
@@ -27,8 +28,8 @@ const darkTheme: InvertedOmittedThemeColors = {
   accent: Colors.accent.dark,
   accentText: Colors.greyShades.shade400,
   defaultIcon: Colors.white,
-  divider: colorWithOpacity(Colors.white, 0.2),
-  placeholder: Colors.greyShades.shade600,
+  divider: (opacity) => colorWithOpacity(Colors.white, opacity ?? 0.2),
+  placeholder: (opacity) => colorWithOpacity(Colors.white, opacity ?? 0.45),
   primary: Colors.primary.dark,
   primaryText: Colors.primary.dark,
   primaryBackground: Colors.black,
@@ -37,7 +38,7 @@ const darkTheme: InvertedOmittedThemeColors = {
   statusBar: Colors.primary.dark,
   text: Colors.white,
   secondaryText: Colors.greyShades.shade400,
-  underlay: colorWithOpacity(Colors.greyShades.shade200, 0.25),
+  underlay: (opacity) => colorWithOpacity(Colors.greyShades.shade200, opacity ?? 0.25),
   error: Colors.error.dark,
 };
 
