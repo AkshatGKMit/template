@@ -3,7 +3,7 @@ import ThemeContext from '@config/ThemeContext';
 import { IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { Animation } from '@utility/helpers';
-import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -26,13 +26,13 @@ const Dropdown = ({
   rightIcon,
   showSeparator,
 }: DropdownProps) => {
-  const defaultRectLayout = {
+  const defaultLayout: ObjectLayout = {
     height: 0,
-    minWidth: 0,
+    width: 0,
     left: 0,
+    bottom: 0,
     top: 0,
-    maxHeight: 0,
-    shouldScroll: true,
+    right: 0,
   };
 
   const { dimensions, theme, safeAreaInsets: insets } = useContext(ThemeContext);
@@ -40,37 +40,39 @@ const Dropdown = ({
   const buttonRef = useRef<View | null>(null);
 
   const [isFocus, setFocus] = useState(false);
-  const [listLayout, setListLayout] = useState(defaultRectLayout);
+  const [listLayout, setListLayout] = useState(defaultLayout);
 
   const { height: H, width: W } = dimensions;
   const { top: topInsets } = insets;
 
-  const _measureList = useCallback(() => {
+  const _measureButton = () => {
     if (buttonRef && buttonRef.current) {
       buttonRef.current.measureInWindow((pageX, pageY, width, height) => {
         const top = topInsets + pageY + height + 2;
         const left = I18nManager.isRTL ? W - width - pageX : pageX;
 
         setListLayout({
-          minWidth: Math.floor(width),
-          top: Math.floor(top),
-          left: Math.floor(left),
+          width: Math.floor(width),
           height: Math.floor(height),
+          top: Math.floor(top),
+          right: Math.floor(top + width),
+          left: Math.floor(left),
+          bottom: Math.floor(top + height),
+          minWidth: Math.floor(width),
           maxHeight: H / 2,
-          shouldScroll: items.length > 11,
         });
       });
     }
-  }, [dimensions, buttonRef, items]);
+  };
 
   function showOrClose(): void {
     if (isFocus) {
       setFocus(!isFocus);
-      setListLayout(defaultRectLayout);
+      setListLayout(defaultLayout);
     }
   }
 
-  const _renderItem = useCallback((): ListRenderItem<DropDownItem> => {
+  const _renderItem = (): ListRenderItem<DropDownItem> => {
     return ({ item, index }) => {
       const { label, startNode } = item;
 
@@ -97,17 +99,17 @@ const Dropdown = ({
         </TouchableHighlight>
       );
     };
-  }, [items]);
+  };
 
-  const _renderList = useCallback(() => {
+  const _renderList = () => {
     const { top, left, minWidth, maxHeight } = listLayout;
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
-    const animate = useCallback(() => {
+    const animate = () => {
       opacityAnim.setValue(0);
       Animation.timing(opacityAnim, 1, 100).start();
-    }, [opacityAnim]);
+    };
 
     useEffect(() => {
       if (isFocus) animate();
@@ -131,7 +133,7 @@ const Dropdown = ({
           data={items}
           keyExtractor={({ id }) => id.toString()}
           renderItem={_renderItem()}
-          scrollEnabled={listLayout.shouldScroll}
+          scrollEnabled={items.length > 11}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => (
             <View
@@ -147,9 +149,9 @@ const Dropdown = ({
         />
       </Animated.View>
     );
-  }, [listLayout, items, isFocus]);
+  };
 
-  const _renderModal = useCallback(() => {
+  const _renderModal = () => {
     return (
       <Modal
         transparent
@@ -172,14 +174,14 @@ const Dropdown = ({
         />
       </Modal>
     );
-  }, [isFocus]);
+  };
 
   return (
     <>
       <Pressable
         ref={buttonRef}
         onPress={() => setFocus((prevFocus) => !prevFocus)}
-        onLayout={_measureList}
+        onLayout={_measureButton}
       >
         <View
           style={{

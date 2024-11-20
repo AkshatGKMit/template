@@ -93,6 +93,19 @@ declare global {
 
   type BottomSheetParams = BottomSheetDataParams & BottomSHeetOptionParams;
 
+  interface ObjectLayout {
+    height: number;
+    width: number;
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+    minHeight?: number;
+    minWidth?: number;
+    maxHeight?: number;
+    maxWidth?: number;
+  }
+
   interface DropDownItem {
     id: string | number;
     label: string;
