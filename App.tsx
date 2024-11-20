@@ -12,6 +12,8 @@ import Splash from '@screens/splash/Splash';
 import { Colors } from '@themes';
 import Onboarding from '@screens/onboarding/Onboarding';
 import Dropdown from '@components/dropdown';
+import Icon from '@components/icon';
+import { IconFamily } from '@constants';
 
 const App = () => {
   return (
@@ -43,6 +45,10 @@ const Main = () => {
       id: 'f7c9cfbf-a6a2-4895-9c9f-c31a684c8a62',
       label: 'Armstrongchester',
       value: 'Armstrongchester',
+      startNode: {
+        family: IconFamily.materialCommunityIcons,
+        name: 'dropbox',
+      },
     },
     {
       id: 'c288ad69-2861-4ac3-8038-2adf94a76cd3',
@@ -97,6 +103,10 @@ const Main = () => {
         <Dropdown
           items={items}
           hint="--Select--"
+          leftIcon={{
+            family: IconFamily.materialCommunityIcons,
+            name: 'dropbox',
+          }}
         />
       </View>
     </SafeAreaView>

@@ -97,8 +97,7 @@ declare global {
     id: string | number;
     label: string;
     value: BasicType;
-    startNode?: ReactNode;
-    endNode?: ReactNode;
+    startNode?: IconProps;
   }
 
   type DropdownItems = DropDownItem[];
@@ -106,9 +105,10 @@ declare global {
   interface DropdownProps {
     items: DropdownItems;
     hint: string;
-    left?: ReactNode;
-    right?: ReactNode;
+    leftIcon?: IconProps;
+    rightIcon?: IconProps;
     buttonStyle?: StyleProp<ViewStyle>;
     lisStyle?: StyleProp<ViewStyle>;
+    showSeparator?: boolean;
   }
 }

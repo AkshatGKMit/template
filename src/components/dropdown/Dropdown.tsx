@@ -1,4 +1,6 @@
+import Icon from '@components/icon';
 import ThemeContext from '@config/ThemeContext';
+import { IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { memo, useCallback, useContext, useRef, useState } from 'react';
 import {
@@ -13,7 +15,7 @@ import {
   Modal,
 } from 'react-native';
 
-const Dropdown = ({ items }: DropdownProps) => {
+const Dropdown = ({ items, hint, leftIcon, rightIcon, showSeparator }: DropdownProps) => {
   const defaultRectLayout = {
     height: 0,
     minWidth: 0,
@@ -53,17 +55,24 @@ const Dropdown = ({ items }: DropdownProps) => {
 
   const _renderItem = useCallback((): ListRenderItem<DropDownItem> => {
     return ({ item }) => {
-      const { label, startNode, endNode } = item;
+      const { label, startNode } = item;
 
       return (
         <TouchableHighlight
           underlayColor={theme.colors.underlay}
           onPress={() => {}}
         >
-          <View style={{ paddingLeft: 12, paddingVertical: 10, paddingRight: 30 }}>
-            {startNode}
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 10,
+              paddingLeft: 12,
+              paddingVertical: 10,
+              paddingRight: 30,
+            }}
+          >
+            {startNode && <Icon {...startNode} />}
             <Text>{label}</Text>
-            {endNode}
           </View>
         </TouchableHighlight>
       );
@@ -84,12 +93,25 @@ const Dropdown = ({ items }: DropdownProps) => {
           minWidth,
           maxHeight,
           paddingVertical: 4,
+          borderWidth: 1,
+          borderColor: theme.colors.primary,
         }}
         data={items}
         keyExtractor={({ id }) => id.toString()}
         renderItem={_renderItem()}
         scrollEnabled={listLayout.shouldScroll}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              width: 'auto',
+              height: 0.75,
+              backgroundColor: theme.colors.divider,
+              marginHorizontal: 12,
+              marginVertical: 1,
+            }}
+          />
+        )}
       />
     );
   }, [listLayout, items]);
@@ -134,8 +156,26 @@ const Dropdown = ({ items }: DropdownProps) => {
         onPress={() => setFocus((prevFocus) => !prevFocus)}
         onLayout={_measureList}
       >
-        <View style={{ backgroundColor: '#eeeeee', padding: 12 }}>
-          <Text>Num List</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#eeeeee',
+            padding: 12,
+            gap: 10,
+            borderWidth: 1,
+            borderColor: isFocus ? theme.colors.primary : Colors.transparent,
+          }}
+        >
+          {leftIcon && <Icon {...leftIcon} />}
+          <Text style={{ marginRight: 'auto' }}>{hint}</Text>
+          {rightIcon ? (
+            <Icon {...rightIcon} />
+          ) : (
+            <Icon
+              family={IconFamily.materialIcons}
+              name="arrow-drop-down"
+            />
+          )}
         </View>
       </Pressable>
       {_renderModal()}
@@ -143,4 +183,4 @@ const Dropdown = ({ items }: DropdownProps) => {
   );
 };
 
-export default Dropdown;
+export default memo(Dropdown);
