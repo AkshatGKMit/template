@@ -1,8 +1,3 @@
-import Icon from '@components/icon';
-import ThemeContext from '@config/ThemeContext';
-import { IconFamily } from '@constants';
-import { Colors } from '@themes';
-import { Animation } from '@utility/helpers';
 import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
@@ -11,14 +6,19 @@ import {
   FlatList,
   ListRenderItem,
   TouchableHighlight,
-  I18nManager,
   Modal,
   Animated,
   LayoutChangeEvent,
 } from 'react-native';
-import ThemedStyles from './styles';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+
+import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
+import ThemeContext from '@config/ThemeContext';
+import { IconFamily } from '@constants';
+import { Animation } from '@utility/helpers';
+import { GlobalThemedStyles } from '@themes/globalStyles';
+
+import ThemedStyles from './styles';
 
 const PopUpMenu = ({
   items,
@@ -55,7 +55,7 @@ const PopUpMenu = ({
     (e: LayoutChangeEvent) => {
       e.target.measureInWindow((x, y, width, height) => {
         const top = y + height + gap;
-        const left = I18nManager.isRTL ? W - width - x : x;
+        const left = x;
 
         setButtonLayout({
           width,
