@@ -1,4 +1,4 @@
-import { ReactNode, RefObject } from 'react';
+import { Component, ReactNode, RefObject } from 'react';
 import {
   EnterKeyHintTypeOptions,
   GestureResponderEvent,
@@ -11,6 +11,7 @@ import {
   TextInputProps,
   TextInputSubmitEditingEventData,
   TextStyle,
+  TouchableHighlightProps,
   ViewStyle,
 } from 'react-native';
 
@@ -25,7 +26,7 @@ declare global {
     style?: StyleProp<TextStyle>;
   }
 
-  interface IconBtnProps {
+  interface IconButtonProps extends TouchableHighlightProps {
     family: IconFamilyType;
     name: string;
     iconStyle?: StyleProp<TextStyle>;
@@ -63,7 +64,7 @@ declare global {
     onSubmitEditing?: (e?: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
     autoFocus?: boolean;
     prefixIcon?: IconProps;
-    suffixIconButton?: IconBtnProps;
+    suffixIconButton?: IconButtonProps;
     secureText?: boolean;
     containerStyle?: StyleProp<ViewStyle>;
     textInputStyle?: StyleProp<TextStyle>;
@@ -127,5 +128,25 @@ declare global {
     itemStyle?: StyleProp<ViewStyle>;
     gap?: number;
     showSeparator?: boolean;
+  }
+
+  interface PopUpMenuButton {
+    id: string;
+    label: string;
+    startIcon?: IconProps;
+    onPress?: (item: PopUpMenuButton, index: number) => void;
+  }
+
+  type PopUpMenuButtons = PopUpMenuButton[];
+
+  interface PopUpMenuProps {
+    items: PopUpMenuButtons;
+    icon?: Omit<IconButtonProps, 'onPress'>;
+    onOpened?: () => void;
+    onClose?: () => void;
+    gap?: number;
+    showSeparator?: boolean;
+    listStyle?: StyleProp<ViewStyle>;
+    itemStyle?: StyleProp<ViewStyle>;
   }
 }

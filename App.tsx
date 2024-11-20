@@ -14,6 +14,7 @@ import Onboarding from '@screens/onboarding/Onboarding';
 import Dropdown from '@components/dropdown';
 import Icon from '@components/icon';
 import { IconFamily } from '@constants';
+import PopUpMenu from '@components/popUpMenu';
 
 const App = () => {
   return (
@@ -42,100 +43,84 @@ const Main = () => {
 
   const globalStyles = GlobalThemedStyles();
 
-  const items: DropdownItems = [
+  const items: PopUpMenuButtons = [
     {
-      id: 'f7c9cfbf-a6a2-4895-9c9f-c31a684c8a62',
-      label: 'Armstrongchester',
-      value: 'Armstrongchester',
-      startNode: {
-        family: IconFamily.materialCommunityIcons,
-        name: 'dropbox',
-      },
+      id: 'dd213f95-6ba1-45e7-a2a2-6c45b48bac3c',
+      label: 'South Maureenshire',
+      onPress: () => Toast.show({ text1: 'South Maureenshire' }),
     },
     {
-      id: 'c288ad69-2861-4ac3-8038-2adf94a76cd3',
-      label: 'West Efrain',
-      value: 'West Efrain',
+      id: '237248ac-819e-4d23-b403-dc4cfec4c809',
+      label: 'Lake Rhiannon',
+      onPress: () => Toast.show({ text1: 'Lake Rhiannon' }),
     },
     {
-      id: '4e92c306-b664-4042-938e-254cdda945a3',
-      label: 'Jamisonberg',
-      value: 'Jamisonberg',
+      id: '53da0a50-0f9f-4ffb-81df-3b8e2ccac40b',
+      label: 'Predovicbury',
+      onPress: () => Toast.show({ text1: 'Predovicbury' }),
     },
     {
-      id: 'bae5621e-b553-4f88-b316-336cad1677f9',
-      label: 'South Ozella',
-      value: 'South Ozella',
+      id: '12bdcbce-76fe-4c05-9a9d-578a3d82b8b0',
+      label: 'Blickburgh',
+      onPress: () => Toast.show({ text1: 'Blickburgh' }),
     },
     {
-      id: '7b74befe-cbb4-4714-8992-6de34e393a9b',
-      label: 'Allenburgh',
-      value: 'Allenburgh',
+      id: '3ee228c0-729f-4a9a-a4ba-f2e4c17c5fd3',
+      label: 'North Roderick',
+      onPress: () => Toast.show({ text1: 'North Roderick' }),
     },
     {
-      id: '5e9b90a4-dab2-4c7d-9c54-52ea98806e2c',
-      label: 'Lake Raphael',
-      value: 'Lake Raphael',
+      id: 'f442e138-23bd-46b4-88b3-d6f6daf2a643',
+      label: 'Port Brooks',
+      onPress: () => Toast.show({ text1: 'Port Brooks' }),
     },
     {
-      id: 'a8c6e28d-a19d-4c1a-9242-706f711bf021',
-      label: 'West Kingport',
-      value: 'West Kingport',
-    },
-    {
-      id: '5b038321-d92c-47c1-8018-5e271490e3ea',
-      label: 'Lake Laury',
-      value: 'Lake Laury',
-    },
-    {
-      id: 'a375f646-e2eb-4588-970a-99ff72591259',
-      label: 'North Johanna',
-      value: 'North Johanna',
-    },
-    {
-      id: 'a2fb360a-a92d-44c2-8806-fa726a6f7c45',
-      label: 'Lake Graham',
-      value: 'Lake Graham',
+      id: 'ffafb753-efcb-4b1e-b9c3-53a8cb2d55be',
+      label: 'South Lenoramouth',
+      onPress: () => Toast.show({ text1: 'South Lenoramouth' }),
     },
   ];
 
-  const D = () => (
-    <Dropdown
+  const P = () => (
+    <PopUpMenu
       items={items}
-      value={val}
-      onSelect={(item) => setVal(item)}
-      hint="--Left--"
-      leftIcon={{
-        family: IconFamily.materialCommunityIcons,
-        name: 'dropbox',
-      }}
-      showSeparator
-      gap={10}
-      listStyle={{ borderRadius: 12 }}
+      onOpened={() => console.log('Opened')}
+      onClose={() => console.log('Closed')}
     />
   );
 
-  const DD = () => (
+  const PPP = () => (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      <D />
-      <D />
+      <P />
+      <P />
+      <P />
     </View>
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ padding: 30, flex: 1, gap: 20 }}>
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
-        <DD />
+    <SafeAreaView style={{ flex: 1, gap: 20 }}>
+      <View style={{ margin: 30, flexDirection: 'row', backgroundColor: 'pink', gap: 20 }}>
+        <Text style={{ backgroundColor: 'cyan', flex: 1 }}>More</Text>
+        <PPP />
       </View>
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
+      <PPP />
     </SafeAreaView>
   );
 };
