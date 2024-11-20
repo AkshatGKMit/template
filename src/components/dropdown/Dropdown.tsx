@@ -45,12 +45,12 @@ const Dropdown = ({
   const { height: H, width: W } = dimensions;
   const { top: topInsets } = insets;
 
-  const buttonListGap = 2;
+  const extraGap = 4;
   const maxDropdownHeight = H / 3;
 
   const _measureButton = (e: LayoutChangeEvent) => {
     e.target.measureInWindow((x, y, width, height) => {
-      const top = y + height + buttonListGap;
+      const top = y + height + extraGap;
       const left = I18nManager.isRTL ? W - width - x : x;
 
       setButtonLayout({
@@ -90,7 +90,7 @@ const Dropdown = ({
     }
 
     if (shouldMoveToTop) {
-      let newTopPos = y - 2 * buttonListGap - height - buttonLayout.height;
+      let newTopPos = y - 2 * extraGap - height - buttonLayout.height;
 
       setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
     }
@@ -148,7 +148,19 @@ const Dropdown = ({
     }, [isFocus]);
 
     return (
-      <Animated.View style={{ opacity: opacityAnim }}>
+      <Animated.View
+        style={{
+          opacity: opacityAnim,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 0,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          elevation: 3,
+        }}
+      >
         <FlatList
           onLayout={_measureList}
           style={{
@@ -160,7 +172,7 @@ const Dropdown = ({
             minWidth,
             maxHeight,
             paddingVertical: 4,
-            borderWidth: 1,
+            // borderWidth: 1,
             borderColor: theme.colors.primary,
           }}
           data={items}
