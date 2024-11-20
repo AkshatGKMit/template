@@ -123,7 +123,9 @@ declare global {
     leftIcon?: IconProps;
     rightIcon?: IconProps;
     buttonStyle?: StyleProp<ViewStyle>;
-    lisStyle?: StyleProp<ViewStyle>;
+    listStyle?: StyleProp<ViewStyle>;
+    itemStyle?: StyleProp<ViewStyle>;
+    gap?: number;
     showSeparator?: boolean;
   }
 }

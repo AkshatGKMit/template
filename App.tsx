@@ -110,6 +110,8 @@ const Main = () => {
         name: 'dropbox',
       }}
       showSeparator
+      gap={10}
+      listStyle={{ borderRadius: 12 }}
     />
   );
 

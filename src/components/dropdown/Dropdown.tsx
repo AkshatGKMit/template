@@ -3,7 +3,7 @@ import ThemeContext from '@config/ThemeContext';
 import { IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { Animation } from '@utility/helpers';
-import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -26,6 +26,10 @@ const Dropdown = ({
   hint,
   leftIcon,
   rightIcon,
+  buttonStyle,
+  listStyle,
+  itemStyle,
+  gap = 4,
   showSeparator,
 }: DropdownProps) => {
   const defaultLayout: ObjectLayout = {
@@ -37,7 +41,7 @@ const Dropdown = ({
     right: 0,
   };
 
-  const { dimensions, theme, safeAreaInsets: insets } = useContext(ThemeContext);
+  const { dimensions, theme } = useContext(ThemeContext);
 
   const [isFocus, setFocus] = useState(false);
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
@@ -47,13 +51,12 @@ const Dropdown = ({
   const styles = ThemedStyles();
 
   const { height: H, width: W } = dimensions;
-  const extraGap = 4;
   const maxDropdownHeight = H / 3;
 
   const _measureButton = useCallback(
     (e: LayoutChangeEvent) => {
       e.target.measureInWindow((x, y, width, height) => {
-        const top = y + height + extraGap;
+        const top = y + height + gap;
         const left = I18nManager.isRTL ? W - width - x : x;
 
         setButtonLayout({
@@ -98,7 +101,7 @@ const Dropdown = ({
 
       if (shouldMoveToTop) {
         //* Calculation -> Current Y Position - (2 * Custom Gap Between Button and List) - list height - button height
-        let newTopPos = y - 2 * extraGap - height - buttonLayout.height;
+        let newTopPos = y - 2 * gap - height - buttonLayout.height;
         setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
       }
     },
@@ -126,14 +129,14 @@ const Dropdown = ({
               onSelect?.(item, index);
             }}
           >
-            <View style={styles.item}>
+            <View style={[styles.item, itemStyle]}>
               {startNode && <Icon {...startNode} />}
               <Text style={styles.itemLabel}>{label}</Text>
             </View>
           </TouchableHighlight>
         );
       },
-    [theme],
+    [theme, styles],
   );
 
   const _renderList = useCallback(() => {
@@ -156,7 +159,7 @@ const Dropdown = ({
     };
 
     const listViewStyles = [styles.listView, { opacity: opacityAnim }];
-    const listStyles = [styles.list, { top, left, minWidth, maxHeight }];
+    const listStyles = [styles.list, listStyle, { top, left, minWidth, maxHeight }];
 
     return (
       <Animated.View style={listViewStyles}>
@@ -172,7 +175,7 @@ const Dropdown = ({
         />
       </Animated.View>
     );
-  }, [listLayout, isFocus, showSeparator]);
+  }, [listLayout, isFocus, showSeparator, styles]);
 
   const _renderModal = useCallback(
     () => (
@@ -190,20 +193,25 @@ const Dropdown = ({
         />
       </Modal>
     ),
-    [isFocus, showOrClose],
+    [isFocus, showOrClose, globalStyles],
   );
 
-  const buttonStyles = [
-    styles.button,
-    { borderColor: isFocus ? theme.colors.primary : Colors.transparent },
-  ];
-  const buttonTextStyles = [
-    styles.buttonText,
-    { color: value ? theme.colors.text : theme.colors.placeholder() },
-  ];
+  const _renderDropdownButton = useCallback(() => {
+    const buttonStyles = useMemo(
+      () => [
+        styles.button,
+        { borderColor: isFocus ? theme.colors.primary : Colors.transparent },
+        buttonStyle,
+      ],
+      [styles, isFocus, theme, buttonStyle],
+    );
 
-  return (
-    <>
+    const buttonTextStyles = useMemo(
+      () => [styles.buttonText, { color: value ? theme.colors.text : theme.colors.placeholder() }],
+      [styles, value, theme],
+    );
+
+    return (
       <Pressable
         onPress={() => setFocus((prevFocus) => !prevFocus)}
         onLayout={_measureButton}
@@ -221,6 +229,12 @@ const Dropdown = ({
           )}
         </View>
       </Pressable>
+    );
+  }, [styles, leftIcon, rightIcon, value, hint, theme]);
+
+  return (
+    <>
+      {_renderDropdownButton()}
       {_renderModal()}
     </>
   );
