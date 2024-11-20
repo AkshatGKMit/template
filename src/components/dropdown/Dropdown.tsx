@@ -45,9 +45,12 @@ const Dropdown = ({
   const { height: H, width: W } = dimensions;
   const { top: topInsets } = insets;
 
+  const buttonListGap = 2;
+  const maxDropdownHeight = H / 3;
+
   const _measureButton = (e: LayoutChangeEvent) => {
     e.target.measureInWindow((x, y, width, height) => {
-      const top = y + height + 2;
+      const top = y + height + buttonListGap;
       const left = I18nManager.isRTL ? W - width - x : x;
 
       setButtonLayout({
@@ -67,7 +70,7 @@ const Dropdown = ({
         left: Math.floor(left),
         right: Math.floor(left + width),
         minWidth: Math.floor(width),
-        maxHeight: H / 2,
+        maxHeight: maxDropdownHeight,
       });
     });
   };
@@ -83,13 +86,13 @@ const Dropdown = ({
 
     if (shouldMoveToLeft) {
       const newLeftPos = x - (rightPos - buttonLayout.right);
-
       setListLayout((prevLayout) => ({ ...prevLayout, left: newLeftPos }));
     }
 
     if (shouldMoveToTop) {
-      // const newTopPos = buttonLayout.top + 10;
-      // setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
+      let newTopPos = y - 2 * buttonListGap - height - buttonLayout.height;
+
+      setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
     }
   };
 
@@ -131,7 +134,7 @@ const Dropdown = ({
   };
 
   const _renderList = () => {
-    const { top, left, right, bottom, minWidth, maxHeight } = listLayout;
+    const { top, left, minWidth, maxHeight } = listLayout;
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -154,8 +157,6 @@ const Dropdown = ({
             zIndex: 10,
             top,
             left,
-            // right,
-            // bottom,
             minWidth,
             maxHeight,
             paddingVertical: 4,
@@ -165,7 +166,7 @@ const Dropdown = ({
           data={items}
           keyExtractor={({ id }) => id.toString()}
           renderItem={_renderItem()}
-          scrollEnabled={items.length > 11}
+          scrollEnabled={items.length > 7}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => (
             <View

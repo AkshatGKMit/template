@@ -98,8 +98,8 @@ declare global {
     right: number;
     bottom: number;
     left: number;
-    height?: number;
-    width?: number;
+    height: number;
+    width: number;
     minHeight?: number;
     minWidth?: number;
     maxHeight?: number;
