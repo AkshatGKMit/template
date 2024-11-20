@@ -2,7 +2,8 @@ import Icon from '@components/icon';
 import ThemeContext from '@config/ThemeContext';
 import { IconFamily } from '@constants';
 import { Colors } from '@themes';
-import { memo, useCallback, useContext, useRef, useState } from 'react';
+import { Animation } from '@utility/helpers';
+import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +14,7 @@ import {
   TouchableHighlight,
   I18nManager,
   Modal,
+  Animated,
 } from 'react-native';
 
 const Dropdown = ({
@@ -100,39 +102,52 @@ const Dropdown = ({
   const _renderList = useCallback(() => {
     const { top, left, minWidth, maxHeight } = listLayout;
 
+    const opacityAnim = useRef(new Animated.Value(0)).current;
+
+    const animate = useCallback(() => {
+      opacityAnim.setValue(0);
+      Animation.timing(opacityAnim, 1, 100).start();
+    }, [opacityAnim]);
+
+    useEffect(() => {
+      if (isFocus) animate();
+    }, [isFocus]);
+
     return (
-      <FlatList
-        style={{
-          backgroundColor: '#eeeeee',
-          position: 'absolute',
-          zIndex: 10,
-          top,
-          left,
-          minWidth,
-          maxHeight,
-          paddingVertical: 4,
-          borderWidth: 1,
-          borderColor: theme.colors.primary,
-        }}
-        data={items}
-        keyExtractor={({ id }) => id.toString()}
-        renderItem={_renderItem()}
-        scrollEnabled={listLayout.shouldScroll}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              width: 'auto',
-              height: 0.75,
-              backgroundColor: theme.colors.divider,
-              marginHorizontal: 12,
-              marginVertical: 1,
-            }}
-          />
-        )}
-      />
+      <Animated.View style={{ opacity: opacityAnim }}>
+        <FlatList
+          style={{
+            backgroundColor: '#eeeeee',
+            position: 'absolute',
+            zIndex: 10,
+            top,
+            left,
+            minWidth,
+            maxHeight,
+            paddingVertical: 4,
+            borderWidth: 1,
+            borderColor: theme.colors.primary,
+          }}
+          data={items}
+          keyExtractor={({ id }) => id.toString()}
+          renderItem={_renderItem()}
+          scrollEnabled={listLayout.shouldScroll}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{
+                width: 'auto',
+                height: 0.75,
+                backgroundColor: theme.colors.divider,
+                marginHorizontal: 12,
+                marginVertical: 1,
+              }}
+            />
+          )}
+        />
+      </Animated.View>
     );
-  }, [listLayout, items]);
+  }, [listLayout, items, isFocus]);
 
   const _renderModal = useCallback(() => {
     return (
@@ -142,7 +157,6 @@ const Dropdown = ({
         visible={isFocus}
         supportedOrientations={['landscape', 'portrait']}
         onRequestClose={showOrClose}
-        animationType="fade"
       >
         <Pressable
           style={{
