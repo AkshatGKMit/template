@@ -104,7 +104,9 @@ declare global {
 
   interface DropdownProps {
     items: DropdownItems;
-    hint: string;
+    value?: DropDownItem | null;
+    onSelect?: (item: DropDownItem, index: number) => void;
+    hint?: string;
     leftIcon?: IconProps;
     rightIcon?: IconProps;
     buttonStyle?: StyleProp<ViewStyle>;

@@ -32,6 +32,8 @@ const App = () => {
 const Main = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
+  const [val, setVal] = useState<DropDownItem | null>(null);
+
   useEffect(() => {
     setTimeout(() => {
       setShowSplashScreen(false);
@@ -102,6 +104,8 @@ const Main = () => {
       <View style={{ padding: 30, flex: 1 }}>
         <Dropdown
           items={items}
+          value={val}
+          onSelect={(item) => setVal(item)}
           hint="--Select--"
           leftIcon={{
             family: IconFamily.materialCommunityIcons,

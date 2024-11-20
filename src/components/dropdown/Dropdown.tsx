@@ -15,7 +15,15 @@ import {
   Modal,
 } from 'react-native';
 
-const Dropdown = ({ items, hint, leftIcon, rightIcon, showSeparator }: DropdownProps) => {
+const Dropdown = ({
+  value,
+  items,
+  onSelect,
+  hint,
+  leftIcon,
+  rightIcon,
+  showSeparator,
+}: DropdownProps) => {
   const defaultRectLayout = {
     height: 0,
     minWidth: 0,
@@ -53,14 +61,24 @@ const Dropdown = ({ items, hint, leftIcon, rightIcon, showSeparator }: DropdownP
     }
   }, [dimensions, buttonRef, items]);
 
+  function showOrClose(): void {
+    if (isFocus) {
+      setFocus(!isFocus);
+      setListLayout(defaultRectLayout);
+    }
+  }
+
   const _renderItem = useCallback((): ListRenderItem<DropDownItem> => {
-    return ({ item }) => {
+    return ({ item, index }) => {
       const { label, startNode } = item;
 
       return (
         <TouchableHighlight
           underlayColor={theme.colors.underlay}
-          onPress={() => {}}
+          onPress={() => {
+            setFocus(false);
+            onSelect?.(item, index);
+          }}
         >
           <View
             style={{
@@ -117,13 +135,6 @@ const Dropdown = ({ items, hint, leftIcon, rightIcon, showSeparator }: DropdownP
   }, [listLayout, items]);
 
   const _renderModal = useCallback(() => {
-    function showOrClose(): void {
-      if (isFocus) {
-        setFocus(!isFocus);
-        setListLayout(defaultRectLayout);
-      }
-    }
-
     return (
       <Modal
         transparent
@@ -167,7 +178,14 @@ const Dropdown = ({ items, hint, leftIcon, rightIcon, showSeparator }: DropdownP
           }}
         >
           {leftIcon && <Icon {...leftIcon} />}
-          <Text style={{ marginRight: 'auto' }}>{hint}</Text>
+          <Text
+            style={{
+              marginRight: 'auto',
+              color: value ? theme.colors.text : theme.colors.placeholder,
+            }}
+          >
+            {value ? value.label : hint}
+          </Text>
           {rightIcon ? (
             <Icon {...rightIcon} />
           ) : (
