@@ -109,6 +109,7 @@ const Main = () => {
         family: IconFamily.materialCommunityIcons,
         name: 'dropbox',
       }}
+      showSeparator
     />
   );
 
