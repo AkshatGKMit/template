@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 import {
   EnterKeyHintTypeOptions,
   GestureResponderEvent,
@@ -92,4 +92,23 @@ declare global {
   }
 
   type BottomSheetParams = BottomSheetDataParams & BottomSHeetOptionParams;
+
+  interface DropDownItem {
+    id: string | number;
+    label: string;
+    value: BasicType;
+    startNode?: ReactNode;
+    endNode?: ReactNode;
+  }
+
+  type DropdownItems = DropDownItem[];
+
+  interface DropdownProps {
+    items: DropdownItems;
+    hint: string;
+    left?: ReactNode;
+    right?: ReactNode;
+    buttonStyle?: StyleProp<ViewStyle>;
+    lisStyle?: StyleProp<ViewStyle>;
+  }
 }

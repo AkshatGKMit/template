@@ -38,10 +38,66 @@ const Main = () => {
 
   const globalStyles = GlobalThemedStyles();
 
+  const items: DropdownItems = [
+    {
+      id: 'f7c9cfbf-a6a2-4895-9c9f-c31a684c8a62',
+      label: 'Armstrongchester',
+      value: 'Armstrongchester',
+    },
+    {
+      id: 'c288ad69-2861-4ac3-8038-2adf94a76cd3',
+      label: 'West Efrain',
+      value: 'West Efrain',
+    },
+    {
+      id: '4e92c306-b664-4042-938e-254cdda945a3',
+      label: 'Jamisonberg',
+      value: 'Jamisonberg',
+    },
+    {
+      id: 'bae5621e-b553-4f88-b316-336cad1677f9',
+      label: 'South Ozella',
+      value: 'South Ozella',
+    },
+    {
+      id: '7b74befe-cbb4-4714-8992-6de34e393a9b',
+      label: 'Allenburgh',
+      value: 'Allenburgh',
+    },
+    {
+      id: '5e9b90a4-dab2-4c7d-9c54-52ea98806e2c',
+      label: 'Lake Raphael',
+      value: 'Lake Raphael',
+    },
+    {
+      id: 'a8c6e28d-a19d-4c1a-9242-706f711bf021',
+      label: 'West Kingport',
+      value: 'West Kingport',
+    },
+    {
+      id: '5b038321-d92c-47c1-8018-5e271490e3ea',
+      label: 'Lake Laury',
+      value: 'Lake Laury',
+    },
+    {
+      id: 'a375f646-e2eb-4588-970a-99ff72591259',
+      label: 'North Johanna',
+      value: 'North Johanna',
+    },
+    {
+      id: 'a2fb360a-a92d-44c2-8806-fa726a6f7c45',
+      label: 'Lake Graham',
+      value: 'Lake Graham',
+    },
+  ];
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ padding: 30, flex: 1 }}>
-        <Dropdown />
+        <Dropdown
+          items={items}
+          hint="--Select--"
+        />
       </View>
     </SafeAreaView>
   );
