@@ -99,19 +99,39 @@ const Main = () => {
     },
   ];
 
+  const D = () => (
+    <Dropdown
+      items={items}
+      value={val}
+      onSelect={(item) => setVal(item)}
+      hint="--Left--"
+      leftIcon={{
+        family: IconFamily.materialCommunityIcons,
+        name: 'dropbox',
+      }}
+    />
+  );
+
+  const DD = () => (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <D />
+      <D />
+    </View>
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ padding: 30, flex: 1 }}>
-        <Dropdown
-          items={items}
-          value={val}
-          onSelect={(item) => setVal(item)}
-          hint="--Select--"
-          leftIcon={{
-            family: IconFamily.materialCommunityIcons,
-            name: 'dropbox',
-          }}
-        />
+      <View style={{ padding: 30, flex: 1, gap: 20 }}>
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
+        <DD />
       </View>
     </SafeAreaView>
   );

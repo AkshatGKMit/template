@@ -3,7 +3,7 @@ import ThemeContext from '@config/ThemeContext';
 import { IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { Animation } from '@utility/helpers';
-import { memo, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import {
   I18nManager,
   Modal,
   Animated,
+  LayoutChangeEvent,
 } from 'react-native';
 
 const Dropdown = ({
@@ -37,31 +38,58 @@ const Dropdown = ({
 
   const { dimensions, theme, safeAreaInsets: insets } = useContext(ThemeContext);
 
-  const buttonRef = useRef<View | null>(null);
-
   const [isFocus, setFocus] = useState(false);
+  const [buttonLayout, setButtonLayout] = useState(defaultLayout);
   const [listLayout, setListLayout] = useState(defaultLayout);
 
   const { height: H, width: W } = dimensions;
   const { top: topInsets } = insets;
 
-  const _measureButton = () => {
-    if (buttonRef && buttonRef.current) {
-      buttonRef.current.measureInWindow((pageX, pageY, width, height) => {
-        const top = topInsets + pageY + height + 2;
-        const left = I18nManager.isRTL ? W - width - pageX : pageX;
+  const _measureButton = (e: LayoutChangeEvent) => {
+    e.target.measureInWindow((x, y, width, height) => {
+      const top = y + height + 2;
+      const left = I18nManager.isRTL ? W - width - x : x;
 
-        setListLayout({
-          width: Math.floor(width),
-          height: Math.floor(height),
-          top: Math.floor(top),
-          right: Math.floor(top + width),
-          left: Math.floor(left),
-          bottom: Math.floor(top + height),
-          minWidth: Math.floor(width),
-          maxHeight: H / 2,
-        });
+      setButtonLayout({
+        width,
+        height,
+        top,
+        left,
+        bottom: y + height,
+        right: x + width,
       });
+
+      setListLayout({
+        width: Math.floor(width),
+        height: Math.floor(height),
+        top: Math.floor(top),
+        bottom: Math.floor(top + height),
+        left: Math.floor(left),
+        right: Math.floor(left + width),
+        minWidth: Math.floor(width),
+        maxHeight: H / 2,
+      });
+    });
+  };
+
+  const _measureList = (e: LayoutChangeEvent) => {
+    const { height, width, x, y } = e.nativeEvent.layout;
+
+    const rightPos = x + width;
+    const bottomPos = y + height;
+
+    const shouldMoveToLeft = rightPos > W;
+    const shouldMoveToTop = bottomPos > H;
+
+    if (shouldMoveToLeft) {
+      const newLeftPos = x - (rightPos - buttonLayout.right);
+
+      setListLayout((prevLayout) => ({ ...prevLayout, left: newLeftPos }));
+    }
+
+    if (shouldMoveToTop) {
+      // const newTopPos = buttonLayout.top + 10;
+      // setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
     }
   };
 
@@ -69,6 +97,7 @@ const Dropdown = ({
     if (isFocus) {
       setFocus(!isFocus);
       setListLayout(defaultLayout);
+      setButtonLayout(defaultLayout);
     }
   }
 
@@ -102,7 +131,7 @@ const Dropdown = ({
   };
 
   const _renderList = () => {
-    const { top, left, minWidth, maxHeight } = listLayout;
+    const { top, left, right, bottom, minWidth, maxHeight } = listLayout;
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -118,12 +147,15 @@ const Dropdown = ({
     return (
       <Animated.View style={{ opacity: opacityAnim }}>
         <FlatList
+          onLayout={_measureList}
           style={{
             backgroundColor: '#eeeeee',
             position: 'absolute',
             zIndex: 10,
             top,
             left,
+            // right,
+            // bottom,
             minWidth,
             maxHeight,
             paddingVertical: 4,
@@ -179,7 +211,6 @@ const Dropdown = ({
   return (
     <>
       <Pressable
-        ref={buttonRef}
         onPress={() => setFocus((prevFocus) => !prevFocus)}
         onLayout={_measureButton}
       >
@@ -217,4 +248,4 @@ const Dropdown = ({
   );
 };
 
-export default memo(Dropdown);
+export default Dropdown;
