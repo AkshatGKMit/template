@@ -1,23 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
-import { Button, SafeAreaView, ScrollView, StatusBar, Switch, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Button, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
-import GradientScreen from '@components/gradientScreen';
+import { ThemeContextProvider } from '@config/ThemeContext';
 import BottomSheet from '@components/bottomSheet';
 import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { GlobalThemedStyles } from '@themes/globalStyles';
-import Splash from '@screens/splash/Splash';
-import { Colors, FontSize } from '@themes';
-import Onboarding from '@screens/onboarding/Onboarding';
-import Dropdown from '@components/dropdown';
-import Icon from '@components/icon';
-import { CardSide, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
-import PopUpMenu from '@components/popUpMenu';
-import Shimmer from '@components/shimmer';
-import FlipCard from '@components/flipCard';
-import SnackBarRoot from '@components/snackBar/SnackBar';
 import Snackbar from '@components/snackBar';
 import TextButton from '@components/textButton';
 
