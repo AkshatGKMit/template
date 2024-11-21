@@ -48,14 +48,19 @@ export const BottomSheetConstants = {
 export const ShimmerDirection = {
   ltr: 'ltr',
   rtl: 'rtl',
-};
+} as const;
 
 export const FlipDirection = {
   horizontal: 'horizontal',
   vertical: 'vertical',
-};
+} as const;
 
 export const CardSide = {
   front: 'front',
   back: 'back',
-};
+} as const;
+
+export const SlideDirection = {
+  right: 'right',
+  left: 'left',
+} as const;

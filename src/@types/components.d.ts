@@ -191,4 +191,16 @@ declare global {
     color?: string;
     onPress?: () => void;
   }
+
+  type SlideDirection = (typeof SlideDirection)[keyof typeof SlideDirection];
+
+  interface SlidableProps {
+    children: any;
+    leftChild?: ReactNode;
+    rightChild?: ReactNode;
+    dismissDirection?: SlideDirection;
+    onDismiss?: () => void;
+    onSlideLeft?: () => void;
+    onSlideRight?: () => void;
+  }
 }

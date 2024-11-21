@@ -53,11 +53,12 @@ export namespace Animation {
     toValue: number,
     duration?: number,
     easing?: EasingFunction,
+    useNativeDriver?: boolean,
   ): Animated.CompositeAnimation {
     return Animated.timing(animatedValue, {
       toValue,
       duration: duration,
-      useNativeDriver: true,
+      useNativeDriver: useNativeDriver ?? true,
       easing,
     });
   }
