@@ -17,6 +17,7 @@ import { CardSide, FlipDirection, IconFamily, ShimmerDirection } from '@constant
 import PopUpMenu from '@components/popUpMenu';
 import Shimmer from '@components/shimmer';
 import FlipCard from '@components/flipCard';
+import SnackBar from '@components/snackBar/SnackBar';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Main />
           <Toast />
           <BottomSheet />
+          <SnackBar />
         </GestureHandlerRootView>
       </ThemeContextProvider>
     </SafeAreaProvider>
@@ -47,14 +49,7 @@ const Main = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, gap: 20 }}>
-      <View style={{ margin: 30, flexDirection: 'row', gap: 20 }}>
-        <FlipCard
-          duration={100}
-          front={<Text style={{ fontWeight: '900', fontSize: 50 }}>Front Card</Text>}
-          back={<Text style={{ fontWeight: '900', fontSize: 50 }}>Back Card</Text>}
-          // direction={FlipDirection.vertical}
-        />
-      </View>
+      <View style={{ margin: 30, flexDirection: 'row', gap: 20 }}></View>
     </SafeAreaView>
   );
 };

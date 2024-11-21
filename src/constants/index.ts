@@ -27,6 +27,15 @@ export const IconFamily = {
 
 export const Images = {};
 
+export const defaultLayout: ObjectLayout = {
+  height: 0,
+  width: 0,
+  left: 0,
+  bottom: 0,
+  top: 0,
+  right: 0,
+};
+
 export const BottomSheetConstants = {
   sheetSlideAnimDuration: 250,
   overlayOpacityAnimDuration: 100,

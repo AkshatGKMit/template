@@ -13,7 +13,7 @@ import {
 
 import Icon from '@components/icon';
 import ThemeContext from '@config/ThemeContext';
-import { IconFamily } from '@constants';
+import { defaultLayout, IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
@@ -33,15 +33,6 @@ const Dropdown = ({
   gap = 4,
   showSeparator,
 }: DropdownProps) => {
-  const defaultLayout: ObjectLayout = {
-    height: 0,
-    width: 0,
-    left: 0,
-    bottom: 0,
-    top: 0,
-    right: 0,
-  };
-
   const { dimensions, theme } = useContext(ThemeContext);
 
   const [isFocus, setFocus] = useState(false);
