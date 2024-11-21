@@ -75,8 +75,16 @@ declare global {
     addOns?: TextInputProps;
   }
 
-  interface BottomSheetDataParams {
+  interface RefOptions {
+    onShow?: () => void;
+    onHide?: () => void;
+  }
+
+  interface RefManagerParams extends RefOptions {
     child: React.JSX.Element | null;
+  }
+
+  interface BottomSheetParams extends RefManagerParams {
     /**
      * @params Points must lie between 0.15 to 0.85
      */
@@ -89,12 +97,12 @@ declare global {
     borderRadius?: number;
   }
 
-  interface BottomSHeetOptionParams {
-    onShow?: () => void;
-    onHide?: () => void;
+  interface SnackbarParams extends RefManagerParams {
+    delay?: number;
+    animationDuration?: number;
+    dismissible?: boolean;
+    showClose?: boolean;
   }
-
-  type BottomSheetParams = BottomSheetDataParams & BottomSHeetOptionParams;
 
   interface ObjectLayout {
     top: number;

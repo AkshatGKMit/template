@@ -11,12 +11,15 @@ import {
 import { View, Animated, PanResponder, Pressable, BackHandler } from 'react-native';
 
 import ThemeContext from '@config/ThemeContext';
-import useBottomSheet from '@config/useBottomSheet';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { BottomSheetConstants } from '@constants';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
+
+const defaultData: BottomSheetParams = {
+  child: null,
+};
 
 const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const {
@@ -28,10 +31,11 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   } = BottomSheetConstants;
 
   const { hp, wp } = useScalingMetrics();
-  const { show, hide, isVisible, data } = useBottomSheet();
 
   const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
 
+  const [isVisible, setVisible] = useState(false);
+  const [data, setData] = useState<BottomSheetParams>(defaultData);
   const [sheetHeight, setSheetHeight] = useState(0);
 
   const snapPointsRef = useRef<number[] | null>(null);
@@ -53,23 +57,32 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     [sheetHeight, dimensions.height],
   );
 
-  useImperativeHandle(
-    ref,
-    useCallback(
-      () => ({
-        show,
-        hide,
-      }),
-      [hide, show],
-    ),
-  );
+  function onShow(params: BottomSheetParams) {
+    const { isDismissible = true, backgroundColor = theme.colors.primaryBackground } = params;
+    setData({ ...params, isDismissible, backgroundColor });
+    setVisible(true);
+  }
 
-  function resetValues() {
+  function onHide() {
+    setVisible(false);
     snapPointsRef.current = null;
     closingSnapPoint.current = maxClosingSnapPointThreshold;
     sheetOriginalPositionRef.current = dimensions.height;
     setSheetHeight(0);
   }
+
+  useImperativeHandle(
+    ref,
+    useCallback(
+      () => ({
+        show: (params: BottomSheetParams) => onShow(params),
+        hide: () => onHide(),
+      }),
+      [],
+    ),
+  );
+
+  function resetValues() {}
 
   function openBottomSheetAnim() {
     sheetPosYAnim.setValue(dimensions.height);
@@ -89,7 +102,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
       Animation.timing(overlayOpacityAnim, 0, duration ?? overlayOpacityAnimDuration),
     ]).start(() => {
       resetValues();
-      hide();
+      onHide();
     });
   }
 
@@ -224,7 +237,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
             maxHeight: maxSheetHeight,
             borderTopLeftRadius: data.borderRadius,
             borderTopRightRadius: data.borderRadius,
-            backgroundColor: data.backgroundColor ?? theme.colors.primaryBackground,
+            backgroundColor: data.backgroundColor,
           },
         ]}
       >

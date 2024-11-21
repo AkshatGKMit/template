@@ -1,7 +1,8 @@
 import { useCallback, useRef } from 'react';
 
-import BottomSheetContainer from './BottomSheetContainer';
 import RefManager from '@utility/RefManager';
+
+import BottomSheetContainer from './BottomSheetContainer';
 
 const refManager = new RefManager<BottomSheetRef>();
 

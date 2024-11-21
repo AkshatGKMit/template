@@ -23,3 +23,5 @@ Add Dialog Box
 Add Snack bar {start:2024-11-21T14:23:30}
 
 Add Modal in Bottom Sheet
+
+Add error boundary

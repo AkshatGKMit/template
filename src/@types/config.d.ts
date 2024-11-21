@@ -12,12 +12,13 @@ declare global {
     scaleSize: (size: number, factor?: number) => number;
   };
 
-  type BottomSheetRef = {
-    show: (params: any) => void;
-    hide: (params: any) => void;
-  };
+  interface BottomSheetRef {
+    show: (params: BottomSheetParams) => void;
+    hide: () => void;
+  }
 
-  type BottomSheetRefObj = {
-    current: BottomSheetRef | null;
-  };
+  interface SnackbarRef {
+    show: (params: SnackbarParams) => void;
+    hide: () => void;
+  }
 }
