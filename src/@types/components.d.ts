@@ -1,4 +1,4 @@
-import { Component, ReactNode, RefObject } from 'react';
+import React, { Component, ReactNode, RefObject } from 'react';
 import {
   EnterKeyHintTypeOptions,
   GestureResponderEvent,
@@ -15,7 +15,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { IconFamily } from '@constants';
+import { IconFamily, ShimmerDirection } from '@constants';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -148,5 +148,15 @@ declare global {
     showSeparator?: boolean;
     listStyle?: StyleProp<ViewStyle>;
     itemStyle?: StyleProp<ViewStyle>;
+  }
+
+  interface ShimmerProps {
+    baseColor: string;
+    highlightColor: string;
+    shimmerWidth?: number;
+    direction?: (typeof ShimmerDirection)[keyof typeof ShimmerDirection];
+    period?: number;
+    style?: StyleProp<ViewStyle>;
+    children?: ReactNode;
   }
 }

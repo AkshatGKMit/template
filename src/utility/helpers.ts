@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Animated } from 'react-native';
+import { Animated, Easing, EasingFunction } from 'react-native';
 
 export function colorWithOpacity(color: string, alpha: string | number): string {
   if (!/^#[0-9a-fA-F]{6}$/.test(color)) {
@@ -52,13 +52,22 @@ export namespace Animation {
     animatedValue: Animated.Value,
     toValue: number,
     duration?: number,
-    config?: Omit<Animated.TimingAnimationConfig, 'toValue' | 'duration' | 'useNativeDriver'>,
+    easing?: EasingFunction,
   ): Animated.CompositeAnimation {
     return Animated.timing(animatedValue, {
       toValue,
       duration: duration,
       useNativeDriver: true,
+      easing,
     });
+  }
+
+  export function continuous(animation: Animated.CompositeAnimation): Animated.CompositeAnimation {
+    return Animated.loop(animation);
+  }
+
+  export function delay(time: number): Animated.CompositeAnimation {
+    return Animated.delay(time);
   }
 
   export const getAnimatedValue = (value: Animated.value) => value.__getValue();

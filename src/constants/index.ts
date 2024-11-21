@@ -35,3 +35,8 @@ export const BottomSheetConstants = {
   maxSnapPointThreshold: 0.85,
   minSnapPointThreshold: 0.15,
 };
+
+export const ShimmerDirection = {
+  ltr: 'ltr',
+  rtl: 'rtl',
+};
