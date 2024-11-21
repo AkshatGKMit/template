@@ -19,6 +19,7 @@ import Shimmer from '@components/shimmer';
 import FlipCard from '@components/flipCard';
 import SnackBarRoot from '@components/snackBar/SnackBar';
 import Snackbar from '@components/snackBar';
+import TextButton from '@components/textButton';
 
 const App = () => {
   return (
@@ -45,7 +46,12 @@ const Main = () => {
       heading: 'Snackbar',
       text: 'This is a snackbar',
       indefinite: true,
-      action: <Button title="Go" />,
+      action: (
+        <TextButton
+          text="This is text button"
+          onPress={() => {}}
+        />
+      ),
     });
   }, []);
 

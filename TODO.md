@@ -20,7 +20,7 @@ Add Flip Card {cm:2024-11-21}
 
 Add Dialog Box
 
-Add Snack bar {start:2024-11-21T14:23:30}
+Add Snack bar {start:2024-11-21T14:23:30} {cm:2024-11-21} {duration:05h}
 
 Add Modal in Bottom Sheet
 
@@ -28,6 +28,8 @@ Add error boundary
 
 Add Tile
 
-Add Text Button
+Add Text Button {cm:2024-11-21}
 
 Set theme mode according to system Only
+
+Add custom header with dynamic button

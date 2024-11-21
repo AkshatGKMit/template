@@ -10,6 +10,7 @@ import {
   TextInputEndEditingEventData,
   TextInputProps,
   TextInputSubmitEditingEventData,
+  TextProps,
   TextStyle,
   TouchableHighlightProps,
   View,
@@ -184,5 +185,11 @@ declare global {
     direction?: (typeof FlipDirection)[keyof typeof FlipDirection];
     onFront?: () => void;
     onBack?: () => void;
+  }
+
+  interface TextButtonProps extends Omit<TextProps, 'children'> {
+    text: string;
+    color?: string;
+    onPress?: () => void;
   }
 }
