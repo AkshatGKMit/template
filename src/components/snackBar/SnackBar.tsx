@@ -30,12 +30,12 @@ const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
   const styles = ThemedStyles();
 
   function show(params: SnackbarParams) {
-    const { animationDuration = 200, delay = 3000, indefinite } = params;
+    const { duration = 3000, indefinite = false } = params;
 
-    setData({ ...params, animationDuration, delay });
+    setData({ ...params, duration });
     setVisible(true);
 
-    isIndefinite.current = !!indefinite;
+    isIndefinite.current = indefinite;
     data.onShow?.();
   }
 
@@ -60,13 +60,17 @@ const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
     ),
   );
 
-  const hidingAnimation = Animation.timing(positionAnim, 0, 200);
+  const hidingAnimation = Animation.timing(positionAnim, 0, 300);
 
   const animate = useCallback(() => {
-    const showingAnimation = Animation.timing(positionAnim, 1, 200);
-    const delayingAnimAnimation = Animation.delay(300);
+    const showingAnimation = Animation.timing(positionAnim, 1, 300);
+    const delayingAnimAnimation = Animation.delay(data.duration!);
 
-    Animated.sequence([showingAnimation, delayingAnimAnimation]).start(({ finished }) => {
+    const sequenceAnimations = [showingAnimation, delayingAnimAnimation];
+
+    if (!isIndefinite.current) sequenceAnimations.push(hidingAnimation);
+
+    Animated.sequence(sequenceAnimations).start(({ finished }) => {
       if (finished && !isIndefinite.current) hide();
     });
   }, [positionAnim, isIndefinite, hide]);
@@ -135,7 +139,7 @@ const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
       {...panResponder.panHandlers}
     >
       <View style={styles.content}>
-        {_renderTitle()}
+        {heading && _renderTitle()}
         {_renderText()}
       </View>
       {action}

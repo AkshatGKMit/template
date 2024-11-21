@@ -18,7 +18,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { CardSide, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
+import { CardSide, SlideDirection, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -101,8 +101,7 @@ declare global {
   interface SnackbarParams extends RefOptions {
     text: string;
     heading?: string;
-    delay?: number;
-    animationDuration?: number;
+    duration?: number;
     indefinite?: boolean;
     showClose?: boolean;
     action?: ReactNode;
