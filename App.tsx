@@ -16,6 +16,7 @@ import Icon from '@components/icon';
 import { IconFamily, ShimmerDirection } from '@constants';
 import PopUpMenu from '@components/popUpMenu';
 import Shimmer from '@components/shimmer';
+import FlipCard from '@components/flipCard';
 
 const App = () => {
   return (
@@ -47,14 +48,7 @@ const Main = () => {
   return (
     <SafeAreaView style={{ flex: 1, gap: 20 }}>
       <View style={{ margin: 30, flexDirection: 'row', gap: 20 }}>
-        <Shimmer
-          baseColor={Colors.grey}
-          highlightColor={Colors.greyShades.shade400}
-          direction={ShimmerDirection.ltr}
-          style={{ width: 100, height: 100, borderRadius: 12 }}
-        >
-          <View style={{ width: 100, height: 100, borderRadius: 12, backgroundColor: 'red' }} />
-        </Shimmer>
+        <FlipCard />
       </View>
     </SafeAreaView>
   );

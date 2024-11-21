@@ -10,6 +10,16 @@ Add Marquee
 
 Add Carousel
 
-Add Popup Menu Button
+Add Popup Menu Button {cm:2024-11-21}
 
-Add Shimmer
+Add Shimmer {cm:2024-11-21}
+
+Add Dismissible
+
+Add Flip Card
+
+Add Dialog Box
+
+Add Snack bar
+
+Add Modal in Bottom Sheet
