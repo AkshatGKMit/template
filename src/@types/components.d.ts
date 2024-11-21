@@ -97,11 +97,17 @@ declare global {
     borderRadius?: number;
   }
 
-  interface SnackbarParams extends RefManagerParams {
+  interface SnackbarParams extends RefOptions {
+    text: string;
+    heading?: string;
     delay?: number;
     animationDuration?: number;
-    dismissible?: boolean;
+    indefinite?: boolean;
     showClose?: boolean;
+    action?: ReactNode;
+    containerStyle?: StyleProp<ViewStyle>;
+    headingStyle?: StyleProp<TextStyle>;
+    textStyle?: StyleProp<TextStyle>;
   }
 
   interface ObjectLayout {

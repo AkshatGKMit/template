@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import Splash from '@screens/splash/Splash';
-import { Colors } from '@themes';
+import { Colors, FontSize } from '@themes';
 import Onboarding from '@screens/onboarding/Onboarding';
 import Dropdown from '@components/dropdown';
 import Icon from '@components/icon';
@@ -41,9 +41,12 @@ const Main = () => {
   const [val, setVal] = useState<DropDownItem | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setShowSplashScreen(false);
-    }, 30);
+    Snackbar.show({
+      heading: 'Snackbar',
+      text: 'This is a snackbar',
+      indefinite: true,
+      action: <Button title="Go" />,
+    });
   }, []);
 
   const globalStyles = GlobalThemedStyles();
@@ -61,9 +64,9 @@ const Main = () => {
       <Button
         title="Snackbar"
         onPress={() => {
-          console.log('Showing');
           Snackbar.show({
-            child: <Text>Snackbar</Text>,
+            heading: 'Snackbar2',
+            text: 'This is Second snackbar',
           });
         }}
       />

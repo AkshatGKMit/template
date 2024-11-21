@@ -1,100 +1,144 @@
-import { View, Text, LayoutChangeEvent, Animated } from 'react-native';
+import { View, Text, LayoutChangeEvent, Animated, PanResponder, Modal } from 'react-native';
 import React, {
   forwardRef,
   useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 
 import ThemeContext from '@config/ThemeContext';
 import { Animation } from '@utility/helpers';
-import IconButton from '@components/iconButton';
-import { IconFamily } from '@constants';
 
-const defaultData: SnackbarParams = {
-  child: null,
-};
+import ThemedStyles from './styles';
+
+const defaultData: SnackbarParams = { text: '' };
 
 const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
-  const { safeAreaInsets: insets, dimensions } = useContext(ThemeContext);
+  const { safeAreaInsets: insets, dimensions, theme } = useContext(ThemeContext);
 
   const [isVisible, setVisible] = useState(false);
   const [data, setData] = useState<SnackbarParams>(defaultData);
   const [height, setHeight] = useState<number>(0);
 
+  const isIndefinite = useRef(false);
   const positionAnim = useRef(new Animated.Value(0)).current;
 
-  function onShow(params: SnackbarParams) {
-    const { animationDuration = 200, delay = 3000, dismissible = true } = params;
-    setData({ ...params, animationDuration, delay, dismissible });
+  const styles = ThemedStyles();
+
+  function show(params: SnackbarParams) {
+    const { animationDuration = 200, delay = 3000, indefinite } = params;
+
+    setData({ ...params, animationDuration, delay });
     setVisible(true);
+
+    isIndefinite.current = !!indefinite;
+    data.onShow?.();
   }
 
-  function onHide() {
+  function hide() {
     setVisible(false);
     setHeight(0);
+
+    positionAnim.extractOffset();
+    positionAnim.flattenOffset();
     positionAnim.resetAnimation();
+    data.onHide?.();
   }
 
   useImperativeHandle(
     ref,
     useCallback(
       () => ({
-        show: (params: SnackbarParams) => onShow(params),
-        hide: () => onHide(),
+        show: (params: SnackbarParams) => show(params),
+        hide: () => hide(),
       }),
       [],
     ),
   );
 
-  function _measure(e: LayoutChangeEvent): void {
-    const { height } = e.nativeEvent.layout;
-    setHeight(height);
-  }
+  const hidingAnimation = Animation.timing(positionAnim, 0, 200);
 
-  const animate = () => {
-    const showAnim = Animation.timing(positionAnim, 1, 200);
-    const delayAnim = Animation.delay(3000);
-    const hideAnim = Animation.timing(positionAnim, 0, 200);
+  const animate = useCallback(() => {
+    const showingAnimation = Animation.timing(positionAnim, 1, 200);
+    const delayingAnimAnimation = Animation.delay(300);
 
-    Animated.sequence([showAnim, delayAnim, hideAnim]).start();
-  };
+    Animated.sequence([showingAnimation, delayingAnimAnimation]).start(({ finished }) => {
+      if (finished && !isIndefinite.current) hide();
+    });
+  }, [positionAnim, isIndefinite, hide]);
 
   useEffect(() => {
     if (isVisible) animate();
   }, [isVisible, height]);
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => isIndefinite.current,
+      onPanResponderMove: (_, gesture) => {
+        if (gesture.dy > 2) {
+          hidingAnimation.start(({ finished }) => {
+            if (finished) hide();
+          });
+        }
+      },
+    }),
+  ).current;
+
+  const { text, action, heading, containerStyle, headingStyle, textStyle } = data;
 
   const translateY = positionAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [dimensions.height, dimensions.height - height],
   });
 
+  const containerStyles = useMemo(
+    () => [styles.paddedBar, containerStyle, styles.bar, { transform: [{ translateY }] }],
+    [styles, containerStyle, translateY],
+  );
+
+  const _renderTitle = useCallback(
+    () => (
+      <Text
+        style={[styles.heading, headingStyle]}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {heading}
+      </Text>
+    ),
+    [heading, headingStyle],
+  );
+
+  const _renderText = useCallback(
+    () => (
+      <Text
+        style={[styles.text, textStyle]}
+        numberOfLines={2}
+        ellipsizeMode="tail"
+      >
+        {text}
+      </Text>
+    ),
+    [text, textStyle],
+  );
+
   if (!isVisible) return null;
 
   return (
     <Animated.View
-      onLayout={_measure}
-      style={{
-        position: 'absolute',
-        backgroundColor: 'grey',
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingBottom: insets.bottom,
-        transform: [{ translateY }],
-        paddingVertical: 8,
-        paddingHorizontal: 15,
-      }}
+      onLayout={(e) => setHeight(e.nativeEvent.layout.height)}
+      style={containerStyles}
+      {...panResponder.panHandlers}
     >
-      <Text>{data.child}</Text>
-      <IconButton
-        family={IconFamily.antDesign}
-        name="closecircle"
-        style={{ marginLeft: 'auto' }}
-      />
+      <View style={styles.content}>
+        {_renderTitle()}
+        {_renderText()}
+      </View>
+      {action}
     </Animated.View>
   );
 });

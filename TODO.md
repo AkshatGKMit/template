@@ -25,3 +25,9 @@ Add Snack bar {start:2024-11-21T14:23:30}
 Add Modal in Bottom Sheet
 
 Add error boundary
+
+Add Tile
+
+Add Text Button
+
+Set theme mode according to system Only
