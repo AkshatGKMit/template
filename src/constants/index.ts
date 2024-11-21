@@ -40,3 +40,13 @@ export const ShimmerDirection = {
   ltr: 'ltr',
   rtl: 'rtl',
 };
+
+export const FlipDirection = {
+  horizontal: 'horizontal',
+  vertical: 'vertical',
+};
+
+export const CardSide = {
+  front: 'front',
+  back: 'back',
+};

@@ -13,7 +13,7 @@ import { Colors } from '@themes';
 import Onboarding from '@screens/onboarding/Onboarding';
 import Dropdown from '@components/dropdown';
 import Icon from '@components/icon';
-import { IconFamily, ShimmerDirection } from '@constants';
+import { CardSide, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
 import PopUpMenu from '@components/popUpMenu';
 import Shimmer from '@components/shimmer';
 import FlipCard from '@components/flipCard';
@@ -48,7 +48,12 @@ const Main = () => {
   return (
     <SafeAreaView style={{ flex: 1, gap: 20 }}>
       <View style={{ margin: 30, flexDirection: 'row', gap: 20 }}>
-        <FlipCard />
+        <FlipCard
+          duration={100}
+          front={<Text style={{ fontWeight: '900', fontSize: 50 }}>Front Card</Text>}
+          back={<Text style={{ fontWeight: '900', fontSize: 50 }}>Back Card</Text>}
+          // direction={FlipDirection.vertical}
+        />
       </View>
     </SafeAreaView>
   );

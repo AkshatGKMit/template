@@ -12,10 +12,12 @@ import {
   TextInputSubmitEditingEventData,
   TextStyle,
   TouchableHighlightProps,
+  View,
+  ViewProps,
   ViewStyle,
 } from 'react-native';
 
-import { IconFamily, ShimmerDirection } from '@constants';
+import { CardSide, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -158,5 +160,15 @@ declare global {
     period?: number;
     style?: StyleProp<ViewStyle>;
     children?: ReactNode;
+  }
+
+  interface FlipCardProps extends ViewProps {
+    front: ReactNode;
+    back?: ReactNode;
+    duration?: number;
+    side?: (typeof CardSide)[keyof typeof CardSide];
+    direction?: (typeof FlipDirection)[keyof typeof FlipDirection];
+    onFront?: () => void;
+    onBack?: () => void;
   }
 }
