@@ -10,7 +10,7 @@ import { GlobalThemedStyles } from '@themes/globalStyles';
 import Snackbar from '@components/snackBar';
 import TextButton from '@components/textButton';
 import Swipeable from '@components/swipeable';
-import { SlideDirection } from '@constants';
+import { SwipeDirection } from '@constants';
 
 const App = () => {
   return (
@@ -62,8 +62,8 @@ const SwipeableList = () => {
       <Swipeable
         leftChild={<View style={styles.leftChild} />}
         rightChild={<View style={styles.rightChild} />}
-        dismissDirection={SlideDirection.right}
-        onDismiss={() => handleDismiss(item.id)}
+        dismissDirection={SwipeDirection.right}
+        // onDismiss={() => handleDismiss(item.id)}
       >
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>{item.text}</Text>
@@ -78,6 +78,7 @@ const SwipeableList = () => {
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+      scrollEnabled={false}
     />
   );
 };

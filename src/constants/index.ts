@@ -60,7 +60,7 @@ export const CardSide = {
   back: 'back',
 } as const;
 
-export const SlideDirection = {
+export const SwipeDirection = {
   right: 'right',
   left: 'left',
 } as const;

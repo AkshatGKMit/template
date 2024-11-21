@@ -18,7 +18,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { CardSide, SlideDirection, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
+import { CardSide, SwipeDirection, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -192,15 +192,15 @@ declare global {
     onPress?: () => void;
   }
 
-  type SlideDirection = (typeof SlideDirection)[keyof typeof SlideDirection];
+  type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
 
-  interface SlidableProps {
+  interface SwipeableProps {
     children: any;
     leftChild?: ReactNode;
     rightChild?: ReactNode;
-    dismissDirection?: SlideDirection;
+    dismissDirection?: SwipeDirection;
     onDismiss?: () => void;
-    onSlideLeft?: () => void;
-    onSlideRight?: () => void;
+    onSwipe?: (direction: SwipeDirection) => void;
+    onSwipeFinished?: (direction: SwipeDirection) => void;
   }
 }
