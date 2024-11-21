@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeContextProvider } from '@config/ThemeContext';
@@ -26,6 +26,83 @@ const App = () => {
     </SafeAreaProvider>
   );
 };
+
+const SwipeableList = () => {
+  const [dismissedItems, setDismissedItems] = useState<any[]>([]);
+
+  const data = Array.from({ length: 10 }, (_, index) => ({
+    id: index.toString(),
+    text: `Item ${index + 1}`,
+  }));
+
+  const handleDismiss = (id: any) => {
+    setDismissedItems((prev) => [...prev, id]);
+    Snackbar.show({
+      text: 'Dismissed',
+      action: (
+        <Button
+          title="Un Dismiss"
+          onPress={() => {
+            undoDismiss(id);
+          }}
+        />
+      ),
+    });
+  };
+
+  const undoDismiss = (id: any) => {
+    setDismissedItems((prev) => prev.filter((itemId) => itemId !== id));
+    Snackbar.show({ text: 'Undismissed' });
+  };
+
+  const renderItem = ({ item }: any) => {
+    if (dismissedItems.includes(item.id)) return null;
+
+    return (
+      <Swipeable
+        leftChild={<View style={styles.leftChild} />}
+        rightChild={<View style={styles.rightChild} />}
+        dismissDirection={SlideDirection.right}
+        onDismiss={() => handleDismiss(item.id)}
+      >
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemText}>{item.text}</Text>
+        </View>
+      </Swipeable>
+    );
+  };
+
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  leftChild: {
+    flex: 1,
+    backgroundColor: 'cyan',
+  },
+  rightChild: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+  itemContainer: {
+    width: '100%',
+    height: 70,
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemText: {
+    color: 'white',
+    fontSize: 18,
+  },
+});
 
 export function generateRandomString(length: number): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -68,38 +145,7 @@ const Main = () => {
           });
         }}
       />
-      <Button
-        title="Un Dismiss"
-        onPress={() => {
-          setIsDismissed1(false);
-          Snackbar.show({ text: 'Un dismissed' });
-        }}
-      />
-
-      {!isDismissed2 && (
-        <Swipeable
-          leftChild={<View style={{ flex: 1, backgroundColor: 'cyan' }} />}
-          rightChild={<View style={{ flex: 1, backgroundColor: 'red' }} />}
-          dismissDirection={SlideDirection.right}
-          onDismiss={() => {
-            setIsDismissed2(true);
-            Snackbar.show({
-              text: 'Dismissed',
-              action: (
-                <Button
-                  title="Un Dismiss"
-                  onPress={() => {
-                    setIsDismissed2(false);
-                    Snackbar.show({ text: 'Un dismissed' });
-                  }}
-                />
-              ),
-            });
-          }}
-        >
-          <View style={{ width: '100%', height: 70, backgroundColor: 'grey' }} />
-        </Swipeable>
-      )}
+      <SwipeableList />
     </SafeAreaView>
   );
 };
