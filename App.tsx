@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import Snackbar from '@components/snackBar';
 import TextButton from '@components/textButton';
+import Dismissible from '@components/dismissible';
 
 const App = () => {
   return (
@@ -29,20 +30,6 @@ const Main = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
   const [val, setVal] = useState<DropDownItem | null>(null);
-
-  useEffect(() => {
-    Snackbar.show({
-      heading: 'Snackbar',
-      text: 'This is a snackbar',
-      indefinite: true,
-      action: (
-        <TextButton
-          text="This is text button"
-          onPress={() => {}}
-        />
-      ),
-    });
-  }, []);
 
   const globalStyles = GlobalThemedStyles();
 
@@ -65,6 +52,7 @@ const Main = () => {
           });
         }}
       />
+      <Dismissible />
     </SafeAreaView>
   );
 };
