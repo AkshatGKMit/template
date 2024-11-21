@@ -1,16 +1,20 @@
-import useScalingMetrics from '@config/useScalingMetrics';
-import { ShimmerDirection } from '@constants';
-import { Colors } from '@themes';
-import { Animation } from '@utility/helpers';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, LayoutChangeEvent, Animated, Easing } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import { ShimmerDirection } from '@constants';
+import { Colors } from '@themes';
+import { GlobalThemedStyles } from '@themes/globalStyles';
+import { Animation } from '@utility/helpers';
+
+import styles from './styles';
+
 const Shimmer = (props: ShimmerProps) => {
-  const { wp } = useScalingMetrics();
   const [layout, setLayout] = useState<{ h: number; w: number }>({ h: 0, w: 0 });
 
   const shimmerPositionAnim = useRef(new Animated.Value(-1)).current;
+
+  const globalStyles = GlobalThemedStyles();
 
   const {
     baseColor,
@@ -42,13 +46,17 @@ const Shimmer = (props: ShimmerProps) => {
     return { start: end, end: start };
   }, [direction]);
 
-  const translateX = useMemo(
-    () =>
-      shimmerPositionAnim.interpolate({ inputRange: [-1, 1], outputRange: [-layout.w, layout.w] }),
-    [shimmerPositionAnim, layout],
-  );
+  const translateX = useMemo(() => {
+    const outputRange =
+      direction === ShimmerDirection.ltr ? [-layout.w, layout.w] : [layout.w, -layout.w];
 
-  const backgroundColor = useMemo(
+    return shimmerPositionAnim.interpolate({
+      inputRange: [-1, 1],
+      outputRange,
+    });
+  }, [shimmerPositionAnim, layout, direction]);
+
+  const shimmerBackgroundColor = useMemo(
     () =>
       style && typeof style === 'object' && 'backgroundColor' in style
         ? baseColor
@@ -56,23 +64,17 @@ const Shimmer = (props: ShimmerProps) => {
     [style, baseColor],
   );
 
-  return (
-    <View
-      style={[
-        style,
-        {
-          position: 'relative',
-          overflow: 'hidden',
-          backgroundColor,
-        },
-      ]}
-      onLayout={_measure}
-    >
-      {children}
+  const containerStyles = useMemo(
+    () => [style, styles.container, { backgroundColor: shimmerBackgroundColor }],
+    [style, shimmerBackgroundColor],
+  );
+
+  const _highlighter = useCallback(
+    () => (
       <Animated.View
         style={[
+          styles.highlighter,
           {
-            position: 'absolute',
             height: layout.h,
             width: shimmerWidth,
             transform: [{ translateX }],
@@ -84,11 +86,20 @@ const Shimmer = (props: ShimmerProps) => {
           start={shimmerDirection.start}
           end={shimmerDirection.end}
           locations={[0.3, 0.5, 0.7]}
-          style={{
-            flex: 1,
-          }}
+          style={globalStyles.flex1}
         />
       </Animated.View>
+    ),
+    [layout, props, translateX],
+  );
+
+  return (
+    <View
+      style={containerStyles}
+      onLayout={_measure}
+    >
+      {children}
+      {_highlighter()}
     </View>
   );
 };
