@@ -61,6 +61,7 @@ export const CardSide = {
 } as const;
 
 export const SwipeDirection = {
+  null: null,
   right: 'right',
   left: 'left',
 } as const;

@@ -30,7 +30,7 @@ const App = () => {
 const SwipeableList = () => {
   const [dismissedItems, setDismissedItems] = useState<any[]>([]);
 
-  const data = Array.from({ length: 10 }, (_, index) => ({
+  const data = Array.from({ length: 3 }, (_, index) => ({
     id: index.toString(),
     text: `Item ${index + 1}`,
   }));
@@ -39,6 +39,7 @@ const SwipeableList = () => {
     setDismissedItems((prev) => [...prev, id]);
     Snackbar.show({
       text: 'Dismissed',
+      indefinite: true,
       action: (
         <Button
           title="Un Dismiss"
@@ -63,7 +64,7 @@ const SwipeableList = () => {
         leftChild={<View style={styles.leftChild} />}
         rightChild={<View style={styles.rightChild} />}
         dismissDirection={SwipeDirection.right}
-        // onDismiss={() => handleDismiss(item.id)}
+        onDismiss={() => handleDismiss(item.id)}
       >
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>{item.text}</Text>
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     width: '100%',
-    height: 70,
+    height: 100,
     backgroundColor: 'grey',
     justifyContent: 'center',
     alignItems: 'center',
