@@ -5,6 +5,7 @@ import {
   InputModeOptions,
   KeyboardTypeOptions,
   NativeSyntheticEvent,
+  PanResponderGestureState,
   StyleProp,
   TextInput,
   TextInputEndEditingEventData,
@@ -200,8 +201,8 @@ declare global {
     rightChild?: ReactNode;
     dismissDirection?: SwipeDirection;
     onDismiss?: () => void;
-    onSwipeStart?: (direction: SwipeDirection) => void;
-    onSwipe?: (direction: SwipeDirection) => void;
-    onSwipeFinished?: (direction: SwipeDirection) => void;
+    onSwipeStart?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
+    onSwipe?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
+    onSwipeFinished?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
   }
 }

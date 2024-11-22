@@ -15,8 +15,7 @@ import { Animation } from '@utility/helpers';
 
 import styles from './styles';
 
-const { slideOutAnimationDuration, containerDismissAnimationDuration, reSnappingDuration } =
-  ComponentsConstants.swipeable;
+const { thresholdAnimationDuration } = ComponentsConstants.swipeable;
 
 const Swipeable = ({
   children,
@@ -54,14 +53,14 @@ const Swipeable = ({
   const slideOutAnimation = Animation.timing(
     animatedChildrenPositionX,
     1,
-    slideOutAnimationDuration,
+    thresholdAnimationDuration,
     Easing.out(Easing.ease),
   );
 
   const containerDismissingAnimation = Animation.timing(
     animatedContainerHeight,
     0,
-    containerDismissAnimationDuration,
+    thresholdAnimationDuration,
     Easing.out(Easing.ease),
     false,
   );
@@ -77,13 +76,14 @@ const Swipeable = ({
 
       const direction = dx < 0 ? SwipeDirection.left : SwipeDirection.right;
 
+      setSwipeDirection(direction);
+
       if (direction !== lastSwipedDirection.current) {
         lastSwipedDirection.current = direction;
-        setSwipeDirection(direction);
-        onSwipeStart?.(direction);
+        onSwipeStart?.(direction, gesture);
       }
 
-      onSwipe?.(direction);
+      onSwipe?.(direction, gesture);
 
       const newGesture: PanResponderGestureState = {
         ...gesture,
@@ -98,15 +98,14 @@ const Swipeable = ({
   const handlePanResponderRelease = useCallback(
     (_: GestureResponderEvent, gesture: PanResponderGestureState) => {
       const { dx } = gesture;
+      const displacement: number = Math.abs(dx);
 
-      const displacement: number = lastSwipedDirection.current === SwipeDirection.left ? -dx : dx;
+      const minimumDisplacementForAction = layoutDimensionsRef.current.width / 3;
 
-      const minimumDisplacementToDismiss = layoutDimensionsRef.current.width / 3;
+      const shouldPerformAction = displacement >= minimumDisplacementForAction;
 
       const shouldDismiss =
-        onDismiss &&
-        displacement >= minimumDisplacementToDismiss &&
-        lastSwipedDirection.current === dismissDirection;
+        onDismiss && shouldPerformAction && lastSwipedDirection.current === dismissDirection;
 
       if (shouldDismiss) {
         dismissAnimationSequence.start(({ finished }) => {
@@ -115,10 +114,14 @@ const Swipeable = ({
         return;
       }
 
-      onSwipeFinished?.(lastSwipedDirection.current);
-      Animation.timing(animatedChildrenPositionX, 0, reSnappingDuration, Easing.bounce).start(() =>
-        setSwipeDirection(null),
-      );
+      if (shouldPerformAction) onSwipeFinished?.(lastSwipedDirection.current, gesture);
+
+      Animation.timing(
+        animatedChildrenPositionX,
+        0,
+        thresholdAnimationDuration / 5,
+        Easing.bounce,
+      ).start(() => setSwipeDirection(null));
     },
     [
       layoutDimensionsRef.current,

@@ -68,8 +68,6 @@ export const SwipeDirection = {
 
 export const ComponentsConstants = {
   swipeable: {
-    slideOutAnimationDuration: 500,
-    containerDismissAnimationDuration: 500,
-    reSnappingDuration: 100,
+    thresholdAnimationDuration: 500,
   },
 };

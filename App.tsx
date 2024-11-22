@@ -65,7 +65,6 @@ const SwipeableList = () => {
         rightChild={<View style={styles.rightChild} />}
         dismissDirection={SwipeDirection.right}
         onDismiss={() => handleDismiss(item.id)}
-        onSwipeStart={(dir) => console.log('Swipe Start: ', dir)}
       >
         <View style={styles.itemContainer}>
           <Text style={styles.itemText}>{item.text}</Text>
