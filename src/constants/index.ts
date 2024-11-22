@@ -66,6 +66,22 @@ export const SwipeDirection = {
   left: 'left',
 } as const;
 
+export const FabAppearance = {
+  extend: 'extend',
+  shrink: 'shrink',
+} as const;
+
+export const FabSize = {
+  large: 'large',
+  normal: 'normal',
+  mini: 'mini',
+} as const;
+
+export const FabBorderRadius = {
+  auto: 'auto',
+  full: 'full',
+} as const;
+
 export const ComponentsConstants = {
   swipeable: {
     thresholdAnimationDuration: 500,

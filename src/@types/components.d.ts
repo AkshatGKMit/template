@@ -19,7 +19,16 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { CardSide, SwipeDirection, FlipDirection, IconFamily, ShimmerDirection } from '@constants';
+import {
+  CardSide,
+  SwipeDirection,
+  FlipDirection,
+  IconFamily,
+  ShimmerDirection,
+  FabAppearance,
+  FabSize,
+  FabBorderRadius,
+} from '@constants';
 
 declare global {
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
@@ -204,5 +213,24 @@ declare global {
     onSwipeStart?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
     onSwipe?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
     onSwipeFinished?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
+  }
+
+  type FabBorderRadius = (typeof FabBorderRadius)[keyof typeof FabBorderRadius];
+  type FabSize = (typeof FabSize)[keyof typeof FabSize];
+  type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
+
+  interface FloatingActionButtonAutoHideProps {
+    icon: Omit<IconProps, 'style'>;
+    iconColor?: string;
+    shadowColor?: string;
+    appearance?: FabAppearance;
+    size?: FabSize;
+    borderRadius?: FabBorderRadius;
+    backgroundColor?: string;
+    margin?: number;
+    onPress?: () => void;
+    hide?: boolean;
+    hideDuration?: number;
+    zIndex?: number;
   }
 }
