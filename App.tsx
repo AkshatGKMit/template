@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Button, Dimensions, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeContextProvider } from '@config/ThemeContext';
 import BottomSheet from '@components/bottomSheet';
 import Toast from 'react-native-toast-message';
@@ -14,6 +14,7 @@ import { SwipeDirection } from '@constants';
 import FlipCard from '@components/flipCard';
 import Shimmer from '@components/shimmer';
 import { Colors } from '@themes';
+import GradientScreen from '@components/gradientScreen';
 
 const App = () => {
   return (
@@ -30,95 +31,6 @@ const App = () => {
   );
 };
 
-const SwipeableList = () => {
-  const [dismissedItems, setDismissedItems] = useState<any[]>([]);
-
-  const data = Array.from({ length: 3 }, (_, index) => ({
-    id: index.toString(),
-    text: `Item ${index + 1}`,
-  }));
-
-  const handleDismiss = (id: any) => {
-    setDismissedItems((prev) => [...prev, id]);
-    Snackbar.show({
-      text: 'Dismissed',
-      indefinite: true,
-      action: (
-        <Button
-          title="Un Dismiss"
-          onPress={() => {
-            undoDismiss(id);
-          }}
-        />
-      ),
-    });
-  };
-
-  const undoDismiss = (id: any) => {
-    setDismissedItems((prev) => prev.filter((itemId) => itemId !== id));
-    Snackbar.show({ text: 'Undismissed' });
-  };
-
-  const renderItem = ({ item }: any) => {
-    if (dismissedItems.includes(item.id)) return null;
-
-    return (
-      <Swipeable
-        leftChild={
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'cyan',
-            }}
-          />
-        }
-        rightChild={
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'red',
-            }}
-          />
-        }
-        dismissDirection={SwipeDirection.right}
-        onDismiss={() => handleDismiss(item.id)}
-      >
-        <View
-          style={{
-            width: '100%',
-            height: 100,
-            backgroundColor: 'grey',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Swipeable>
-    );
-  };
-
-  return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-      scrollEnabled={false}
-    />
-  );
-};
-
-export function generateRandomString(length: number): string {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters[randomIndex];
-  }
-
-  return result;
-}
-
 const Main = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
@@ -129,7 +41,10 @@ const Main = () => {
   const [data, setData] = useState(['a', 'b', 'c', 'd', 'e']);
 
   return (
-    <SafeAreaView style={{ flex: 1, gap: 20, alignItems: 'center' }}>
+    <GradientScreen
+      style={{ flex: 1, gap: 20, alignItems: 'center' }}
+      showStatusBar
+    >
       <Button
         title="Bottom Sheet"
         onPress={() => {
@@ -219,7 +134,7 @@ const Main = () => {
           />
         }
       />
-    </SafeAreaView>
+    </GradientScreen>
   );
 };
 

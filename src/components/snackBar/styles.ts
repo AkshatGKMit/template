@@ -3,6 +3,7 @@ import { FontSize, FontWeight } from '@themes';
 
 const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
   const { inverted } = theme.colors;
+  const { bottom } = insets;
 
   return createStyles({
     bar: {
@@ -12,7 +13,7 @@ const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: inverted.secondaryBackground,
-      paddingBottom: insets.bottom,
+      paddingBottom: bottom ? bottom : 10,
       gap: 8,
     },
     paddedBar: {
