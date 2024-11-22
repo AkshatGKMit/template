@@ -83,4 +83,11 @@ export namespace Animation {
   }
 
   export const getAnimatedValue = (value: Animated.Value) => value.__getValue();
+
+  export function event(
+    mapping: Array<Animated.Mapping | null> = [],
+    useNativeDriver: boolean = false,
+  ) {
+    return Animated.event([null, ...mapping], { useNativeDriver });
+  }
 }

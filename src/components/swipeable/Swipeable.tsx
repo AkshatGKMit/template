@@ -83,10 +83,7 @@ const Swipeable = ({
         dx: dx / layoutDimensionsRef.current.width,
       };
 
-      Animated.event([null, { dx: animatedChildrenPositionX }], { useNativeDriver: false })(
-        _,
-        newGesture,
-      );
+      Animation.event([{ dx: animatedChildrenPositionX }])(_, newGesture);
     },
     [onSwipe, layoutDimensionsRef.current, animatedChildrenPositionX],
   );
