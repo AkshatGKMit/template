@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -26,12 +26,12 @@ const Swipeable = ({
 }: SwipeableProps) => {
   const [swipeDirection, setSwipeDirection] = useState<SwipeDirection>(SwipeDirection.null);
 
-  const layoutRef = useRef<ObjectLayout>(defaultLayout);
+  const layoutDimensionsRef = useRef<ObjectLayout>(defaultLayout);
 
-  const containerAnimation = useRef(new Animated.Value(1)).current;
-  const viewAnimation = useRef(new Animated.Value(0)).current;
+  const animatedContainerHeight = useRef(new Animated.Value(1)).current;
+  const animatedChildrenPositionX = useRef(new Animated.Value(0)).current;
 
-  const _measure = useCallback((e: LayoutChangeEvent) => {
+  const _onLayoutChange = useCallback((e: LayoutChangeEvent) => {
     const { height: h, width: w, x, y } = e.nativeEvent.layout;
 
     const newLayout = {
@@ -43,22 +43,27 @@ const Swipeable = ({
       right: Math.floor(x + w),
     };
 
-    layoutRef.current = newLayout;
+    layoutDimensionsRef.current = newLayout;
   }, []);
 
-  const viewOutAnimation = Animation.timing(viewAnimation, 1, 1000, Easing.out(Easing.ease));
+  const slideOutAnimation = Animation.timing(
+    animatedChildrenPositionX,
+    1,
+    1000,
+    Easing.out(Easing.ease),
+  );
 
   const containerHidingAnimation = Animation.timing(
-    containerAnimation,
+    animatedContainerHeight,
     0,
     1000,
     Easing.out(Easing.ease),
     false,
   );
 
-  const animationSequence = Animated.sequence([viewOutAnimation, containerHidingAnimation]);
+  const dismissAnimationSequence = Animated.sequence([slideOutAnimation, containerHidingAnimation]);
 
-  const onPanResponderMove = useCallback(
+  const handlePanResponderMove = useCallback(
     (_: GestureResponderEvent, gesture: PanResponderGestureState) => {
       const { dx } = gesture;
 
@@ -69,104 +74,115 @@ const Swipeable = ({
 
       const newGesture: PanResponderGestureState = {
         ...gesture,
-        dx: dx / layoutRef.current.width,
+        dx: dx / layoutDimensionsRef.current.width,
       };
 
-      Animated.event([null, { dx: viewAnimation }], { useNativeDriver: false })(_, newGesture);
+      Animated.event([null, { dx: animatedChildrenPositionX }], { useNativeDriver: false })(
+        _,
+        newGesture,
+      );
     },
-    [onSwipe, layoutRef.current, viewAnimation],
+    [onSwipe, layoutDimensionsRef.current, animatedChildrenPositionX],
   );
 
-  const onPanResponderRelease = useCallback(
+  const handlePanResponderRelease = useCallback(
     (_: GestureResponderEvent, gesture: PanResponderGestureState) => {
       const { dx } = gesture;
 
       const direction: SwipeDirection = dx < 0 ? SwipeDirection.left : SwipeDirection.right;
       const displacement: number = direction === SwipeDirection.left ? -dx : dx;
 
-      const minimumDisplacementToDismiss = layoutRef.current.width / 4;
+      const minimumDisplacementToDismiss = layoutDimensionsRef.current.width / 4;
 
       const shouldDismiss =
         onDismiss && displacement >= minimumDisplacementToDismiss && direction === dismissDirection;
 
       if (shouldDismiss) {
-        animationSequence.start(({ finished }) => {
+        dismissAnimationSequence.start(({ finished }) => {
           if (finished) onDismiss?.();
         });
         return;
       }
 
       onSwipeFinished?.(direction);
-      Animation.timing(viewAnimation, 0, 100, Easing.bounce).start(() => setSwipeDirection(null));
+      Animation.timing(animatedChildrenPositionX, 0, 100, Easing.bounce).start(() =>
+        setSwipeDirection(null),
+      );
     },
-    [layoutRef.current, onDismiss, animationSequence, viewAnimation],
+    [layoutDimensionsRef.current, onDismiss, dismissAnimationSequence, animatedChildrenPositionX],
   );
 
-  const panResponder = useRef(
+  const swipePanResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove,
-      onPanResponderRelease,
+      onPanResponderMove: handlePanResponderMove,
+      onPanResponderRelease: handlePanResponderRelease,
     }),
   ).current;
 
-  const containerHeight = containerAnimation.interpolate({
+  const interpolatedContainerHeight = animatedContainerHeight.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, layoutRef.current.height],
+    outputRange: [0, layoutDimensionsRef.current.height],
   });
 
-  const translateX = viewAnimation.interpolate({
+  const interpolatedTranslateX = animatedChildrenPositionX.interpolate({
     inputRange: [-1, 1],
-    outputRange: [-layoutRef.current.width, layoutRef.current.width],
+    outputRange: [-layoutDimensionsRef.current.width, layoutDimensionsRef.current.width],
   });
 
-  const containerStyles = [
-    { height: layoutRef.current.height ? containerHeight : null },
-    styles.container,
-  ];
+  const animatedContainerStyles = useMemo(
+    () => [
+      { height: layoutDimensionsRef.current.height ? interpolatedContainerHeight : null },
+      styles.container,
+    ],
+    [layoutDimensionsRef.current, interpolatedContainerHeight, styles],
+  );
 
-  const backgroundViewStyles = useMemo(
+  const actionStyles = useMemo(
     () => [
       styles.backgroundView,
       {
-        height: layoutRef.current.height,
-        width: layoutRef.current.width,
+        height: layoutDimensionsRef.current.height,
+        width: layoutDimensionsRef.current.width,
       },
     ],
-    [styles, layoutRef.current],
+    [styles, layoutDimensionsRef.current],
   );
 
-  const mainViewStyles = useMemo(() => ({ transform: [{ translateX }] }), [translateX]);
+  const animatedMainStyles = useMemo(
+    () => ({ transform: [{ translateX: interpolatedTranslateX }] }),
+    [interpolatedTranslateX],
+  );
 
-  const _renderMain = useCallback(
+  const _renderMainComponent = useCallback(
     () => (
       <Animated.View
-        onLayout={_measure}
-        style={mainViewStyles}
-        {...panResponder.panHandlers}
+        onLayout={_onLayoutChange}
+        style={animatedMainStyles}
+        {...swipePanResponder.panHandlers}
       >
         {children}
       </Animated.View>
     ),
-    [mainViewStyles, panResponder, children],
+    [animatedMainStyles, swipePanResponder, children],
   );
 
-  const _renderBackgroundView = useCallback(
+  const _renderActionComponent = useCallback(
     () => (
-      <View style={backgroundViewStyles}>
+      <View style={actionStyles}>
         {swipeDirection === SwipeDirection.left ? rightChild : leftChild}
       </View>
     ),
-    [swipeDirection, leftChild, rightChild, backgroundViewStyles],
+    [swipeDirection, leftChild, rightChild, actionStyles],
   );
 
   return (
-    <Animated.View style={containerStyles}>
-      {swipeDirection && _renderBackgroundView()}
-      {_renderMain()}
+    <Animated.View style={animatedContainerStyles}>
+      {swipeDirection && _renderActionComponent()}
+      {_renderMainComponent()}
     </Animated.View>
   );
 };
 
-export default Swipeable;
+export default memo(Swipeable);
