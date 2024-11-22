@@ -16,11 +16,13 @@ const FlipCard = (props: FlipCardProps) => {
     direction = FlipDirection.horizontal,
   } = props;
 
+  const [isFirstFlip, setFirstFlip] = useState(false);
   const [isFront, setFront] = useState(true);
 
   const flipAnim = useRef(new Animated.Value(-1)).current;
 
   const startAnimation = useCallback(() => {
+    setFirstFlip(true);
     if (back) {
       Animation.timing(flipAnim, 0, duration).start(() => {
         setFront((prev) => !prev);

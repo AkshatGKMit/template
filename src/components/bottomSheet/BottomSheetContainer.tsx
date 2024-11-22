@@ -17,6 +17,7 @@ import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
 import { GlobalThemedStyles } from '@themes/globalStyles';
+import { Orientation } from '@themes';
 
 const defaultData: BottomSheetParams = {
   child: null,
@@ -261,6 +262,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
       statusBarTranslucent
       onRequestClose={() => closeBottomSheetAnimation()}
       visible={isVisible}
+      supportedOrientations={[Orientation.landscape, Orientation.portrait]}
     >
       {_renderOverlay()}
       {_renderSheet()}
