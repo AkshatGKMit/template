@@ -24,11 +24,13 @@ const Swipeable = ({
   rightChild,
   dismissDirection,
   onDismiss,
+  onSwipeStart,
   onSwipe,
   onSwipeFinished,
 }: SwipeableProps) => {
   const [swipeDirection, setSwipeDirection] = useState<SwipeDirection>(SwipeDirection.null);
 
+  const lastSwipedDirection = useRef<SwipeDirection>(null);
   const layoutDimensionsRef = useRef<ObjectLayout>(defaultLayout);
 
   const animatedContainerHeight = Animation.newValue(1);
@@ -75,7 +77,12 @@ const Swipeable = ({
 
       const direction = dx < 0 ? SwipeDirection.left : SwipeDirection.right;
 
-      setSwipeDirection(direction);
+      if (direction !== lastSwipedDirection.current) {
+        lastSwipedDirection.current = direction;
+        setSwipeDirection(direction);
+        onSwipeStart?.(direction);
+      }
+
       onSwipe?.(direction);
 
       const newGesture: PanResponderGestureState = {
@@ -85,20 +92,21 @@ const Swipeable = ({
 
       Animation.event([{ dx: animatedChildrenPositionX }])(_, newGesture);
     },
-    [onSwipe, layoutDimensionsRef.current, animatedChildrenPositionX],
+    [onSwipe, layoutDimensionsRef.current, animatedChildrenPositionX, lastSwipedDirection.current],
   );
 
   const handlePanResponderRelease = useCallback(
     (_: GestureResponderEvent, gesture: PanResponderGestureState) => {
       const { dx } = gesture;
 
-      const direction: SwipeDirection = dx < 0 ? SwipeDirection.left : SwipeDirection.right;
-      const displacement: number = direction === SwipeDirection.left ? -dx : dx;
+      const displacement: number = lastSwipedDirection.current === SwipeDirection.left ? -dx : dx;
 
       const minimumDisplacementToDismiss = layoutDimensionsRef.current.width / 3;
 
       const shouldDismiss =
-        onDismiss && displacement >= minimumDisplacementToDismiss && direction === dismissDirection;
+        onDismiss &&
+        displacement >= minimumDisplacementToDismiss &&
+        lastSwipedDirection.current === dismissDirection;
 
       if (shouldDismiss) {
         dismissAnimationSequence.start(({ finished }) => {
@@ -107,12 +115,18 @@ const Swipeable = ({
         return;
       }
 
-      onSwipeFinished?.(direction);
+      onSwipeFinished?.(lastSwipedDirection.current);
       Animation.timing(animatedChildrenPositionX, 0, reSnappingDuration, Easing.bounce).start(() =>
         setSwipeDirection(null),
       );
     },
-    [layoutDimensionsRef.current, onDismiss, dismissAnimationSequence, animatedChildrenPositionX],
+    [
+      layoutDimensionsRef.current,
+      onDismiss,
+      dismissAnimationSequence,
+      animatedChildrenPositionX,
+      lastSwipedDirection.current,
+    ],
   );
 
   const swipePanResponder = useRef(

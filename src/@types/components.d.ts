@@ -195,11 +195,12 @@ declare global {
   type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
 
   interface SwipeableProps {
-    children: any;
+    children: ReactNode;
     leftChild?: ReactNode;
     rightChild?: ReactNode;
     dismissDirection?: SwipeDirection;
     onDismiss?: () => void;
+    onSwipeStart?: (direction: SwipeDirection) => void;
     onSwipe?: (direction: SwipeDirection) => void;
     onSwipeFinished?: (direction: SwipeDirection) => void;
   }
