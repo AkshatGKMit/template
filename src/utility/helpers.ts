@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRef } from 'react';
 import { Animated, Easing, EasingFunction } from 'react-native';
 
 export function colorWithOpacity(color: string, alpha: string | number): string {
@@ -48,6 +49,10 @@ export namespace StorageManager {
 }
 
 export namespace Animation {
+  export function newValue(value: number) {
+    return useRef(new Animated.Value(value)).current;
+  }
+
   export function timing(
     animatedValue: Animated.Value,
     toValue: number,
@@ -63,6 +68,12 @@ export namespace Animation {
     });
   }
 
+  export function sequence(
+    animations: Array<Animated.CompositeAnimation>,
+  ): Animated.CompositeAnimation {
+    return Animated.sequence(animations);
+  }
+
   export function continuous(animation: Animated.CompositeAnimation): Animated.CompositeAnimation {
     return Animated.loop(animation);
   }
@@ -71,5 +82,5 @@ export namespace Animation {
     return Animated.delay(time);
   }
 
-  export const getAnimatedValue = (value: Animated.value) => value.__getValue();
+  export const getAnimatedValue = (value: Animated.Value) => value.__getValue();
 }
