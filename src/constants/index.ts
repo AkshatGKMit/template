@@ -72,14 +72,14 @@ export const FabAppearance = {
 } as const;
 
 export const FabSize = {
-  large: 'large',
-  normal: 'normal',
-  mini: 'mini',
+  large: 8,
+  normal: 5,
+  mini: 2,
 } as const;
 
 export const FabBorderRadius = {
-  auto: 'auto',
-  full: 'full',
+  auto: 10,
+  full: 100,
 } as const;
 
 export const ComponentsConstants = {

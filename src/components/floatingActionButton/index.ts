@@ -1,3 +1,3 @@
-import FloatingActionButtonAutoHide from './FloatingActionButton';
+import FloatingActionButtonAutoHide from './FloatingActionButtonAutoHide';
 
-export default FloatingActionButtonAutoHide;
+export { FloatingActionButtonAutoHide };

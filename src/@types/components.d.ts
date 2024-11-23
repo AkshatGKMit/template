@@ -1,9 +1,11 @@
 import React, { Component, ReactNode, RefObject } from 'react';
 import {
+  Animated,
   EnterKeyHintTypeOptions,
   GestureResponderEvent,
   InputModeOptions,
   KeyboardTypeOptions,
+  LayoutChangeEvent,
   NativeSyntheticEvent,
   PanResponderGestureState,
   StyleProp,
@@ -14,6 +16,7 @@ import {
   TextProps,
   TextStyle,
   TouchableHighlightProps,
+  TransformsStyle,
   View,
   ViewProps,
   ViewStyle,
@@ -219,7 +222,7 @@ declare global {
   type FabSize = (typeof FabSize)[keyof typeof FabSize];
   type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
 
-  interface FloatingActionButtonAutoHideProps {
+  interface FloatingActionButtonProps {
     icon: Omit<IconProps, 'style'>;
     iconColor?: string;
     shadowColor?: string;
@@ -228,9 +231,14 @@ declare global {
     borderRadius?: FabBorderRadius;
     backgroundColor?: string;
     margin?: number;
-    onPress?: () => void;
-    hide?: boolean;
-    hideDuration?: number;
     zIndex?: number;
+    onPress?: () => void;
+    style?: TransformsStyle;
+    onLayout?: (e: LayoutChangeEvent) => void;
+  }
+
+  interface FloatingActionButtonAutoHideProps extends FloatingActionButtonProps {
+    visible?: boolean;
+    visibleDuration?: number;
   }
 }
