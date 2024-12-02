@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Animated, TouchableWithoutFeedback } from 'react-native';
+import { Animated, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 
 import Icon from '@components/icon';
 import ThemeContext from '@config/ThemeContext';
@@ -28,7 +28,7 @@ const FloatingActionButton = (props: FabProps) => {
   const fabStyles = [
     style,
     styles.fab,
-    globalStyles.columnCenter,
+    globalStyles.rowCenter,
     {
       margin: marginFromScreen,
       height: size,
@@ -62,6 +62,27 @@ FloatingActionButton.Shrink = (props: FabShrinkProps) => {
         {...icon}
         style={[styles.fabIcon, { color: color }]}
       />
+    </FloatingActionButton>
+  );
+};
+
+FloatingActionButton.Expanded = (props: FabExpandedProps) => {
+  const { theme } = useContext(ThemeContext);
+
+  const { text, icon, color = theme.colors.text } = props;
+
+  return (
+    <FloatingActionButton
+      {...props}
+      style={styles.extendedFab}
+    >
+      {icon && (
+        <Icon
+          {...icon}
+          style={[styles.fabIcon, { color }]}
+        />
+      )}
+      <Text style={[styles.fabText, { color }]}>{text}</Text>
     </FloatingActionButton>
   );
 };

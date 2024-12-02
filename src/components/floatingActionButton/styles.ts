@@ -14,7 +14,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     elevation: 4,
   },
-  fabIcon: { fontSize: 40 },
+  fabIcon: { fontSize: 24 },
+  fabText: { fontSize: 18 },
+  extendedFab: {
+    minHeight: 56,
+    minWidth: 120,
+    gap: 5,
+  },
 });
 
 export default styles;

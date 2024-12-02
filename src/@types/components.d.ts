@@ -101,12 +101,18 @@ declare global {
     borderRadius?: FabBorderRadius;
     backgroundColor?: string;
     onPress?: () => void;
-    style?: TransformsStyle;
+    style?: StyleProp<ViewStyle>;
     onLayout?: (e: LayoutChangeEvent) => void;
   }
 
   interface FabShrinkProps extends FabProps {
     icon: Omit<IconProps, 'style'>;
+    color?: string;
+  }
+
+  interface FabExpandedProps extends FabProps {
+    text: string;
+    icon?: Omit<IconProps, 'style'>;
     color?: string;
   }
 

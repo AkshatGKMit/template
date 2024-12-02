@@ -9,6 +9,7 @@ import Snackbar from '@components/snackBar';
 import Swipeable from '@components/swipeable';
 import { FabBorderRadius, FabSize, IconFamily, SwipeDirection } from '@constants';
 import { FloatingActionButtonAutoHide } from '@components/floatingActionButton';
+import FloatingActionButton from '@components/floatingActionButton/FloatingActionButton';
 
 const App = () => {
   return (
@@ -58,10 +59,11 @@ const Main = () => {
             </Text>
           ))}
         </ScrollView>
-        <FloatingActionButtonAutoHide
+        <FloatingActionButton.Expanded
           icon={{ family: IconFamily.materialIcons, name: 'add' }}
-          visible={visible}
+          // visible={visible}
           size={FabSize.mini}
+          text="Compose"
         />
       </View>
     </SafeAreaView>
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   content: {
-    height: 1000, // Example height to allow scrolling
+    height: 1000,
     justifyContent: 'space-around',
   },
   box: {
