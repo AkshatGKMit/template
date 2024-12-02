@@ -1,12 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-import counterReducer from '@reducers/counter';
-import { useDispatch, useSelector } from 'react-redux';
+import themeReducer from '@reducers/theme';
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    theme: themeReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();

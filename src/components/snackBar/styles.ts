@@ -2,7 +2,7 @@ import { createStyles, createThemedStyles } from '@config/useStyles';
 import { FontSize, FontWeight } from '@themes';
 
 const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
-  const { inverted } = theme.colors;
+  const { inverted } = theme;
   const { bottom } = insets;
 
   return createStyles({

@@ -2,12 +2,10 @@ import { createStyles, createThemedStyles } from '@config/useStyles';
 import { Colors } from './colors';
 
 export const GlobalThemedStyles = createThemedStyles((theme) => {
-  const { colors } = theme;
-
   return createStyles({
     screen: {
       flex: 1,
-      backgroundColor: Colors.white,
+      backgroundColor: theme.primaryBackground,
     },
     rowCenter: {
       alignItems: 'center',

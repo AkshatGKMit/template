@@ -2,6 +2,10 @@ import { Platform } from 'react-native';
 
 export const isIos = Platform.OS === 'ios';
 
+export const Slice = {
+  theme: 'theme',
+} as const;
+
 export const StorageKey = {
   themeMode: 'ThemeMode',
   fontFamily: 'fontFamily',

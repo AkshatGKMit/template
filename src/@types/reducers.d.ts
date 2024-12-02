@@ -1,3 +1,4 @@
-interface CounterState {
-  value: number;
+interface ThemeState {
+  mode: ThemeMode;
+  colors: ThemeColors;
 }

@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { StatusBar, StyleProp, View, ViewStyle } from 'react-native';
+import { Platform, StatusBar, StyleProp, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
 import ThemeContext from '@config/ThemeContext';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { GlobalThemedStyles } from '@themes/globalStyles';
+import { useAppSelector } from '@config/store';
 
 const GradientScreen = ({
   children,
@@ -25,11 +26,7 @@ const GradientScreen = ({
 
   const { top: topInsets, right: rightInsets, bottom: bottomInsets, left: leftInsets } = insets;
 
-  const statusBarHeight = StatusBar.currentHeight;
-
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const globalStyles = GlobalThemedStyles();
 
@@ -98,7 +95,7 @@ const GradientScreen = ({
 
   return (
     <LinearGradient
-      colors={colors.screenGradient}
+      colors={theme.screenGradient}
       style={globalStyles.screen}
     >
       <View style={[globalStyles.flex1, style, marginStyles]}>{children}</View>

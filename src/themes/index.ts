@@ -34,7 +34,7 @@ const darkTheme: InvertedOmittedThemeColors = {
   primaryText: Colors.primary.dark,
   primaryBackground: Colors.black,
   secondaryBackground: Colors.greyShades.shade800,
-  screenGradient: [Colors.greyShades.shade100, colorWithOpacity(Colors.greyShades.shade100, 0.3)],
+  screenGradient: [Colors.greyShades.shade900, colorWithOpacity(Colors.greyShades.shade900, 0.3)],
   statusBar: Colors.primary.dark,
   text: Colors.white,
   secondaryText: Colors.greyShades.shade400,
