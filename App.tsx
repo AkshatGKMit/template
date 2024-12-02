@@ -19,7 +19,7 @@ import { GlobalThemedStyles } from '@themes/globalStyles';
 import Snackbar from '@components/snackBar';
 import TextButton from '@components/textButton';
 import Swipeable from '@components/swipeable';
-import { IconFamily, SwipeDirection } from '@constants';
+import { FabBorderRadius, FabSize, IconFamily, SwipeDirection } from '@constants';
 import FlipCard from '@components/flipCard';
 import Shimmer from '@components/shimmer';
 import { Colors } from '@themes';
@@ -125,6 +125,8 @@ const Main = () => {
         <FloatingActionButtonAutoHide
           icon={{ family: IconFamily.materialIcons, name: 'add' }}
           visible={false}
+          // borderRadius={FabBorderRadius.round}
+          size={FabSize.mini}
         />
       </View>
     </SafeAreaView>

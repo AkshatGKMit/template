@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 import {
   Animated,
   EnterKeyHintTypeOptions,
@@ -34,61 +34,6 @@ import {
 } from '@constants';
 
 declare global {
-  type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
-
-  interface IconProps {
-    family: IconFamilyType;
-    name: string;
-    style?: StyleProp<TextStyle>;
-  }
-
-  interface IconButtonProps extends TouchableHighlightProps {
-    family: IconFamilyType;
-    name: string;
-    iconStyle?: StyleProp<TextStyle>;
-    containerStyle?: StyleProp<ViewStyle>;
-    underlayColor?: string;
-    onPress?: (ev?: GestureResponderEvent) => void;
-  }
-
-  interface GradientScreenProps {
-    children?: ReactNode;
-    style?: StyleProp<ViewStyle>;
-    showStatusBar?: boolean;
-  }
-
-  type LoaderProps = {
-    color?: string;
-    size?: number | 'small' | 'large';
-  };
-
-  interface LoadingViewProps {
-    processInfo?: string;
-    invertedStyle?: boolean;
-  }
-
-  interface TextFieldProps {
-    value: string;
-    onChangeText: (text: string) => void;
-    label?: string;
-    placeholder?: string;
-    ref?: RefObject<TextInput>;
-    keyboardType?: KeyboardTypeOptions;
-    inputMode?: InputModeOptions;
-    enterKeyHint?: EnterKeyHintTypeOptions;
-    onEndEditing?: (e?: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
-    onSubmitEditing?: (e?: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
-    autoFocus?: boolean;
-    prefixIcon?: IconProps;
-    suffixIconButton?: IconButtonProps;
-    secureText?: boolean;
-    containerStyle?: StyleProp<ViewStyle>;
-    textInputStyle?: StyleProp<TextStyle>;
-    errorMsg?: string;
-    multiline?: boolean;
-    addOns?: TextInputProps;
-  }
-
   interface RefOptions {
     onShow?: () => void;
     onHide?: () => void;
@@ -109,31 +54,6 @@ declare global {
     isDismissible?: boolean;
     backgroundColor?: string;
     borderRadius?: number;
-  }
-
-  interface SnackbarParams extends RefOptions {
-    text: string;
-    heading?: string;
-    duration?: number;
-    indefinite?: boolean;
-    showClose?: boolean;
-    action?: ReactNode;
-    containerStyle?: StyleProp<ViewStyle>;
-    headingStyle?: StyleProp<TextStyle>;
-    textStyle?: StyleProp<TextStyle>;
-  }
-
-  interface ObjectLayout {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-    height: number;
-    width: number;
-    minHeight?: number;
-    minWidth?: number;
-    maxHeight?: number;
-    maxWidth?: number;
   }
 
   interface DropDownItem {
@@ -157,6 +77,72 @@ declare global {
     itemStyle?: StyleProp<ViewStyle>;
     gap?: number;
     showSeparator?: boolean;
+  }
+
+  interface FlipCardProps extends ViewProps {
+    front: ReactNode;
+    back?: ReactNode;
+    duration?: number;
+    side?: (typeof CardSide)[keyof typeof CardSide];
+    direction?: (typeof FlipDirection)[keyof typeof FlipDirection];
+    onFront?: () => void;
+    onBack?: () => void;
+  }
+
+  type FabBorderRadius = (typeof FabBorderRadius)[keyof typeof FabBorderRadius];
+  type FabSize = (typeof FabSize)[keyof typeof FabSize];
+  type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
+
+  interface FloatingActionButtonProps {
+    icon: Omit<IconProps, 'style'>;
+    iconColor?: string;
+    shadowColor?: string;
+    appearance?: FabAppearance;
+    size?: FabSize;
+    borderRadius?: FabBorderRadius;
+    backgroundColor?: string;
+    zIndex?: number;
+    onPress?: () => void;
+    style?: TransformsStyle;
+    onLayout?: (e: LayoutChangeEvent) => void;
+  }
+
+  interface FloatingActionButtonAutoHideProps extends FloatingActionButtonProps {
+    visible?: boolean;
+    visibleDuration?: number;
+  }
+
+  interface GradientScreenProps {
+    children?: ReactNode;
+    style?: StyleProp<ViewStyle>;
+    showStatusBar?: boolean;
+  }
+
+  type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
+
+  interface IconProps {
+    family: IconFamilyType;
+    name: string;
+    style?: StyleProp<TextStyle>;
+  }
+
+  interface IconButtonProps extends TouchableHighlightProps {
+    family: IconFamilyType;
+    name: string;
+    iconStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    underlayColor?: string;
+    onPress?: (ev?: GestureResponderEvent) => void;
+  }
+
+  type LoaderProps = {
+    color?: string;
+    size?: number | 'small' | 'large';
+  };
+
+  interface LoadingViewProps {
+    processInfo?: string;
+    invertedStyle?: boolean;
   }
 
   interface PopUpMenuButton {
@@ -189,20 +175,16 @@ declare global {
     children?: ReactNode;
   }
 
-  interface FlipCardProps extends ViewProps {
-    front: ReactNode;
-    back?: ReactNode;
-    duration?: number;
-    side?: (typeof CardSide)[keyof typeof CardSide];
-    direction?: (typeof FlipDirection)[keyof typeof FlipDirection];
-    onFront?: () => void;
-    onBack?: () => void;
-  }
-
-  interface TextButtonProps extends Omit<TextProps, 'children'> {
+  interface SnackbarParams extends RefOptions {
     text: string;
-    color?: string;
-    onPress?: () => void;
+    heading?: string;
+    duration?: number;
+    indefinite?: boolean;
+    showClose?: boolean;
+    action?: ReactNode;
+    containerStyle?: StyleProp<ViewStyle>;
+    headingStyle?: StyleProp<TextStyle>;
+    textStyle?: StyleProp<TextStyle>;
   }
 
   type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
@@ -218,27 +200,44 @@ declare global {
     onSwipeFinished?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
   }
 
-  type FabBorderRadius = (typeof FabBorderRadius)[keyof typeof FabBorderRadius];
-  type FabSize = (typeof FabSize)[keyof typeof FabSize];
-  type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
-
-  interface FloatingActionButtonProps {
-    icon: Omit<IconProps, 'style'>;
-    iconColor?: string;
-    shadowColor?: string;
-    appearance?: FabAppearance;
-    size?: FabSize;
-    borderRadius?: FabBorderRadius;
-    backgroundColor?: string;
-    margin?: number;
-    zIndex?: number;
+  interface TextButtonProps extends Omit<TextProps, 'children'> {
+    text: string;
+    color?: string;
     onPress?: () => void;
-    style?: TransformsStyle;
-    onLayout?: (e: LayoutChangeEvent) => void;
   }
 
-  interface FloatingActionButtonAutoHideProps extends FloatingActionButtonProps {
-    visible?: boolean;
-    visibleDuration?: number;
+  interface TextFieldProps {
+    value: string;
+    onChangeText: (text: string) => void;
+    label?: string;
+    placeholder?: string;
+    ref?: RefObject<TextInput>;
+    keyboardType?: KeyboardTypeOptions;
+    inputMode?: InputModeOptions;
+    enterKeyHint?: EnterKeyHintTypeOptions;
+    onEndEditing?: (e?: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
+    onSubmitEditing?: (e?: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
+    autoFocus?: boolean;
+    prefixIcon?: IconProps;
+    suffixIconButton?: IconButtonProps;
+    secureText?: boolean;
+    containerStyle?: StyleProp<ViewStyle>;
+    textInputStyle?: StyleProp<TextStyle>;
+    errorMsg?: string;
+    multiline?: boolean;
+    addOns?: TextInputProps;
+  }
+
+  interface ObjectLayout {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+    height: number;
+    width: number;
+    minHeight?: number;
+    minWidth?: number;
+    maxHeight?: number;
+    maxWidth?: number;
   }
 }

@@ -72,18 +72,21 @@ export const FabAppearance = {
 } as const;
 
 export const FabSize = {
-  large: 8,
-  normal: 5,
-  mini: 2,
+  large: 70,
+  normal: 56,
+  mini: 44,
 } as const;
 
 export const FabBorderRadius = {
-  auto: 10,
-  full: 100,
+  auto: 16,
+  round: 100,
 } as const;
 
 export const ComponentsConstants = {
   swipeable: {
     thresholdAnimationDuration: 500,
+  },
+  fab: {
+    marginFromScreen: 16,
   },
 };
