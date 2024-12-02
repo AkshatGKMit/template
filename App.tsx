@@ -28,74 +28,8 @@ const App = () => {
 
 const Main = () => {
   const { theme } = useContext(ThemeContext);
-  const [visible, setVisible] = useState(false);
 
-  return (
-    <SafeAreaView style={{ height: '100%', width: '100%', flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-          height: '100%',
-          width: '100%',
-          backgroundColor: theme.colors.primaryBackground,
-        }}
-      >
-        <ScrollView
-          onScrollBeginDrag={() => setVisible(true)}
-          onScrollEndDrag={() => setVisible(false)}
-          style={{
-            flex: 1,
-            height: '100%',
-            width: '100%',
-            backgroundColor: theme.colors.primaryBackground,
-          }}
-        >
-          {Array.from({ length: 30 }).map((_, i) => (
-            <Text
-              key={i}
-              style={{ marginBottom: 30 }}
-            >
-              {i}
-            </Text>
-          ))}
-        </ScrollView>
-        <FloatingActionButton.Expanded
-          icon={{ family: IconFamily.materialIcons, name: 'add' }}
-          // visible={visible}
-          size={FabSize.mini}
-          text="Compose"
-        />
-      </View>
-    </SafeAreaView>
-  );
+  return <SafeAreaView></SafeAreaView>;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-  content: {
-    height: 1000,
-    justifyContent: 'space-around',
-  },
-  box: {
-    height: 100,
-    width: '100%',
-    backgroundColor: 'lightblue',
-    marginVertical: 10,
-  },
-  fabContainer: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    elevation: 5,
-    backgroundColor: 'white',
-    borderRadius: 30,
-    padding: 10,
-  },
-});
 
 export default App;
