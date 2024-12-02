@@ -1,40 +1,22 @@
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  Animated,
-  LayoutChangeEvent,
-  Pressable,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import Icon from '@components/icon';
-import { defaultLayout, FabAppearance, FabBorderRadius, FabSize, IconFamily } from '@constants';
+import { useCallback, useEffect, useRef } from 'react';
+import { LayoutChangeEvent } from 'react-native';
+
 import { Animation } from '@utility/helpers';
-import ThemeContext from '@config/ThemeContext';
+
 import FloatingActionButton from './FloatingActionButton';
 
 const FloatingActionButtonAutoHide = (props: FloatingActionButtonAutoHideProps) => {
-  const { theme } = useContext(ThemeContext);
-  const layoutDimensionsRef = useRef<ObjectLayout>(defaultLayout);
+  const { visible, visibleDuration = 250 } = props;
+
+  const fabPositionX = useRef<number>(0);
 
   const animateFAB = Animation.newValue(0);
 
-  const { visible, visibleDuration = 500 } = props;
+  let timeout: NodeJS.Timeout;
 
   const _onLayoutChange = useCallback((e: LayoutChangeEvent) => {
-    const { height: h, width: w, x, y } = e.nativeEvent.layout;
-
-    const newLayout = {
-      height: Math.floor(h),
-      width: Math.floor(w),
-      top: Math.floor(y),
-      left: Math.floor(x),
-      bottom: Math.floor(y + h),
-      right: Math.floor(x + w),
-    };
-
-    layoutDimensionsRef.current = newLayout;
+    const { width: w, x } = e.nativeEvent.layout;
+    fabPositionX.current = w + x;
   }, []);
 
   const animate = () => {
@@ -42,35 +24,29 @@ const FloatingActionButtonAutoHide = (props: FloatingActionButtonAutoHideProps) 
   };
 
   useEffect(() => {
-    if (!visible) {
-      setTimeout(() => {
+    clearTimeout(timeout);
+
+    if (visible) {
+      animate();
+    } else {
+      timeout = setTimeout(() => {
         animate();
       }, 3000);
-    } else {
-      animate();
     }
-  }, []);
+
+    return () => clearTimeout(timeout);
+  }, [visible]);
+
+  const translateXInterpolate = animateFAB.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, fabPositionX.current],
+  });
 
   return (
     <FloatingActionButton
       {...props}
       onLayout={_onLayoutChange}
-      style={{
-        transform: [
-          {
-            translateX: animateFAB.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 30 + layoutDimensionsRef.current.width],
-            }),
-          },
-          {
-            rotate: animateFAB.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['0deg', '360deg'],
-            }),
-          },
-        ],
-      }}
+      style={{ transform: [{ translateX: translateXInterpolate }] }}
     />
   );
 };

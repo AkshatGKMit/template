@@ -1,29 +1,13 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import {
-  Animated,
-  Button,
-  Dimensions,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
 import BottomSheet from '@components/bottomSheet';
 import Toast from 'react-native-toast-message';
-import { NavigationContainer } from '@react-navigation/native';
-import { GlobalThemedStyles } from '@themes/globalStyles';
 import Snackbar from '@components/snackBar';
-import TextButton from '@components/textButton';
 import Swipeable from '@components/swipeable';
 import { FabBorderRadius, FabSize, IconFamily, SwipeDirection } from '@constants';
-import FlipCard from '@components/flipCard';
-import Shimmer from '@components/shimmer';
-import { Colors } from '@themes';
-import GradientScreen from '@components/gradientScreen';
 import { FloatingActionButtonAutoHide } from '@components/floatingActionButton';
 
 const App = () => {
@@ -43,57 +27,10 @@ const App = () => {
 
 const Main = () => {
   const { theme } = useContext(ThemeContext);
-  const [showSplashScreen, setShowSplashScreen] = useState(true);
-
-  const [visible, setVisible] = useState(true);
-
-  const globalStyles = GlobalThemedStyles();
-
-  const [data, setData] = useState(['a', 'b', 'c', 'd', 'e']);
-
-  const scrollY = useRef(new Animated.Value(0)).current;
-  let scrollTimeout = useRef<any>(null);
-
-  const [isFabVisible, setIsFabVisible] = useState(true);
-
-  const handleScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-    useNativeDriver: false,
-    listener: (event) => {
-      // Show FAB when scrolling starts
-      if (isFabVisible === false) {
-        setIsFabVisible(true);
-      }
-
-      // Clear the timeout if user is still scrolling
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-
-      // Set a timeout to hide the FAB after 3 seconds of no scrolling
-      scrollTimeout.current = setTimeout(() => {
-        setIsFabVisible(false);
-      }, 3000);
-    },
-  });
+  const [visible, setVisible] = useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* <View style={styles.container}> */}
-      {/* <ScrollView onScroll={handleScroll}>
-        {Array.from({ length: 50 }).map((_, i) => (
-          <View
-            key={i}
-            style={styles.box}
-          />
-        ))}
-      </ScrollView>
-
-      {isFabVisible && (
-        <Animated.View style={styles.fabContainer}>
-          <Button title="FAB" />
-        </Animated.View>
-      )} */}
-      {/* </View> */}
+    <SafeAreaView style={{ height: '100%', width: '100%', flex: 1 }}>
       <View
         style={{
           flex: 1,
@@ -104,8 +41,7 @@ const Main = () => {
       >
         <ScrollView
           onScrollBeginDrag={() => setVisible(true)}
-          onMomentumScrollEnd={() => setVisible(false)}
-          scrollEventThrottle={20}
+          onScrollEndDrag={() => setVisible(false)}
           style={{
             flex: 1,
             height: '100%',
@@ -124,8 +60,7 @@ const Main = () => {
         </ScrollView>
         <FloatingActionButtonAutoHide
           icon={{ family: IconFamily.materialIcons, name: 'add' }}
-          visible={false}
-          // borderRadius={FabBorderRadius.round}
+          visible={visible}
           size={FabSize.mini}
         />
       </View>
