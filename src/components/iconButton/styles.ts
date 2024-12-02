@@ -1,4 +1,4 @@
-import { createStyles } from '@config/useStyles';
+import { createStyles } from '@utility/styles';
 
 const styles = createStyles({
   button: {

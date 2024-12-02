@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,11 @@ import {
 
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
+import useScalingMetrics from '@config/useScalingMetrics';
 import { IconFamily } from '@constants';
-import { Animation } from '@utility/helpers';
 import { GlobalThemedStyles } from '@themes/globalStyles';
+import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
 
@@ -39,7 +40,9 @@ const PopUpMenu = ({
     right: 0,
   };
 
-  const { dimensions, theme, safeAreaInsets } = useContext(ThemeContext);
+  const { WW, WH } = useScalingMetrics();
+
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const [isFocus, setFocus] = useState(false);
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
@@ -48,8 +51,7 @@ const PopUpMenu = ({
   const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
-  const { height: H, width: W } = dimensions;
-  const maxMenuHeight = H / 3;
+  const maxMenuHeight = WH / 3;
 
   const _measureButton = useCallback(
     (e: LayoutChangeEvent) => {
@@ -78,7 +80,7 @@ const PopUpMenu = ({
         });
       });
     },
-    [W, H],
+    [WW, WH],
   );
 
   const _measureList = useCallback(
@@ -88,8 +90,8 @@ const PopUpMenu = ({
       const rightPos = x + width;
       const bottomPos = y + height;
 
-      const shouldMoveToLeft = rightPos > W;
-      const shouldMoveToTop = bottomPos > H;
+      const shouldMoveToLeft = rightPos > WW;
+      const shouldMoveToTop = bottomPos > WH;
 
       if (shouldMoveToLeft) {
         //* Calculation -> Current X Position - (Right Position - Button Right Position)
@@ -103,7 +105,7 @@ const PopUpMenu = ({
         setMenuLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
       }
     },
-    [W, H, buttonLayout],
+    [WW, WH, buttonLayout],
   );
 
   function showOrClose(): void {
@@ -125,7 +127,7 @@ const PopUpMenu = ({
 
         return (
           <TouchableHighlight
-            underlayColor={theme.colors.underlay(0.1)}
+            underlayColor={theme.underlay}
             onPress={() => {
               showOrClose();
               onPress?.(item, index);

@@ -1,18 +1,16 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { Platform, StatusBar, StyleProp, View, ViewStyle } from 'react-native';
+import { useMemo } from 'react';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { GlobalThemedStyles } from '@themes/globalStyles';
-import { useAppSelector } from '@config/store';
 
 const GradientScreen = ({
   children,
   style,
   useSafeArea,
-  showStatusBar,
   useSafeAreaInLandscape,
   useSafeAreaInPortrait,
   bottomInset: isBottomInset,

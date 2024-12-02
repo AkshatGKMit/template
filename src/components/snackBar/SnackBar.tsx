@@ -9,8 +9,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
+import useScalingMetrics from '@config/useScalingMetrics';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
@@ -18,7 +20,7 @@ import ThemedStyles from './styles';
 const defaultData: SnackbarParams = { text: '' };
 
 const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
-  const { safeAreaInsets: insets, dimensions, theme } = useContext(ThemeContext);
+  const { WH } = useScalingMetrics();
 
   const [isVisible, setVisible] = useState(false);
   const [data, setData] = useState<SnackbarParams>(defaultData);
@@ -96,7 +98,7 @@ const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
 
   const translateY = positionAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [dimensions.height, dimensions.height - height],
+    outputRange: [WH, WH - height],
   });
 
   const containerStyles = useMemo(

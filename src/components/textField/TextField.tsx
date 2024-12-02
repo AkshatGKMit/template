@@ -1,9 +1,9 @@
-import { memo, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
 import { colorWithOpacity } from '@utility/helpers';
 
 import textfieldStyles from './styles';
@@ -29,9 +29,7 @@ const TextField = ({
   multiline,
   addOns,
 }: TextFieldProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const inputRef = useRef<TextInput>(null);
 
@@ -50,16 +48,14 @@ const TextField = ({
       const placeholderOpacity = 0.75;
 
       if (errorMsg)
-        return isPlaceHolder ? colorWithOpacity(colors.error, placeholderOpacity) : colors.error;
+        return isPlaceHolder ? colorWithOpacity(theme.error, placeholderOpacity) : theme.error;
 
       if (isFocused)
-        return isPlaceHolder
-          ? colorWithOpacity(colors.primary, placeholderOpacity)
-          : colors.primary;
+        return isPlaceHolder ? colorWithOpacity(theme.primary, placeholderOpacity) : theme.primary;
 
-      return isPlaceHolder ? colors.placeholder : colors.text;
+      return isPlaceHolder ? theme.placeholder : theme.text;
     },
-    [isFocused, errorMsg, colors],
+    [isFocused, errorMsg, theme],
   );
 
   const textInputStyles = useMemo(

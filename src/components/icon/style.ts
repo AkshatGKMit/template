@@ -1,5 +1,5 @@
-import { createStyles, createThemedStyles } from '@config/useStyles';
 import { FontSize } from '@themes';
+import { createStyles, createThemedStyles } from '@utility/styles';
 
 const ThemedStyles = createThemedStyles((theme) => {
   return createStyles({

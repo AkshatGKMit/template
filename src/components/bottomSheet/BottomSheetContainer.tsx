@@ -1,5 +1,4 @@
 import {
-  useContext,
   useState,
   useRef,
   useMemo,
@@ -8,16 +7,17 @@ import {
   useEffect,
   forwardRef,
 } from 'react';
-import { View, Animated, PanResponder, Pressable, BackHandler, Modal } from 'react-native';
+import { View, Animated, PanResponder, Pressable, Modal } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { BottomSheetConstants } from '@constants';
+import { Orientation } from '@themes';
+import { GlobalThemedStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
-import { GlobalThemedStyles } from '@themes/globalStyles';
-import { Orientation } from '@themes';
 
 const defaultData: BottomSheetParams = {
   child: null,
@@ -32,9 +32,10 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     maxSnapPointThreshold,
   } = BottomSheetConstants;
 
-  const { hp, wp } = useScalingMetrics();
+  const insets = useSafeAreaInsets();
+  const { hp, WH, orientation } = useScalingMetrics();
 
-  const { theme, dimensions, orientation, safeAreaInsets: insets } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const [isVisible, setVisible] = useState(false);
   const [data, setData] = useState<BottomSheetParams>(defaultData);
@@ -46,24 +47,18 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const sheetOriginalPositionRef = useRef<number | null>(null);
 
   const modalOpacityAnimation = useRef(new Animated.Value(0)).current;
-  const sheetPositionYAnimation = useRef(new Animated.Value(dimensions.height)).current;
+  const sheetPositionYAnimation = useRef(new Animated.Value(WH)).current;
 
   const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
   const { child, backgroundColor, borderRadius, isDismissible, snap, onHide, onShow } = data;
 
-  const maxSheetHeight = useMemo(
-    () => dimensions.height - insets.top - hp(5),
-    [dimensions, insets],
-  );
-  const finalSheetPosY = useMemo(
-    () => dimensions.height - sheetHeight,
-    [sheetHeight, dimensions.height],
-  );
+  const maxSheetHeight = useMemo(() => WH - insets.top - hp(5), [WH, insets]);
+  const finalSheetPosY = useMemo(() => WH - sheetHeight, [sheetHeight, WH]);
 
   function showModal(params: BottomSheetParams) {
-    const { isDismissible = true, backgroundColor = theme.colors.primaryBackground } = params;
+    const { isDismissible = true, backgroundColor = theme.primaryBackground } = params;
     setData({ ...params, isDismissible, backgroundColor });
     setVisible(true);
   }
@@ -72,7 +67,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     setVisible(false);
     snapPointsRef.current = null;
     closingSnapPoint.current = maxClosingSnapPointThreshold;
-    sheetOriginalPositionRef.current = dimensions.height;
+    sheetOriginalPositionRef.current = WH;
     setSheetHeight(0);
   }
 
@@ -88,7 +83,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   );
 
   function openBottomSheetAnimation() {
-    sheetPositionYAnimation.setValue(dimensions.height);
+    sheetPositionYAnimation.setValue(WH);
     sheetPositionYAnimation.flattenOffset();
 
     Animated.parallel([
@@ -101,19 +96,14 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     sheetPositionYAnimation.flattenOffset();
 
     Animated.parallel([
-      Animation.timing(
-        sheetPositionYAnimation,
-        dimensions.height,
-        duration ?? sheetSlideAnimDuration,
-      ),
+      Animation.timing(sheetPositionYAnimation, WH, duration ?? sheetSlideAnimDuration),
       Animation.timing(modalOpacityAnimation, 0, duration ?? overlayOpacityAnimDuration),
     ]).start(() => hideModal());
   }
 
   useEffect(() => {
-    sheetOriginalPositionRef.current =
-      dimensions.height - (sheetHeight > dimensions.height ? maxSheetHeight : sheetHeight);
-  }, [sheetHeight, dimensions.height, orientation]);
+    sheetOriginalPositionRef.current = WH - (sheetHeight > WH ? maxSheetHeight : sheetHeight);
+  }, [sheetHeight, WH, orientation]);
 
   useEffect(() => {
     if (isVisible) openBottomSheetAnimation();
@@ -124,7 +114,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
     if (snap) {
       const { closingPoint, points } = snap;
 
-      const originalSnapPoint = (dimensions.height - sheetHeight) / dimensions.height;
+      const originalSnapPoint = (WH - sheetHeight) / WH;
       points.push(originalSnapPoint);
 
       const validSnapPoints = points.filter(
@@ -199,7 +189,7 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
           Animation.timing(sheetPositionYAnimation, snapPoint, sheetSlideAnimDuration / 10).start();
         },
       }),
-    [dimensions.height],
+    [WH],
   );
 
   const overlayStyles = useMemo(

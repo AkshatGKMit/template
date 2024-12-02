@@ -1,19 +1,17 @@
-import { View, Text, TouchableHighlight } from 'react-native';
-import React, { useContext } from 'react';
+import { Text, TouchableHighlight } from 'react-native';
+
+import { useAppSelector } from '@config/store';
 import { Colors } from '@themes';
-import ThemeContext from '@config/ThemeContext';
 
 const TextButton = (props: TextButtonProps) => {
   const { text, onPress, style, color = Colors.blue } = props;
 
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   return (
     <TouchableHighlight
       onPress={onPress}
-      underlayColor={colors.underlay(0.01)}
+      underlayColor={theme.underlay}
     >
       <Text
         style={[style, { color }]}

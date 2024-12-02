@@ -1,4 +1,4 @@
-import { createStyles, createThemedStyles } from '@config/useStyles';
+import { createStyles, createThemedStyles } from '@utility/styles';
 
 const ThemedStyles = createThemedStyles((theme) => {
   return createStyles({

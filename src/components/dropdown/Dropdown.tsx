@@ -12,13 +12,14 @@ import {
 } from 'react-native';
 
 import Icon from '@components/icon';
-import ThemeContext from '@config/ThemeContext';
 import { defaultLayout, IconFamily } from '@constants';
 import { Colors } from '@themes';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
+import { useAppSelector } from '@config/store';
+import useScalingMetrics from '@config/useScalingMetrics';
 
 const Dropdown = ({
   value,
@@ -33,7 +34,8 @@ const Dropdown = ({
   gap = 4,
   showSeparator,
 }: DropdownProps) => {
-  const { dimensions, theme } = useContext(ThemeContext);
+  const { WH, WW } = useScalingMetrics();
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const [isFocus, setFocus] = useState(false);
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
@@ -42,8 +44,7 @@ const Dropdown = ({
   const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
-  const { height: H, width: W } = dimensions;
-  const maxDropdownHeight = H / 3;
+  const maxDropdownHeight = WH / 3;
 
   const _measureButton = useCallback(
     (e: LayoutChangeEvent) => {
@@ -72,7 +73,7 @@ const Dropdown = ({
         });
       });
     },
-    [W, H],
+    [WW, WH],
   );
 
   const _measureList = useCallback(
@@ -82,8 +83,8 @@ const Dropdown = ({
       const rightPos = x + width;
       const bottomPos = y + height;
 
-      const shouldMoveToLeft = rightPos > W;
-      const shouldMoveToTop = bottomPos > H;
+      const shouldMoveToLeft = rightPos > WW;
+      const shouldMoveToTop = bottomPos > WH;
 
       if (shouldMoveToLeft) {
         //* Calculation -> Current X Position - (Right Position - Button Right Position)
@@ -97,7 +98,7 @@ const Dropdown = ({
         setListLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
       }
     },
-    [W, H, buttonLayout],
+    [WW, WH, buttonLayout],
   );
 
   function showOrClose(): void {
@@ -115,7 +116,7 @@ const Dropdown = ({
 
         return (
           <TouchableHighlight
-            underlayColor={theme.colors.underlay(0.1)}
+            underlayColor={theme.underlay}
             onPress={() => {
               setFocus(false);
               onSelect?.(item, index);
@@ -192,14 +193,14 @@ const Dropdown = ({
     const buttonStyles = useMemo(
       () => [
         styles.button,
-        { borderColor: isFocus ? theme.colors.primary : Colors.transparent },
+        { borderColor: isFocus ? theme.primary : Colors.transparent },
         buttonStyle,
       ],
       [styles, isFocus, theme, buttonStyle],
     );
 
     const buttonTextStyles = useMemo(
-      () => [styles.buttonText, { color: value ? theme.colors.text : theme.colors.placeholder() }],
+      () => [styles.buttonText, { color: value ? theme.text : theme.placeholder }],
       [styles, value, theme],
     );
 

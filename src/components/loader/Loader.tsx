@@ -1,16 +1,13 @@
-import { useContext } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
 
 const Loader = ({ color, size }: LoaderProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   return (
     <ActivityIndicator
-      color={color ?? colors.primary}
+      color={color ?? theme.primary}
       size={size ?? 'small'}
       animating
     />

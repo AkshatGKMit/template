@@ -1,4 +1,4 @@
-import { createStyles, createThemedStyles } from '@config/useStyles';
+import { createStyles, createThemedStyles } from '@utility/styles';
 import { FontSize, FontWeight, StyleValues } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
 

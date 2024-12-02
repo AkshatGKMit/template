@@ -1,15 +1,14 @@
-import { useContext } from 'react';
-import { Animated, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
+import { Animated, Text, TouchableWithoutFeedback } from 'react-native';
 
 import Icon from '@components/icon';
-import ThemeContext from '@config/ThemeContext';
+import { useAppSelector } from '@config/store';
 import { ComponentsConstants, FabBorderRadius, FabSize } from '@constants';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 
 import styles from './styles';
 
 const FloatingActionButton = (props: FabProps) => {
-  const { theme } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
   const globalStyles = GlobalThemedStyles();
 
@@ -22,7 +21,7 @@ const FloatingActionButton = (props: FabProps) => {
     children,
     borderRadius = FabBorderRadius.auto,
     size = FabSize.normal,
-    backgroundColor = theme.colors.primary,
+    backgroundColor = theme.primary,
   } = props;
 
   const fabStyles = [
@@ -35,7 +34,7 @@ const FloatingActionButton = (props: FabProps) => {
       width: size,
       backgroundColor,
       borderRadius,
-      shadowColor: theme.colors.inverted.main,
+      shadowColor: theme.inverted.main,
     },
   ];
 
@@ -52,9 +51,9 @@ const FloatingActionButton = (props: FabProps) => {
 };
 
 FloatingActionButton.Shrink = (props: FabShrinkProps) => {
-  const { theme } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
-  const { icon, color = theme.colors.text } = props;
+  const { icon, color = theme.text } = props;
 
   return (
     <FloatingActionButton {...props}>
@@ -67,9 +66,9 @@ FloatingActionButton.Shrink = (props: FabShrinkProps) => {
 };
 
 FloatingActionButton.Expanded = (props: FabExpandedProps) => {
-  const { theme } = useContext(ThemeContext);
+  const theme = useAppSelector((state) => state.theme.colors);
 
-  const { text, icon, color = theme.colors.text } = props;
+  const { text, icon, color = theme.text } = props;
 
   return (
     <FloatingActionButton

@@ -125,7 +125,6 @@ declare global {
     children?: ReactNode;
     style?: StyleProp<ViewStyle>;
     useSafeArea?: boolean;
-    showStatusBar?: boolean;
     useSafeAreaInLandscape?: boolean;
     useSafeAreaInPortrait?: boolean;
     topInset?: boolean;
