@@ -1,13 +1,14 @@
+import { Orientation } from '@themes';
 import { useCallback } from 'react';
 import { PixelRatio, useWindowDimensions } from 'react-native';
 
 const useScalingMetrics = () => {
-  const { width, height } = useWindowDimensions();
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 
   // Determine the smaller and larger of the two dimensions (portrait vs. landscape)
   // screenWidth contains smaller dimension of screen (It contains width in portrait and height in landscape)
-  const screenWidth = Math.min(width, height);
-  const screenHeight = Math.max(width, height);
+  const screenWidth = Math.min(windowWidth, windowHeight);
+  const screenHeight = Math.max(windowWidth, windowHeight);
 
   // Base screen dimensions for scaling(typically used for iPhone 6/7/8 width and height)
   const baseWidth = 375;
@@ -50,16 +51,24 @@ const useScalingMetrics = () => {
   );
   // Use when you want to set the height of elements as a percentage of the screen height(e.g., boxes, layouts, images, views, button heights)
 
+  const landscape = windowWidth > windowHeight;
+  const portrait = windowWidth < windowHeight;
+
+  const orientation = landscape ? Orientation.landscape : Orientation.portrait;
+
   return {
     hs: horizontalScale,
     vs: verticalScale,
     ms: moderateScale,
     ss: scaleSize,
-    WH: height,
-    WW: width,
+    WH: windowHeight,
+    WW: windowWidth,
     wp,
     hp,
     dp,
+    orientation,
+    landscape,
+    portrait,
   };
 };
 
