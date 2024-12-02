@@ -124,7 +124,14 @@ declare global {
   interface GradientScreenProps {
     children?: ReactNode;
     style?: StyleProp<ViewStyle>;
+    useSafeArea?: boolean;
     showStatusBar?: boolean;
+    useSafeAreaInLandscape?: boolean;
+    useSafeAreaInPortrait?: boolean;
+    topInset?: boolean;
+    bottomInset?: boolean;
+    leftInset?: boolean;
+    rightInset?: boolean;
   }
 
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
