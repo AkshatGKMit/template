@@ -93,21 +93,24 @@ declare global {
   type FabSize = (typeof FabSize)[keyof typeof FabSize];
   type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
 
-  interface FloatingActionButtonProps {
-    icon: Omit<IconProps, 'style'>;
-    iconColor?: string;
+  interface FabProps {
+    children?: ReactNode;
     shadowColor?: string;
     appearance?: FabAppearance;
     size?: FabSize;
     borderRadius?: FabBorderRadius;
     backgroundColor?: string;
-    zIndex?: number;
     onPress?: () => void;
     style?: TransformsStyle;
     onLayout?: (e: LayoutChangeEvent) => void;
   }
 
-  interface FloatingActionButtonAutoHideProps extends FloatingActionButtonProps {
+  interface FabShrinkProps extends FabProps {
+    icon: Omit<IconProps, 'style'>;
+    color?: string;
+  }
+
+  interface FabAutoHideProps extends FabShrinkProps {
     visible?: boolean;
     visibleDuration?: number;
   }

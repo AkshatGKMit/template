@@ -8,7 +8,7 @@ import { GlobalThemedStyles } from '@themes/globalStyles';
 
 import styles from './styles';
 
-const FloatingActionButton = (props: FloatingActionButtonProps) => {
+const FloatingActionButton = (props: FabProps) => {
   const { theme } = useContext(ThemeContext);
 
   const globalStyles = GlobalThemedStyles();
@@ -16,12 +16,10 @@ const FloatingActionButton = (props: FloatingActionButtonProps) => {
   const { marginFromScreen } = ComponentsConstants.fab;
 
   const {
-    icon,
     onPress,
-    zIndex,
     style,
     onLayout,
-    iconColor = theme.colors.text,
+    children,
     borderRadius = FabBorderRadius.auto,
     size = FabSize.normal,
     backgroundColor = theme.colors.primary,
@@ -47,12 +45,24 @@ const FloatingActionButton = (props: FloatingActionButtonProps) => {
         onLayout={onLayout}
         style={fabStyles}
       >
-        <Icon
-          {...icon}
-          style={[styles.fabIcon, { color: iconColor }]}
-        />
+        {children}
       </Animated.View>
     </TouchableWithoutFeedback>
+  );
+};
+
+FloatingActionButton.Shrink = (props: FabShrinkProps) => {
+  const { theme } = useContext(ThemeContext);
+
+  const { icon, color = theme.colors.text } = props;
+
+  return (
+    <FloatingActionButton {...props}>
+      <Icon
+        {...icon}
+        style={[styles.fabIcon, { color: color }]}
+      />
+    </FloatingActionButton>
   );
 };
 

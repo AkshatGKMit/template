@@ -5,7 +5,7 @@ import { Animation } from '@utility/helpers';
 
 import FloatingActionButton from './FloatingActionButton';
 
-const FloatingActionButtonAutoHide = (props: FloatingActionButtonAutoHideProps) => {
+const FloatingActionButtonAutoHide = (props: FabAutoHideProps) => {
   const { visible, visibleDuration = 250 } = props;
 
   const fabPositionX = useRef<number>(0);
@@ -43,7 +43,7 @@ const FloatingActionButtonAutoHide = (props: FloatingActionButtonAutoHideProps) 
   });
 
   return (
-    <FloatingActionButton
+    <FloatingActionButton.Shrink
       {...props}
       onLayout={_onLayoutChange}
       style={{ transform: [{ translateX: translateXInterpolate }] }}
