@@ -1,8 +1,6 @@
 import { createStyles, createThemedStyles } from '@config/useStyles';
 
 const ThemedStyles = createThemedStyles((theme) => {
-  const { colors } = theme;
-
   return createStyles({
     item: {
       flexDirection: 'row',
@@ -15,12 +13,12 @@ const ThemedStyles = createThemedStyles((theme) => {
     listSeparator: {
       width: 'auto',
       height: 0.75,
-      backgroundColor: colors.divider(),
+      backgroundColor: theme.divider,
       marginHorizontal: 12,
       marginVertical: 1,
     },
     listView: {
-      shadowColor: colors.inverted.main,
+      shadowColor: theme.inverted.main,
       shadowOffset: {
         width: 0,
         height: 0,
@@ -32,12 +30,12 @@ const ThemedStyles = createThemedStyles((theme) => {
     list: {
       position: 'absolute',
       zIndex: 10,
-      backgroundColor: colors.secondaryBackground,
+      backgroundColor: theme.secondaryBackground,
       paddingVertical: 4,
     },
     button: {
       flexDirection: 'row',
-      backgroundColor: colors.secondaryBackground,
+      backgroundColor: theme.secondaryBackground,
       padding: 12,
       gap: 10,
       borderWidth: 1,

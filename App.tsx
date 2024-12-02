@@ -7,9 +7,9 @@ import BottomSheet from '@components/bottomSheet';
 import GradientScreen from '@components/gradientScreen';
 import Snackbar from '@components/snackBar';
 import store, { useAppDispatch, useAppSelector } from '@config/store';
-import ThemeContext, { ThemeContextProvider } from '@config/ThemeContext';
 import { Colors, ThemeMode } from '@themes';
 import { switchTheme } from '@reducers/theme';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -17,11 +17,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <ThemeContextProvider>
-          <Main />
-          <BottomSheet />
-          <Snackbar />
-        </ThemeContextProvider>
+        <Main />
+        <BottomSheet />
+        <Snackbar />
       </SafeAreaProvider>
     </Provider>
   );

@@ -20,20 +20,18 @@ declare global {
   interface ThemeColors {
     main: string;
     primary: string;
-    accent: string;
-    statusBar: string;
+    primaryText: string;
     primaryBackground: string;
     secondaryBackground: string;
+    cardColor: string;
     screenGradient: string[];
     text: string;
-    primaryText: string;
     secondaryText: string;
-    accentText: string;
-    defaultIcon: string;
-    divider: (opacity?: number) => string;
-    underlay: (opacity?: number) => string;
-    placeholder: (opacity?: number) => string;
     error: string;
+    divider: string;
+    placeholder: string;
+    underlay: string;
+    all: Object;
     inverted: InvertedOmittedThemeColors;
   }
 

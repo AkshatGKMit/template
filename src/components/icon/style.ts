@@ -2,11 +2,9 @@ import { createStyles, createThemedStyles } from '@config/useStyles';
 import { FontSize } from '@themes';
 
 const ThemedStyles = createThemedStyles((theme) => {
-  const { colors } = theme;
-
   return createStyles({
     icon: {
-      color: colors.defaultIcon,
+      color: theme.text,
       fontSize: FontSize.bodyLarge,
     },
   });

@@ -1,5 +1,4 @@
 import { createStyles, createThemedStyles } from '@config/useStyles';
-import { Colors } from './colors';
 
 export const GlobalThemedStyles = createThemedStyles((theme) => {
   return createStyles({

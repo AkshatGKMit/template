@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Platform, StatusBar, StyleProp, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
@@ -24,69 +24,47 @@ const GradientScreen = ({
 
   const { portrait, landscape } = useScalingMetrics();
 
-  const { top: topInsets, right: rightInsets, bottom: bottomInsets, left: leftInsets } = insets;
-
   const theme = useAppSelector((state) => state.theme.colors);
 
   const globalStyles = GlobalThemedStyles();
 
-  const [marginStyles, setMarginStyles] = useState<StyleProp<ViewStyle>>({});
+  const marginStyles = useMemo(() => {
+    const { top, right, bottom, left } = insets;
 
-  const safeAreaMargins = () => {
-    setMarginStyles({
-      marginTop: topInsets,
-      marginRight: rightInsets,
-      marginBottom: bottomInsets,
-      marginLeft: leftInsets,
-    });
-  };
-
-  const landscapeSafeAreaMargins = () => {
-    setMarginStyles({
-      marginRight: rightInsets,
-      marginLeft: leftInsets,
-    });
-  };
-
-  const portraitSafeAreaMargins = () => {
-    setMarginStyles({
-      marginTop: topInsets,
-      marginBottom: bottomInsets,
-    });
-  };
-
-  const changeMarginStyles = () => {
     if (useSafeArea) {
-      safeAreaMargins();
-      return;
+      return {
+        marginTop: top,
+        marginRight: right,
+        marginBottom: bottom,
+        marginLeft: left,
+      };
     }
 
     if (useSafeAreaInLandscape && landscape) {
-      landscapeSafeAreaMargins();
-      return;
+      return {
+        marginRight: right,
+        marginLeft: left,
+      };
     }
 
     if (useSafeAreaInPortrait && portrait) {
-      portraitSafeAreaMargins();
-      return;
+      return {
+        marginTop: top,
+        marginBottom: bottom,
+      };
     }
 
-    setMarginStyles({
-      marginTop: isTopInset ? topInsets : 0,
-      marginRight: isRightInset ? rightInsets : 0,
-      marginBottom: isBottomInset ? bottomInsets : 0,
-      marginLeft: isLeftInset ? leftInsets : 0,
-    });
-  };
-
-  useEffect(() => {
-    changeMarginStyles();
+    return {
+      marginTop: isTopInset ? top : 0,
+      marginRight: isRightInset ? right : 0,
+      marginBottom: isBottomInset ? bottom : 0,
+      marginLeft: isLeftInset ? left : 0,
+    };
   }, [
     insets,
     useSafeArea,
-    showStatusBar,
-    useSafeAreaInLandscape,
-    useSafeAreaInPortrait,
+    landscape,
+    portrait,
     isBottomInset,
     isLeftInset,
     isRightInset,

@@ -1,45 +1,40 @@
 import { colorWithOpacity } from '@utility/helpers';
 
-import { Colors } from './colors';
+import { Colors, Dark, Light } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 const lightTheme: InvertedOmittedThemeColors = {
   main: Colors.white,
-  accent: Colors.accent.light,
-  accentText: Colors.greyShades.shade600,
-  defaultIcon: Colors.black,
-  divider: (opacity) => colorWithOpacity(Colors.black, opacity ?? 0.2),
-  placeholder: (opacity) => colorWithOpacity(Colors.black, opacity ?? 0.45),
-  primary: Colors.primary.light,
-  primaryText: Colors.primary.light,
-  primaryBackground: Colors.white,
-  secondaryBackground: Colors.greyShades.shade200,
-  screenGradient: [Colors.greyShades.shade100, colorWithOpacity(Colors.greyShades.shade100, 0.3)],
-  statusBar: Colors.primary.light,
-  text: Colors.black,
-  secondaryText: Colors.greyShades.shade600,
-  underlay: (opacity) => colorWithOpacity(Colors.greyShades.shade800, opacity ?? 0.25),
-  error: Colors.error.light,
+  primary: Light.primary.color,
+  primaryText: Light.primary.color,
+  primaryBackground: Light.neutral.surface.main,
+  secondaryBackground: Light.neutral.container.normal,
+  cardColor: Light.neutral.container.normal,
+  screenGradient: [Light.neutral.container.highest, Light.neutral.container.lowest],
+  text: Light.neutral.surface.on,
+  secondaryText: Light.neutral.surface.var,
+  error: Light.error.color,
+  divider: Light.neutral.outline.variant,
+  placeholder: Light.neutral.outline.main,
+  underlay: Light.neutral.outline.variant,
+  all: Light,
 };
 
 const darkTheme: InvertedOmittedThemeColors = {
-  main: Colors.black,
-  accent: Colors.accent.dark,
-  accentText: Colors.greyShades.shade400,
-  defaultIcon: Colors.white,
-  divider: (opacity) => colorWithOpacity(Colors.white, opacity ?? 0.2),
-  placeholder: (opacity) => colorWithOpacity(Colors.white, opacity ?? 0.45),
-  primary: Colors.primary.dark,
-  primaryText: Colors.primary.dark,
-  primaryBackground: Colors.black,
-  secondaryBackground: Colors.greyShades.shade800,
-  screenGradient: [Colors.greyShades.shade900, colorWithOpacity(Colors.greyShades.shade900, 0.3)],
-  statusBar: Colors.primary.dark,
-  text: Colors.white,
-  secondaryText: Colors.greyShades.shade400,
-  underlay: (opacity) => colorWithOpacity(Colors.greyShades.shade200, opacity ?? 0.25),
-  error: Colors.error.dark,
+  main: Colors.white,
+  primary: Dark.primary.color,
+  primaryText: Dark.primary.color,
+  primaryBackground: Dark.neutral.surface.main,
+  secondaryBackground: Dark.neutral.container.normal,
+  cardColor: Dark.neutral.container.normal,
+  screenGradient: [Dark.neutral.container.highest, Dark.neutral.container.lowest],
+  text: Dark.neutral.surface.on,
+  secondaryText: Dark.neutral.surface.var,
+  error: Dark.error.color,
+  divider: Dark.neutral.outline.variant,
+  placeholder: Dark.neutral.outline.main,
+  underlay: Dark.neutral.outline.variant,
+  all: Dark,
 };
 
 export const ThemeColorModes: ThemeColorModes = {
