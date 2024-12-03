@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import IconButton from '@components/iconButton';
 import { useAppSelector } from '@config/store';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { IconFamily } from '@constants';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
@@ -48,7 +48,6 @@ const PopUpMenu = ({
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
   const [menuLayout, setMenuLayout] = useState(defaultLayout);
 
-  const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
   const maxMenuHeight = WH / 3;
@@ -105,14 +104,12 @@ const PopUpMenu = ({
         setMenuLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
       }
     },
-    [WW, WH, buttonLayout],
+    [WH, WW, isFocus, buttonLayout],
   );
 
   function showOrClose(): void {
     if (isFocus) {
       setFocus(false);
-      setMenuLayout(defaultLayout);
-      setButtonLayout(defaultLayout);
       onClose?.();
     } else {
       setFocus(true);
@@ -123,7 +120,7 @@ const PopUpMenu = ({
   const _renderItem = useCallback(
     (): ListRenderItem<PopUpMenuButton> =>
       ({ item, index }) => {
-        const { id, label, onPress, startIcon } = item;
+        const { label, onPress, startIcon } = item;
 
         return (
           <TouchableHighlight
@@ -140,7 +137,7 @@ const PopUpMenu = ({
           </TouchableHighlight>
         );
       },
-    [theme, styles],
+    [items, styles, theme],
   );
 
   const _renderList = useCallback(() => {
@@ -148,13 +145,10 @@ const PopUpMenu = ({
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
-    const animate = () => {
-      opacityAnim.setValue(0);
-      Animation.timing(opacityAnim, 1, 100).start();
-    };
-
     useEffect(() => {
-      if (isFocus) animate();
+      if (isFocus) {
+        Animation.timing(opacityAnim, 1, 100).start();
+      }
     }, [isFocus]);
 
     const ListSeparator = () => {
@@ -179,44 +173,36 @@ const PopUpMenu = ({
         />
       </Animated.View>
     );
-  }, [menuLayout, isFocus, showSeparator, styles]);
+  }, [menuLayout, isFocus, showSeparator, styles, items]);
 
-  const _renderModal = useCallback(
-    () => (
-      <Modal
-        transparent
-        statusBarTranslucent
-        visible={isFocus}
-        supportedOrientations={['landscape', 'portrait']}
-        onRequestClose={showOrClose}
-      >
-        <Pressable
-          style={globalStyles.flex1}
-          onPress={showOrClose}
-          children={_renderList()}
-        />
-      </Modal>
-    ),
-    [isFocus, showOrClose, globalStyles],
-  );
-
-  const _renderMenuButton = useCallback(() => {
-    return (
-      <IconButton
-        family={icon?.family ?? IconFamily.materialIcons}
-        name={icon?.name ?? 'more-vert'}
+  const _renderModal = () => (
+    <Modal
+      transparent
+      statusBarTranslucent
+      visible={isFocus}
+      supportedOrientations={['landscape', 'portrait']}
+      onRequestClose={showOrClose}
+    >
+      <Pressable
+        style={globalStyles.flex1}
         onPress={showOrClose}
-        onLayout={_measureButton}
+        children={_renderList()}
       />
-    );
-  }, [styles, theme, icon]);
+    </Modal>
+  );
 
   return (
     <>
-      {_renderMenuButton()}
+      <IconButton
+        family={icon?.family ?? IconFamily.materialIcons}
+        name={icon?.name ?? 'more-vert'}
+        size={icon?.size}
+        onPress={showOrClose}
+        onLayout={_measureButton}
+      />
       {_renderModal()}
     </>
   );
 };
 
-export default memo(PopUpMenu);
+export default PopUpMenu;
