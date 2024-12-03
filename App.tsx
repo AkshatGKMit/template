@@ -12,6 +12,7 @@ import { switchTheme } from '@reducers/theme';
 import Scaffold from '@components/scaffold/Scaffold';
 import TextBlock from '@components/textBlock/TextBlock';
 import { globalStyles } from '@themes/globalStyles';
+import RippleButton from '@components/rippleButton';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -51,12 +52,7 @@ const Main = () => {
           ...globalStyles.columnCenter,
         }}
       >
-        <TextBlock
-          fontFamily={FontFamily.italic.black}
-          fontSize={30}
-        >
-          Hello World
-        </TextBlock>
+        <RippleButton />
       </View>
     </Scaffold>
   );

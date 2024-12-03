@@ -78,6 +78,10 @@ export namespace Animation {
     return Animated.loop(animation);
   }
 
+  export function parallel(animation: Animated.CompositeAnimation[]): Animated.CompositeAnimation {
+    return Animated.parallel(animation);
+  }
+
   export function delay(time: number): Animated.CompositeAnimation {
     return Animated.delay(time);
   }
