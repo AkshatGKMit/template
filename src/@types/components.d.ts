@@ -222,6 +222,7 @@ declare global {
   interface ScaffoldProps extends SafeAreaProps, ViewProps {
     backgroundColor?: string;
     style?: StyleProp<Omit<ViewStyle, 'backgroundColor'>>;
+    appBar?: ReactElement<SmallAppBarProps | ExtendedAppBarProps>;
   }
 
   interface ShimmerProps {

@@ -17,6 +17,7 @@ import { switchTheme } from '@store/reducers/theme';
 import TextField from '@components/textField';
 import Loader from '@components/loader';
 import { loginUser } from '@store/reducers/auth';
+import AppBar from '@components/appBar';
 // import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {
@@ -34,6 +35,22 @@ const App = () => {
         <Snackbar />
       </SafeAreaProvider>
     </Provider>
+  );
+};
+
+const ScreenAppBar = () => {
+  return (
+    <AppBar.Extended
+      title={'Template'}
+      leading={{ family: 'MaterialIcons', name: 'menu' }}
+      trailing={[
+        { icon: { family: 'MaterialIcons', name: 'settings' }, title: 'Filter' },
+        { icon: { family: 'MaterialIcons', name: 'search' }, title: 'Filter' },
+        { icon: { family: 'MaterialIcons', name: 'mood' }, title: 'Filter' },
+        { icon: { family: 'MaterialIcons', name: 'favorite' }, title: 'Filter' },
+        { icon: { family: 'MaterialIcons', name: 'numbers' }, title: 'Filter' },
+      ]}
+    />
   );
 };
 
@@ -59,6 +76,7 @@ const Main = () => {
   return (
     <Scaffold
       style={{ padding: 12, gap: 10 }}
+      appBar={<ScreenAppBar />}
       useSafeAreaInPortrait
     >
       {error && (

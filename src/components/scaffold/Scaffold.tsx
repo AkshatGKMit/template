@@ -15,6 +15,7 @@ const Scaffold = (props: ScaffoldProps) => {
     leftInset,
     rightInset,
     topInset,
+    appBar,
   } = props;
   const { insetTop, insetBottom, insetLeft, insetRight } = useDeviceSafeArea({
     useSafeArea,
@@ -37,17 +38,7 @@ const Scaffold = (props: ScaffoldProps) => {
 
   return (
     <View style={[globalThemedStyles.screen, paddingStyles]}>
-      <AppBar.Extended
-        title={'Template'}
-        leading={{ family: 'MaterialIcons', name: 'menu' }}
-        trailing={[
-          { icon: { family: 'MaterialIcons', name: 'settings' }, title: 'Filter' },
-          { icon: { family: 'MaterialIcons', name: 'search' }, title: 'Filter' },
-          { icon: { family: 'MaterialIcons', name: 'mood' }, title: 'Filter' },
-          { icon: { family: 'MaterialIcons', name: 'favorite' }, title: 'Filter' },
-          { icon: { family: 'MaterialIcons', name: 'numbers' }, title: 'Filter' },
-        ]}
-      />
+      {appBar}
       <View
         {...props}
         style={style}
