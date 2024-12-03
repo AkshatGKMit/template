@@ -44,6 +44,8 @@ const Scaffold = (props: ScaffoldProps) => {
           { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
           { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
           { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
+          { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
+          { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
         ]}
       />
       <View

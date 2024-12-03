@@ -46,7 +46,7 @@ export const AppBarConstants = {
   paddingHorizontal: 8,
   gap: 12,
   targetSize: 36,
-  maxExtendedTrailing: 4,
+  maxExtendedTrailing: 3,
 };
 
 export const BottomSheetConstants = {
