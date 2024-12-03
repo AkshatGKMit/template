@@ -272,26 +272,17 @@ declare global {
     onPress?: () => void;
   }
 
-  interface TextFieldProps {
+  interface TextFieldProps extends TextInputProps {
     value: string;
     onChangeText: (text: string) => void;
     label?: string;
     placeholder?: string;
     ref?: RefObject<TextInput>;
-    keyboardType?: KeyboardTypeOptions;
-    inputMode?: InputModeOptions;
-    enterKeyHint?: EnterKeyHintTypeOptions;
-    onEndEditing?: (e?: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
-    onSubmitEditing?: (e?: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void;
-    autoFocus?: boolean;
     prefixIcon?: IconProps;
     suffixIconButton?: IconButtonProps;
     secureText?: boolean;
     containerStyle?: StyleProp<ViewStyle>;
-    textInputStyle?: StyleProp<TextStyle>;
     errorMsg?: string;
-    multiline?: boolean;
-    addOns?: TextInputProps;
   }
 
   interface ObjectLayout {

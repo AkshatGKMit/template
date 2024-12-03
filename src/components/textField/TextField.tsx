@@ -3,33 +3,26 @@ import { Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
-import { useAppSelector } from '@config/store';
+import { useAppSelector } from '@store';
 import { colorWithOpacity } from '@utility/helpers';
 
 import textfieldStyles from './styles';
 
-const TextField = ({
-  value,
-  onChangeText,
-  placeholder,
-  label,
-  ref,
-  autoFocus,
-  keyboardType,
-  inputMode,
-  enterKeyHint,
-  onSubmitEditing,
-  onEndEditing,
-  errorMsg,
-  secureText,
-  prefixIcon,
-  suffixIconButton,
-  containerStyle,
-  textInputStyle,
-  multiline,
-  addOns,
-}: TextFieldProps) => {
-  const theme = useAppSelector((state) => state.theme.colors);
+const TextField = (props: TextFieldProps) => {
+  const {
+    value,
+    placeholder,
+    label,
+    ref,
+    errorMsg,
+    secureText,
+    prefixIcon,
+    suffixIconButton,
+    containerStyle,
+    multiline,
+    style,
+  } = props;
+  const theme = useAppSelector(({ theme }) => theme.colors);
 
   const inputRef = useRef<TextInput>(null);
 
@@ -59,8 +52,8 @@ const TextField = ({
   );
 
   const textInputStyles = useMemo(
-    () => [styles.textInput, textInputStyle, multiline && { paddingBottom: 5 }],
-    [styles, textInputStyle, multiline],
+    () => [styles.textInput, style, multiline && { paddingBottom: 5 }],
+    [styles, style, multiline],
   );
 
   const Label = () => (
@@ -76,24 +69,13 @@ const TextField = ({
   const TextInputNode = () => (
     <TextInput
       ref={ref ?? inputRef}
-      value={value}
-      onChangeText={onChangeText}
       onFocus={_onFocus}
       onBlur={_onBlur}
-      keyboardType={keyboardType}
-      inputMode={inputMode}
-      autoComplete={'off'}
-      onEndEditing={onEndEditing}
-      enterKeyHint={enterKeyHint}
-      onSubmitEditing={onSubmitEditing}
       placeholder={placeholder}
       placeholderTextColor={getColor(true)}
       secureTextEntry={secureText}
-      autoFocus={autoFocus}
-      style={textInputStyles}
       autoCapitalize="sentences"
-      multiline={multiline}
-      {...addOns}
+      {...props}
     />
   );
 
@@ -107,7 +89,7 @@ const TextField = ({
         >
           {prefixIcon && (
             <Icon
-              style={{ color: getColor() }}
+              color={getColor()}
               {...prefixIcon}
             />
           )}
@@ -116,7 +98,7 @@ const TextField = ({
 
           {suffixIconButton && (
             <IconButton
-              iconStyle={{ color: getColor() }}
+              color={getColor()}
               {...suffixIconButton}
             />
           )}
