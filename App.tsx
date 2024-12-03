@@ -42,7 +42,7 @@ const Main = () => {
   }, [colorScheme]);
 
   return (
-    <Scaffold>
+    <Scaffold useSafeAreaInPortrait>
       <View
         style={{
           height: 300,

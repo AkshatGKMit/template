@@ -183,6 +183,11 @@ declare global {
     itemStyle?: StyleProp<ViewStyle>;
   }
 
+  interface ScaffoldProps extends SafeAreaProps, ViewProps {
+    backgroundColor?: string;
+    style?: StyleProp<Omit<ViewStyle, 'backgroundColor'>>;
+  }
+
   interface ShimmerProps {
     baseColor: string;
     highlightColor: string;
