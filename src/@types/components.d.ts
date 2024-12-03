@@ -215,6 +215,13 @@ declare global {
     onSwipeFinished?: (direction?: SwipeDirection, gesture?: PanResponderGestureState) => void;
   }
 
+  interface TextBlockProps extends TextProps {
+    fontFamily?: FontFamily;
+    fontSize?: FontSize;
+    color?: string;
+    style?: StyleProp<Omit<TextStyle, 'fontFamily' | 'fontSize' | 'color'>>;
+  }
+
   interface TextButtonProps extends Omit<TextProps, 'children'> {
     text: string;
     color?: string;

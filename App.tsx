@@ -7,9 +7,11 @@ import BottomSheet from '@components/bottomSheet';
 import GradientScreen from '@components/gradientScreen';
 import Snackbar from '@components/snackBar';
 import store, { useAppDispatch, useAppSelector } from '@config/store';
-import { Colors, ThemeMode } from '@themes';
+import { Colors, FontFamily, ThemeMode } from '@themes';
 import { switchTheme } from '@reducers/theme';
 import Scaffold from '@components/scaffold/Scaffold';
+import TextBlock from '@components/textBlock/TextBlock';
+import { globalStyles } from '@themes/globalStyles';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -46,8 +48,16 @@ const Main = () => {
           height: 300,
           width: 300,
           backgroundColor: theme.cardColor,
+          ...globalStyles.columnCenter,
         }}
-      ></View>
+      >
+        <TextBlock
+          fontFamily={FontFamily.italic.black}
+          fontSize={30}
+        >
+          Hello World
+        </TextBlock>
+      </View>
     </Scaffold>
   );
 };
