@@ -16,11 +16,17 @@ export const StoreConstants = {
       decrement: 'decrement',
     },
   },
+  user: {
+    name: 'user',
+    actions: {},
+    thunk: {
+      login: 'login',
+    },
+  },
 } as const;
 
 export const StorageKey = {
-  themeMode: 'ThemeMode',
-  fontFamily: 'fontFamily',
+  user: 'User',
 };
 
 export const Errors = {

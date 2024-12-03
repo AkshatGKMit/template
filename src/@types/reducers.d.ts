@@ -6,3 +6,9 @@ interface ThemeState {
 interface CounterState {
   value: number;
 }
+
+interface AuthState {
+  user: User | null;
+  loading: boolean;
+  error?: Partial<ApiCallError>;
+}

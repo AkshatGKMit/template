@@ -43,8 +43,8 @@ export namespace StorageManager {
     }
   }
 
-  export async function saveStoreValue(key: StorageKey, value: string) {
-    await AsyncStorage.setItem(key, value);
+  export async function saveStoreValue(key: StorageKey, value: any) {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
   }
 }
 
