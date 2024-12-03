@@ -6,18 +6,21 @@ export const GlobalThemedStyles = createThemedStyles((theme) => {
       flex: 1,
       backgroundColor: theme.primaryBackground,
     },
-    rowCenter: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-    },
-    columnCenter: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-    },
-    flex1: {
-      flex: 1,
-    },
   });
+});
+
+export const globalStyles = createStyles({
+  rowCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  columnCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  flex1: {
+    flex: 1,
+  },
 });

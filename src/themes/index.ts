@@ -1,5 +1,3 @@
-import { colorWithOpacity } from '@utility/helpers';
-
 import { Colors, Dark, Light } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
 

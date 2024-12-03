@@ -9,13 +9,17 @@ import Snackbar from '@components/snackBar';
 import store, { useAppDispatch, useAppSelector } from '@config/store';
 import { Colors, ThemeMode } from '@themes';
 import { switchTheme } from '@reducers/theme';
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import Scaffold from '@components/scaffold/Scaffold';
 
 const App = () => {
   useEffect(() => {}, []);
 
   return (
     <Provider store={store}>
+      <StatusBar
+        translucent
+        backgroundColor={Colors.transparent}
+      />
       <SafeAreaProvider>
         <Main />
         <BottomSheet />
@@ -36,21 +40,15 @@ const Main = () => {
   }, [colorScheme]);
 
   return (
-    <>
-      <StatusBar
-        translucent
-        backgroundColor={Colors.transparent}
-      />
-      <GradientScreen useSafeArea>
-        <View
-          style={{
-            height: 300,
-            width: 300,
-            backgroundColor: theme.primary,
-          }}
-        ></View>
-      </GradientScreen>
-    </>
+    <Scaffold>
+      <View
+        style={{
+          height: 300,
+          width: 300,
+          backgroundColor: theme.cardColor,
+        }}
+      ></View>
+    </Scaffold>
   );
 };
 

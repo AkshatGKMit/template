@@ -3,14 +3,12 @@ import { Animated, Text, TouchableWithoutFeedback } from 'react-native';
 import Icon from '@components/icon';
 import { useAppSelector } from '@config/store';
 import { ComponentsConstants, FabBorderRadius, FabSize } from '@constants';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+import { globalStyles } from '@themes/globalStyles';
 
 import styles from './styles';
 
 const FloatingActionButton = (props: FabProps) => {
   const theme = useAppSelector((state) => state.theme.colors);
-
-  const globalStyles = GlobalThemedStyles();
 
   const { marginFromScreen } = ComponentsConstants.fab;
 
