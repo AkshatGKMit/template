@@ -10,7 +10,7 @@ const initialState: AuthState = {
   user: null,
 };
 
-export const loginThunk = createAsyncThunk(
+export const loginUser = createAsyncThunk(
   thunk.login,
   async (loginRequestData: UserLoginRequestType) => {
     const loginResponse = await axios.post<User>(
@@ -24,10 +24,10 @@ export const loginThunk = createAsyncThunk(
 );
 
 const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<AuthState>) => {
-  addCase(loginThunk.pending, (state) => {
+  addCase(loginUser.pending, (state) => {
     state.loading = true;
   });
-  addCase(loginThunk.fulfilled, (state, actions) => {
+  addCase(loginUser.fulfilled, (state, actions) => {
     const { data } = actions.payload;
 
     state.user = actions.payload.data;
@@ -35,7 +35,7 @@ const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<AuthState>) => {
 
     StorageManager.saveStoreValue(StorageKey.user, data);
   });
-  addCase(loginThunk.rejected, (state, actions) => {
+  addCase(loginUser.rejected, (state, actions) => {
     state.error = actions.error;
     state.loading = false;
   });
