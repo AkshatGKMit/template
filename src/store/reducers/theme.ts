@@ -33,7 +33,7 @@ export namespace Switch {
 const switchTheme = Switch.action;
 
 const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<ThemeState>) => {
-  addCase(Switch.action, Switch.reducer);
+  addCase(switchTheme, Switch.reducer);
 };
 
 const themeReducer = createReducer<ThemeState>(initialState, reducerBuilder);

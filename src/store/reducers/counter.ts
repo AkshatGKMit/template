@@ -1,5 +1,6 @@
 import {
   ActionCreatorWithOptionalPayload,
+  ActionCreatorWithoutPayload,
   ActionReducerMapBuilder,
   CaseReducer,
   createAction,
@@ -26,12 +27,12 @@ export namespace Increment {
 }
 
 export namespace Decrement {
-  export const action = createAction<number | undefined>(`${sliceName}/${actions.decrement}`);
+  export const action = createAction(`${sliceName}/${actions.decrement}`);
 
-  export const reducer: CaseReducer<
-    CounterState,
-    ReturnType<ActionCreatorWithOptionalPayload<number | undefined, string>>
-  > = (state, action) => {
+  export const reducer: CaseReducer<CounterState, ReturnType<ActionCreatorWithoutPayload>> = (
+    state,
+    action,
+  ) => {
     state.value -= action.payload ?? 1;
   };
 }
@@ -40,12 +41,12 @@ const increment = Increment.action;
 const decrement = Decrement.action;
 
 const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<CounterState>) => {
-  addCase(Increment.action, Increment.reducer);
-  addCase(Decrement.action, Decrement.reducer);
+  addCase(increment, Increment.reducer);
+  addCase(decrement, Decrement.reducer);
 };
 
-const themeReducer = createReducer<CounterState>(initialState, reducerBuilder);
+const counterReducer = createReducer<CounterState>(initialState, reducerBuilder);
 
 export { increment, decrement };
 
-export default themeReducer;
+export default counterReducer;

@@ -57,11 +57,11 @@ const Main = () => {
           gap: 20,
         }}
       >
-        <RippleButton onPress={() => dispatch(decrement(10))}>
+        <RippleButton onPress={() => dispatch(decrement())}>
           <TextBlock fontFamily="Lato-BlackItalic">-</TextBlock>
         </RippleButton>
         <TextBlock fontFamily="Lato-BlackItalic">{counter}</TextBlock>
-        <RippleButton onPress={() => dispatch(increment(10))}>
+        <RippleButton onPress={() => dispatch(increment())}>
           <TextBlock fontFamily="Lato-BlackItalic">+</TextBlock>
         </RippleButton>
       </View>
