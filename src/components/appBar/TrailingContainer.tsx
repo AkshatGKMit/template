@@ -5,7 +5,7 @@ import { AppBarConstants } from '@constants';
 
 import ThemedStyles from './styles';
 
-export const TrailingContainer = (trailing?: IconButtonProps, iconColor?: string) => {
+export const TrailingContainer = ({ trailing, iconColor }: TrailingContainerProps) => {
   const styles = ThemedStyles();
 
   const { iconSize } = AppBarConstants;

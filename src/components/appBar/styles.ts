@@ -16,15 +16,14 @@ const ThemedStyles = createThemedStyles((theme) => {
       paddingHorizontal,
     },
     extendedTrailingContainer: {
-      ...globalStyles.columnCenter,
+      ...globalStyles.rowCenter,
       height: targetSize,
-      backgroundColor: 'yellow',
+      gap,
     },
     trailingContainer: {
       ...globalStyles.columnCenter,
       height: targetSize,
       width: targetSize,
-      backgroundColor: 'red',
     },
     title: {
       ...globalStyles.flex1,

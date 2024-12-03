@@ -58,7 +58,13 @@ declare global {
     title: string;
     onPress?: () => void;
   }
+
   type TrailingButtons = TrailingButton[];
+
+  interface TrailingContainerProps {
+    trailing?: IconButtonProps;
+    iconColor?: string;
+  }
 
   interface AppBarProps {
     title: string;
@@ -75,7 +81,7 @@ declare global {
   }
 
   interface ExtendedAppBarProps extends Omit<AppBarProps, 'centerTitle'> {
-    trailing?: TrailingButtons;
+    trailing: TrailingButtons;
   }
 
   interface BottomSheetParams extends RefManagerParams {
@@ -196,7 +202,7 @@ declare global {
 
   interface PopUpMenuProps {
     items: PopUpMenuButtons;
-    icon?: Omit<IconButtonProps, 'onPress'>;
+    icon?: Partial<Omit<IconButtonProps, 'onPress'>>;
     onOpened?: () => void;
     onClose?: () => void;
     gap?: number;
