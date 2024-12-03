@@ -44,7 +44,7 @@ export const AppBarConstants = {
   height: 60,
   iconSize: 24,
   paddingHorizontal: 8,
-  gap: 24,
+  gap: 12,
   targetSize: 36,
 };
 

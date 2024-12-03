@@ -41,6 +41,7 @@ const Scaffold = (props: ScaffoldProps) => {
         title={'Template'}
         leading={{ family: 'FontAwesome', name: 'filter' }}
         trailing={{ family: 'FontAwesome', name: 'filter' }}
+        centerTitle
       />
       <View
         {...props}

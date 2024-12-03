@@ -56,10 +56,11 @@ declare global {
   interface AppBarProps {
     title: string;
     titleColor?: string;
+    centerTitle?: boolean;
     backgroundColor?: string;
     iconColor?: string;
     leading?: IconButtonProps;
-    trailing?: IconButtonProps[];
+    trailing?: ReactNode;
   }
 
   interface SmallAppBarProps extends AppBarProps {

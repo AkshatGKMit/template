@@ -1,4 +1,4 @@
-import { View, Text, StyleProp, ViewStyle, StyleSheet } from 'react-native';
+import { View, Text, StyleProp, ViewStyle, StyleSheet, TextStyle } from 'react-native';
 
 import IconButton from '@components/iconButton';
 import TextBlock from '@components/textBlock';
@@ -9,14 +9,15 @@ import { globalStyles } from '@themes/globalStyles';
 import { createThemedStyles } from '@utility/styles';
 
 export namespace AppBar {
-  export const Small = ({
+  const Main = ({
     title,
     titleColor,
+    centerTitle,
     backgroundColor,
     iconColor,
     leading,
     trailing,
-  }: SmallAppBarProps) => {
+  }: AppBarProps) => {
     const theme = useAppSelector(({ theme }) => theme.colors);
 
     const styles = ThemedStyles();
@@ -28,9 +29,14 @@ export namespace AppBar {
 
     const { iconSize } = AppBarConstants;
 
+    const titleStyles: StyleProp<TextStyle> = [
+      styles.title,
+      centerTitle ? styles.centerAlignedTitle : null,
+    ];
+
     return (
       <View style={containerStyles}>
-        <View style={styles.targetContainer}>
+        <View style={styles.trailingContainer}>
           {leading && (
             <IconButton
               color={iconColor}
@@ -40,7 +46,7 @@ export namespace AppBar {
           )}
         </View>
         <TextBlock
-          style={styles.title}
+          style={titleStyles}
           fontFamily={FontFamily.normal.heavy}
           fontSize={FontSize.titleLarge}
           color={titleColor}
@@ -48,16 +54,32 @@ export namespace AppBar {
           ellipsizeMode="tail"
           children={title}
         />
-        <View style={styles.targetContainer}>
-          {trailing && (
-            <IconButton
-              color={iconColor}
-              {...trailing}
-              size={iconSize}
-            />
-          )}
-        </View>
+        <View style={styles.trailingContainer}>{trailing}</View>
       </View>
+    );
+  };
+
+  export const Small = (props: SmallAppBarProps) => {
+    const styles = ThemedStyles();
+
+    const { trailing, iconColor } = props;
+    const { iconSize } = AppBarConstants;
+
+    return (
+      <Main
+        {...props}
+        trailing={
+          <View style={styles.trailingContainer}>
+            {trailing && (
+              <IconButton
+                color={iconColor}
+                {...trailing}
+                size={iconSize}
+              />
+            )}
+          </View>
+        }
+      />
     );
   };
 }
@@ -75,15 +97,17 @@ const ThemedStyles = createThemedStyles((theme) => {
       gap,
       paddingHorizontal,
     },
-    targetContainer: {
+    trailingContainer: {
       ...globalStyles.columnCenter,
       height: targetSize,
       width: targetSize,
     },
     title: {
       ...globalStyles.flex1,
-      textAlign: 'center',
       textAlignVertical: 'center',
+    },
+    centerAlignedTitle: {
+      textAlign: 'center',
     },
   });
 });
