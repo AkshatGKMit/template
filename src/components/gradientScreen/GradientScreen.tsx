@@ -16,7 +16,7 @@ const GradientScreen = ({
   rightInset,
   topInset,
 }: GradientScreenProps) => {
-  const marginStyles = useDeviceSafeArea({
+  const { insetBottom, insetLeft, insetRight, insetTop } = useDeviceSafeArea({
     useSafeArea,
     useSafeAreaInLandscape,
     useSafeAreaInPortrait,
@@ -29,6 +29,13 @@ const GradientScreen = ({
   const theme = useAppSelector((state) => state.theme.colors);
 
   const globalThemeStyles = GlobalThemedStyles();
+
+  const marginStyles = {
+    marginTop: insetTop,
+    marginBottom: insetBottom,
+    marginLeft: insetLeft,
+    marginRight: insetRight,
+  };
 
   return (
     <LinearGradient

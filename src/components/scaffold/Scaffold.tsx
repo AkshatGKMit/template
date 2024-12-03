@@ -16,7 +16,7 @@ const Scaffold = (props: ScaffoldProps) => {
     rightInset,
     topInset,
   } = props;
-  const marginStyles = useDeviceSafeArea({
+  const { insetTop, insetBottom, insetLeft, insetRight } = useDeviceSafeArea({
     useSafeArea,
     useSafeAreaInLandscape,
     useSafeAreaInPortrait,
@@ -26,14 +26,21 @@ const Scaffold = (props: ScaffoldProps) => {
     topInset,
   });
 
+  const paddingStyles = {
+    paddingTop: insetTop,
+    paddingBottom: insetBottom,
+    paddingLeft: insetLeft,
+    paddingRight: insetRight,
+  };
+
   const globalThemedStyles = GlobalThemedStyles();
 
   return (
-    <View style={globalThemedStyles.screen}>
+    <View style={[globalThemedStyles.screen, paddingStyles]}>
       <AppBar />
       <View
         {...props}
-        style={[style, marginStyles]}
+        style={style}
       >
         {children}
       </View>
