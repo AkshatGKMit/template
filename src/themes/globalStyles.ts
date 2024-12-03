@@ -23,4 +23,7 @@ export const globalStyles = createStyles({
   flex1: {
     flex: 1,
   },
+  positionRelative: {
+    position: 'relative',
+  },
 });

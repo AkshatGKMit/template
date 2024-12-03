@@ -1,13 +1,17 @@
 import { View, Pressable, Animated } from 'react-native';
 
-import Icon from '@components/icon';
+import { useAppSelector } from '@config/store';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
-const RippleButton = () => {
+import styles from './styles';
+
+const RippleButton = ({ children, rippleColor, onPress, borderRadius }: RippleButtonProps) => {
+  const theme = useAppSelector(({ theme }) => theme.colors);
   const opacity = Animation.newValue(0);
   const scale = Animation.newValue(0);
 
-  const ANIM_DURATION = 80;
+  const ANIM_DURATION = 120;
 
   const animatePressIn = () => {
     Animation.parallel([
@@ -24,30 +28,25 @@ const RippleButton = () => {
     });
   };
 
+  const rippleContainerStyles = [
+    styles.rippleContainer,
+    {
+      opacity,
+      transform: [{ scale }],
+      borderRadius,
+      backgroundColor: rippleColor ?? theme.underlay(0.5),
+    },
+  ];
+
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={globalStyles.positionRelative}>
       <Pressable
-        onPress={() => {}}
+        onPress={onPress}
         onPressIn={animatePressIn}
         onPressOut={animatePressOut}
       >
-        <View style={{ padding: 3 }}>
-          <Icon
-            family={'MaterialIcons'}
-            name="menu"
-          />
-        </View>
-        <Animated.View
-          style={{
-            opacity,
-            transform: [{ scale }],
-            position: 'absolute',
-            zIndex: -1,
-            backgroundColor: 'red',
-            height: '100%',
-            width: '100%',
-          }}
-        />
+        <View style={styles.parentContainer}>{children}</View>
+        <Animated.View style={rippleContainerStyles} />
       </Pressable>
     </View>
   );

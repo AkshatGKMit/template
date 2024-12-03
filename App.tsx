@@ -13,6 +13,7 @@ import Scaffold from '@components/scaffold/Scaffold';
 import TextBlock from '@components/textBlock/TextBlock';
 import { globalStyles } from '@themes/globalStyles';
 import RippleButton from '@components/rippleButton';
+import Icon from '@components/icon';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -52,7 +53,15 @@ const Main = () => {
           ...globalStyles.columnCenter,
         }}
       >
-        <RippleButton />
+        <RippleButton>
+          <Icon
+            family={'MaterialIcons'}
+            name="menu"
+          />
+        </RippleButton>
+        <RippleButton>
+          <TextBlock fontFamily="Lato-BlackItalic">Hello World</TextBlock>
+        </RippleButton>
       </View>
     </Scaffold>
   );

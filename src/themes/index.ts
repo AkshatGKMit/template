@@ -15,7 +15,7 @@ const lightTheme: InvertedOmittedThemeColors = {
   error: Light.error.color,
   divider: Light.neutral.outline.variant,
   placeholder: Light.neutral.outline.main,
-  underlay: (opacity?: number) => colorWithOpacity(Light.neutral.outline.variant, 0.25),
+  underlay: (opacity?: number) => colorWithOpacity(Light.neutral.outline.variant, opacity ?? 0.25),
   all: Light,
 };
 
@@ -32,7 +32,7 @@ const darkTheme: InvertedOmittedThemeColors = {
   error: Dark.error.color,
   divider: Dark.neutral.outline.variant,
   placeholder: Dark.neutral.outline.main,
-  underlay: (opacity?: number) => colorWithOpacity(Dark.neutral.outline.variant, 0.25),
+  underlay: (opacity?: number) => colorWithOpacity(Dark.neutral.outline.variant, opacity ?? 0.25),
   all: Dark,
 };
 

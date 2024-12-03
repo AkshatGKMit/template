@@ -1,4 +1,4 @@
-import { ReactNode, RefObject } from 'react';
+import { ReactElement, ReactNode, RefObject } from 'react';
 import {
   Animated,
   EnterKeyHintTypeOptions,
@@ -8,6 +8,7 @@ import {
   LayoutChangeEvent,
   NativeSyntheticEvent,
   PanResponderGestureState,
+  PressableProps,
   StyleProp,
   TextInput,
   TextInputEndEditingEventData,
@@ -209,6 +210,13 @@ declare global {
     showSeparator?: boolean;
     listStyle?: StyleProp<ViewStyle>;
     itemStyle?: StyleProp<ViewStyle>;
+  }
+
+  interface RippleButtonProps extends ViewProps {
+    children?: ReactElement<IconProps> | ReactElement<TextBlockProps>;
+    rippleColor?: string;
+    onPress?: () => void;
+    borderRadius?: number;
   }
 
   interface ScaffoldProps extends SafeAreaProps, ViewProps {
