@@ -6,14 +6,14 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import BottomSheet from '@components/bottomSheet';
 import GradientScreen from '@components/gradientScreen';
 import Snackbar from '@components/snackBar';
-import store, { useAppDispatch, useAppSelector } from '@config/store';
 import { Colors, FontFamily, ThemeMode } from '@themes';
-import { switchTheme } from '@reducers/theme';
 import Scaffold from '@components/scaffold/Scaffold';
 import TextBlock from '@components/textBlock/TextBlock';
 import { globalStyles } from '@themes/globalStyles';
 import RippleButton from '@components/rippleButton';
 import Icon from '@components/icon';
+import store, { useAppDispatch, useAppSelector } from '@store';
+import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {
   useEffect(() => {}, []);

@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { TouchableHighlight } from 'react-native';
 
 import Icon from '@components/icon';
-import { useAppSelector } from '@config/store';
+import { useAppSelector } from '@store';
 
 import styles from './styles';
 

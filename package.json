@@ -7,15 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
-    "clean-node": "rm -rf node_modules package-lock.json yarn.lock Gemfile.lock",
-    "clean-android": "rm -rf android/.gradle android/build android/app/build android/app/.cxx",
-    "clean-ios": "rm -rf ios/Podfile.lock ios/Pods ios/build",
-    "clean-all": "npm run clean-node && npm run clean-android && npm run clean-ios",
-    "build-node": "npm install",
-    "build-android": "cd android && ./gradlew clean",
-    "build-ios": "npx pod-install",
-    "build-all": "npm run build-node && npm run build-android && npm run build-ios"
+    "test": "jest"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.0.0",

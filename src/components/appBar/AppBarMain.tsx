@@ -2,8 +2,8 @@ import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 
 import IconButton from '@components/iconButton';
 import TextBlock from '@components/textBlock';
-import { useAppSelector } from '@config/store';
 import { AppBarConstants } from '@constants';
+import { useAppSelector } from '@store';
 import { FontFamily, FontSize } from '@themes';
 
 import ThemedStyles from './styles';

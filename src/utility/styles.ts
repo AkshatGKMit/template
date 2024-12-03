@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useScalingMetrics from '@config/useScalingMetrics';
-import { useAppSelector } from '@config/store';
+import { useAppSelector } from '@store';
 
 export function createStyles<T extends NamedStyles<T>>(styles: T): T {
   return StyleSheet.create(styles);

@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-import { useAppSelector } from '@config/store';
+import { useAppSelector } from '@store';
 import { FontSize } from '@themes';
 
 const iconFamilies = {

@@ -10,11 +10,11 @@ import {
 import { View, Animated, PanResponder, Pressable, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useAppSelector } from '@config/store';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { BottomSheetConstants } from '@constants';
+import { useAppSelector } from '@store';
 import { Orientation } from '@themes';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
@@ -49,7 +49,6 @@ const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const modalOpacityAnimation = useRef(new Animated.Value(0)).current;
   const sheetPositionYAnimation = useRef(new Animated.Value(WH)).current;
 
-  const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
   const { child, backgroundColor, borderRadius, isDismissible, snap, onHide, onShow } = data;

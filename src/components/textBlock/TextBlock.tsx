@@ -1,7 +1,7 @@
-import { View, Text, StyleProp, TextStyle } from 'react-native';
-import React from 'react';
+import { Text, StyleProp, TextStyle } from 'react-native';
+
+import { useAppSelector } from '@store';
 import { FontFamily, FontSize } from '@themes';
-import { useAppSelector } from '@config/store';
 
 const TextBlock = (props: TextBlockProps) => {
   const theme = useAppSelector(({ theme }) => theme);

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-import themeReducer from '@reducers/theme';
+import themeReducer from './reducers/theme';
 
 const store = configureStore({
   reducer: {

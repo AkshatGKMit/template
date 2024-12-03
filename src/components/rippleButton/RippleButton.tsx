@@ -1,6 +1,6 @@
 import { View, Pressable, Animated } from 'react-native';
 
-import { useAppSelector } from '@config/store';
+import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 

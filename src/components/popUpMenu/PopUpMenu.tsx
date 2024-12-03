@@ -12,10 +12,9 @@ import {
 } from 'react-native';
 
 import Icon from '@components/icon';
-import IconButton from '@components/iconButton';
-import { useAppSelector } from '@config/store';
 import useScalingMetrics from '@config/useScalingMetrics';
 import { IconFamily } from '@constants';
+import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
