@@ -1,3 +1,4 @@
+import { colorWithOpacity } from '@utility/helpers';
 import { Colors, Dark, Light } from './colors';
 import { FontFamily, FontSize, FontWeight } from './font';
 
@@ -14,12 +15,12 @@ const lightTheme: InvertedOmittedThemeColors = {
   error: Light.error.color,
   divider: Light.neutral.outline.variant,
   placeholder: Light.neutral.outline.main,
-  underlay: Light.neutral.outline.variant,
+  underlay: (opacity?: number) => colorWithOpacity(Light.neutral.outline.variant, 0.25),
   all: Light,
 };
 
 const darkTheme: InvertedOmittedThemeColors = {
-  main: Colors.white,
+  main: Colors.black,
   primary: Dark.primary.color,
   primaryText: Dark.primary.color,
   primaryBackground: Dark.neutral.surface.main,
@@ -31,7 +32,7 @@ const darkTheme: InvertedOmittedThemeColors = {
   error: Dark.error.color,
   divider: Dark.neutral.outline.variant,
   placeholder: Dark.neutral.outline.main,
-  underlay: Dark.neutral.outline.variant,
+  underlay: (opacity?: number) => colorWithOpacity(Dark.neutral.outline.variant, 0.25),
   all: Dark,
 };
 

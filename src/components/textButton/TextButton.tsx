@@ -11,7 +11,7 @@ const TextButton = (props: TextButtonProps) => {
   return (
     <TouchableHighlight
       onPress={onPress}
-      underlayColor={theme.underlay}
+      underlayColor={theme.underlay()}
     >
       <Text
         style={[style, { color }]}

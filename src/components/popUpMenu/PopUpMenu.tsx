@@ -124,7 +124,7 @@ const PopUpMenu = ({
 
         return (
           <TouchableHighlight
-            underlayColor={theme.underlay}
+            underlayColor={theme.underlay()}
             onPress={() => {
               showOrClose();
               onPress?.(item, index);

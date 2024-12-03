@@ -14,7 +14,7 @@ import {
 import Icon from '@components/icon';
 import { defaultLayout, IconFamily } from '@constants';
 import { Colors } from '@themes';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
@@ -41,7 +41,6 @@ const Dropdown = ({
   const [buttonLayout, setButtonLayout] = useState(defaultLayout);
   const [listLayout, setListLayout] = useState(defaultLayout);
 
-  const globalStyles = GlobalThemedStyles();
   const styles = ThemedStyles();
 
   const maxDropdownHeight = WH / 3;
@@ -116,7 +115,7 @@ const Dropdown = ({
 
         return (
           <TouchableHighlight
-            underlayColor={theme.underlay}
+            underlayColor={theme.underlay()}
             onPress={() => {
               setFocus(false);
               onSelect?.(item, index);
