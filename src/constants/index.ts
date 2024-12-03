@@ -40,6 +40,14 @@ export const defaultLayout: ObjectLayout = {
   right: 0,
 };
 
+export const AppBarConstants = {
+  height: 60,
+  iconSize: 24,
+  paddingHorizontal: 8,
+  gap: 24,
+  targetSize: 36,
+};
+
 export const BottomSheetConstants = {
   sheetSlideAnimDuration: 250,
   overlayOpacityAnimDuration: 100,

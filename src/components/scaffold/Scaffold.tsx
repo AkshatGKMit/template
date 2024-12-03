@@ -37,7 +37,7 @@ const Scaffold = (props: ScaffoldProps) => {
 
   return (
     <View style={[globalThemedStyles.screen, paddingStyles]}>
-      <AppBar />
+      <AppBar.Small />
       <View
         {...props}
         style={style}
