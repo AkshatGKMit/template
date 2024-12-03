@@ -1,15 +1,22 @@
 import { View, Text, StyleProp, ViewStyle, StyleSheet } from 'react-native';
-import React from 'react';
-import { createStyles, createThemedStyles } from '@utility/styles';
-import { AppBarConstants } from '@constants';
-import { useAppSelector } from '@config/store';
+
 import IconButton from '@components/iconButton';
-import TextBlock from '@components/textBlock/TextBlock';
-import { globalStyles } from '@themes/globalStyles';
+import TextBlock from '@components/textBlock';
+import { useAppSelector } from '@config/store';
+import { AppBarConstants } from '@constants';
 import { FontFamily, FontSize } from '@themes';
+import { globalStyles } from '@themes/globalStyles';
+import { createThemedStyles } from '@utility/styles';
 
 export namespace AppBar {
-  export const Small = ({ backgroundColor }: { backgroundColor?: string }) => {
+  export const Small = ({
+    title,
+    titleColor,
+    backgroundColor,
+    iconColor,
+    leading,
+    trailing,
+  }: SmallAppBarProps) => {
     const theme = useAppSelector(({ theme }) => theme.colors);
 
     const styles = ThemedStyles();
@@ -24,30 +31,37 @@ export namespace AppBar {
     return (
       <View style={containerStyles}>
         <View style={styles.targetContainer}>
-          <IconButton
-            family="Entypo"
-            name="menu"
-            size={iconSize}
-          />
+          {leading && (
+            <IconButton
+              color={iconColor}
+              {...leading}
+              size={iconSize}
+            />
+          )}
         </View>
         <TextBlock
           style={styles.title}
           fontFamily={FontFamily.normal.heavy}
           fontSize={FontSize.titleLarge}
-        >
-          App Bar
-        </TextBlock>
+          color={titleColor}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          children={title}
+        />
         <View style={styles.targetContainer}>
-          <IconButton
-            family="FontAwesome"
-            name="filter"
-            size={iconSize}
-          />
+          {trailing && (
+            <IconButton
+              color={iconColor}
+              {...trailing}
+              size={iconSize}
+            />
+          )}
         </View>
       </View>
     );
   };
 }
+
 export default AppBar;
 
 const ThemedStyles = createThemedStyles((theme) => {

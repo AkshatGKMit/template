@@ -53,6 +53,19 @@ declare global {
     rightInset?: boolean;
   }
 
+  interface AppBarProps {
+    title: string;
+    titleColor?: string;
+    backgroundColor?: string;
+    iconColor?: string;
+    leading?: IconButtonProps;
+    trailing?: IconButtonProps[];
+  }
+
+  interface SmallAppBarProps extends AppBarProps {
+    trailing?: IconButtonProps;
+  }
+
   interface BottomSheetParams extends RefManagerParams {
     /**
      * @params Points must lie between 0.15 to 0.85
