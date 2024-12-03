@@ -6,10 +6,10 @@ import {
   createReducer,
 } from '@reduxjs/toolkit';
 
-import { ReducerConstants } from '@constants';
+import { StoreConstants } from '@constants';
 import { ThemeColorModes, ThemeMode } from '@themes';
 
-const { name: sliceName, actions } = ReducerConstants.theme;
+const { name: sliceName, actions } = StoreConstants.theme;
 
 const initialState: ThemeState = {
   mode: ThemeMode.light,

@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 export const isIos = Platform.OS === 'ios';
 
-export const ReducerConstants = {
+export const StoreConstants = {
   theme: {
     name: 'theme',
     actions: {
