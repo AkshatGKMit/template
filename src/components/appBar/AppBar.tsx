@@ -7,6 +7,7 @@ import { AppBarConstants } from '@constants';
 import { FontFamily, FontSize } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import { createThemedStyles } from '@utility/styles';
+import useScalingMetrics from '@config/useScalingMetrics';
 
 export namespace AppBar {
   const Main = ({
@@ -54,7 +55,25 @@ export namespace AppBar {
           ellipsizeMode="tail"
           children={title}
         />
-        <View style={styles.trailingContainer}>{trailing}</View>
+        {trailing}
+      </View>
+    );
+  };
+
+  const TrailingContainer = (trailing?: IconButtonProps, iconColor?: string) => {
+    const styles = ThemedStyles();
+
+    const { iconSize } = AppBarConstants;
+
+    return (
+      <View style={styles.trailingContainer}>
+        {trailing && (
+          <IconButton
+            color={iconColor}
+            {...trailing}
+            size={iconSize}
+          />
+        )}
       </View>
     );
   };
@@ -63,22 +82,31 @@ export namespace AppBar {
     const styles = ThemedStyles();
 
     const { trailing, iconColor } = props;
-    const { iconSize } = AppBarConstants;
 
     return (
       <Main
         {...props}
-        trailing={
-          <View style={styles.trailingContainer}>
-            {trailing && (
-              <IconButton
-                color={iconColor}
-                {...trailing}
-                size={iconSize}
-              />
-            )}
-          </View>
-        }
+        trailing={TrailingContainer(trailing, iconColor)}
+      />
+    );
+  };
+
+  export const Extended = (props: ExtendedAppBarProps) => {
+    const {} = useScalingMetrics();
+
+    const styles = ThemedStyles();
+
+    const { trailing, iconColor } = props;
+    const { targetSize, gap, maxExtendedTrailing } = AppBarConstants;
+
+    const trailingLength = Math.min(trailing?.length ?? 0, maxExtendedTrailing);
+
+    const trailingSize = trailingLength * targetSize + gap;
+
+    return (
+      <Main
+        {...props}
+        trailing={<View style={[styles.extendedTrailingContainer, { width: trailingSize }]}></View>}
       />
     );
   };
@@ -97,10 +125,16 @@ const ThemedStyles = createThemedStyles((theme) => {
       gap,
       paddingHorizontal,
     },
+    extendedTrailingContainer: {
+      ...globalStyles.columnCenter,
+      height: targetSize,
+      backgroundColor: 'yellow',
+    },
     trailingContainer: {
       ...globalStyles.columnCenter,
       height: targetSize,
       width: targetSize,
+      backgroundColor: 'red',
     },
     title: {
       ...globalStyles.flex1,

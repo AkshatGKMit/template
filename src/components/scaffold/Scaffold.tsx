@@ -37,11 +37,14 @@ const Scaffold = (props: ScaffoldProps) => {
 
   return (
     <View style={[globalThemedStyles.screen, paddingStyles]}>
-      <AppBar.Small
+      <AppBar.Extended
         title={'Template'}
         leading={{ family: 'FontAwesome', name: 'filter' }}
-        trailing={{ family: 'FontAwesome', name: 'filter' }}
-        centerTitle
+        trailing={[
+          { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
+          { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
+          { icon: { family: 'FontAwesome', name: 'filter' }, title: 'Filter' },
+        ]}
       />
       <View
         {...props}

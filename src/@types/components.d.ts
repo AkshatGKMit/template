@@ -53,6 +53,13 @@ declare global {
     rightInset?: boolean;
   }
 
+  interface TrailingButton {
+    icon: IconProps;
+    title: string;
+    onPress?: () => void;
+  }
+  type TrailingButtons = TrailingButton[];
+
   interface AppBarProps {
     title: string;
     titleColor?: string;
@@ -65,6 +72,10 @@ declare global {
 
   interface SmallAppBarProps extends AppBarProps {
     trailing?: IconButtonProps;
+  }
+
+  interface ExtendedAppBarProps extends Omit<AppBarProps, 'centerTitle'> {
+    trailing?: TrailingButtons;
   }
 
   interface BottomSheetParams extends RefManagerParams {
