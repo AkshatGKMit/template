@@ -43,6 +43,16 @@ declare global {
     child: React.JSX.Element | null;
   }
 
+  interface SafeAreaProps {
+    useSafeArea?: boolean;
+    useSafeAreaInLandscape?: boolean;
+    useSafeAreaInPortrait?: boolean;
+    topInset?: boolean;
+    bottomInset?: boolean;
+    leftInset?: boolean;
+    rightInset?: boolean;
+  }
+
   interface BottomSheetParams extends RefManagerParams {
     /**
      * @params Points must lie between 0.15 to 0.85
@@ -121,16 +131,9 @@ declare global {
     visibleDuration?: number;
   }
 
-  interface GradientScreenProps {
+  interface GradientScreenProps extends SafeAreaProps {
     children?: ReactNode;
     style?: StyleProp<ViewStyle>;
-    useSafeArea?: boolean;
-    useSafeAreaInLandscape?: boolean;
-    useSafeAreaInPortrait?: boolean;
-    topInset?: boolean;
-    bottomInset?: boolean;
-    leftInset?: boolean;
-    rightInset?: boolean;
   }
 
   type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
