@@ -14,6 +14,7 @@ import RippleButton from '@components/rippleButton';
 import Icon from '@components/icon';
 import store, { useAppDispatch, useAppSelector } from '@store';
 import { switchTheme } from '@store/reducers/theme';
+// import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {
   useEffect(() => {}, []);

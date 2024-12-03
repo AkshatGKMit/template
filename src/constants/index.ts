@@ -3,7 +3,12 @@ import { Platform } from 'react-native';
 export const isIos = Platform.OS === 'ios';
 
 export const Slice = {
-  theme: 'theme',
+  theme: {
+    name: 'theme',
+    actions: {
+      switch: 'switch',
+    },
+  },
 } as const;
 
 export const StorageKey = {

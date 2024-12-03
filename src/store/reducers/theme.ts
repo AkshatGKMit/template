@@ -1,26 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createAction, createReducer } from '@reduxjs/toolkit';
 
 import { Slice } from '@constants';
 import { ThemeColorModes, ThemeMode } from '@themes';
+
+const { name: sliceName, actions } = Slice.theme;
 
 const initialState: ThemeState = {
   mode: ThemeMode.light,
   colors: ThemeColorModes[ThemeMode.light],
 };
 
-export const themeSlice = createSlice({
-  name: Slice.theme,
-  initialState,
-  reducers: {
-    switch: (state, actions: PayloadAction<ThemeMode>) => {
-      const mode = actions.payload;
+const switchAction = createAction<ThemeMode>(`${sliceName}/${actions.switch}`);
 
-      state.mode = mode;
-      state.colors = ThemeColorModes[mode];
-    },
-  },
-});
+const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<ThemeState>) => {
+  addCase(switchAction, (state, actions) => {
+    const mode = actions.payload;
 
-export const { switch: switchTheme } = themeSlice.actions;
+    state.mode = mode;
+    state.colors = ThemeColorModes[mode];
+  });
+};
 
-export default themeSlice.reducer;
+const themeReducer = createReducer<ThemeState>(initialState, reducerBuilder);
+
+export { switchAction as switchTheme };
+
+export default themeReducer;
