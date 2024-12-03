@@ -2,11 +2,18 @@ import { Platform } from 'react-native';
 
 export const isIos = Platform.OS === 'ios';
 
-export const Slice = {
+export const ReducerConstants = {
   theme: {
     name: 'theme',
     actions: {
       switch: 'switch',
+    },
+  },
+  counter: {
+    name: 'counter',
+    actions: {
+      increment: 'increment',
+      decrement: 'decrement',
     },
   },
 } as const;

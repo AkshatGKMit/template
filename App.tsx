@@ -14,6 +14,7 @@ import RippleButton from '@components/rippleButton';
 import Icon from '@components/icon';
 import store, { useAppDispatch, useAppSelector } from '@store';
 import { switchTheme } from '@store/reducers/theme';
+import { decrement, increment } from '@store/reducers/counter';
 // import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {
@@ -38,7 +39,8 @@ const Main = () => {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
 
-  const theme = useAppSelector((state) => state.theme.colors);
+  const theme = useAppSelector(({ theme }) => theme.colors);
+  const counter = useAppSelector(({ counter }) => counter.value);
 
   useEffect(() => {
     dispatch(switchTheme(colorScheme ?? ThemeMode.light));
@@ -51,17 +53,16 @@ const Main = () => {
           height: 300,
           width: 300,
           backgroundColor: theme.cardColor,
-          ...globalStyles.columnCenter,
+          ...globalStyles.rowCenter,
+          gap: 20,
         }}
       >
-        <RippleButton>
-          <Icon
-            family={'MaterialIcons'}
-            name="menu"
-          />
+        <RippleButton onPress={() => dispatch(decrement(10))}>
+          <TextBlock fontFamily="Lato-BlackItalic">-</TextBlock>
         </RippleButton>
-        <RippleButton>
-          <TextBlock fontFamily="Lato-BlackItalic">Hello World</TextBlock>
+        <TextBlock fontFamily="Lato-BlackItalic">{counter}</TextBlock>
+        <RippleButton onPress={() => dispatch(increment(10))}>
+          <TextBlock fontFamily="Lato-BlackItalic">+</TextBlock>
         </RippleButton>
       </View>
     </Scaffold>

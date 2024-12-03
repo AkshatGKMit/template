@@ -6,10 +6,10 @@ import {
   createReducer,
 } from '@reduxjs/toolkit';
 
-import { Slice } from '@constants';
+import { ReducerConstants } from '@constants';
 import { ThemeColorModes, ThemeMode } from '@themes';
 
-const { name: sliceName, actions } = Slice.theme;
+const { name: sliceName, actions } = ReducerConstants.theme;
 
 const initialState: ThemeState = {
   mode: ThemeMode.light,
@@ -30,7 +30,7 @@ export namespace Switch {
   };
 }
 
-const switchAction = Switch.action;
+const switchTheme = Switch.action;
 
 const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<ThemeState>) => {
   addCase(Switch.action, Switch.reducer);
@@ -38,6 +38,6 @@ const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<ThemeState>) => {
 
 const themeReducer = createReducer<ThemeState>(initialState, reducerBuilder);
 
-export { switchAction as switchTheme };
+export { switchTheme };
 
 export default themeReducer;

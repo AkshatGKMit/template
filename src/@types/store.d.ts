@@ -1,4 +1,4 @@
-import store from '@config/store';
+import store from '@store';
 
 declare global {
   type RootState = ReturnType<typeof store.getState>;
