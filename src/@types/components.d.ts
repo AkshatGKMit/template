@@ -141,16 +141,13 @@ declare global {
   interface IconProps {
     family: IconFamilyType;
     name: string;
-    style?: StyleProp<TextStyle>;
+    size?: FontSize | number;
+    color?: string;
   }
 
-  interface IconButtonProps extends TouchableHighlightProps {
-    family: IconFamilyType;
-    name: string;
-    iconStyle?: StyleProp<TextStyle>;
-    containerStyle?: StyleProp<ViewStyle>;
+  interface IconButtonProps extends TouchableHighlightProps, IconProps {
     underlayColor?: string;
-    onPress?: (ev?: GestureResponderEvent) => void;
+    onPress?: () => void;
   }
 
   type LoaderProps = {

@@ -10,7 +10,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-import ThemedStyles from './style';
+import { useAppSelector } from '@config/store';
+import { FontSize } from '@themes';
 
 const iconFamilies = {
   AntDesign,
@@ -25,15 +26,16 @@ const iconFamilies = {
   SimpleLineIcons,
 };
 
-const Icon = ({ family, name, style }: IconProps) => {
-  const styles = ThemedStyles();
+const Icon = ({ family, name, color, size }: IconProps) => {
+  const theme = useAppSelector(({ theme }) => theme.colors);
 
   const SelectedIcon = iconFamilies[family];
 
   return (
     <SelectedIcon
       name={name}
-      style={[styles.icon, style]}
+      color={color ?? theme.text}
+      size={size ?? FontSize.labelMedium}
     />
   );
 };
