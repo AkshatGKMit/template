@@ -6,11 +6,12 @@ import { Animation } from '@utility/helpers';
 
 import styles from './styles';
 
-const RippleButton = ({ children, rippleColor, onPress, borderRadius }: RippleButtonProps) => {
+const RippleButton = (props: RippleButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
   const opacity = Animation.newValue(0);
   const scale = Animation.newValue(0);
 
+  const { children, rippleColor, onPress, borderRadius } = props;
   const ANIM_DURATION = 120;
 
   const animatePressIn = () => {
@@ -45,7 +46,12 @@ const RippleButton = ({ children, rippleColor, onPress, borderRadius }: RippleBu
         onPressIn={animatePressIn}
         onPressOut={animatePressOut}
       >
-        <View style={styles.parentContainer}>{children}</View>
+        <View
+          {...props}
+          style={styles.parentContainer}
+        >
+          {children}
+        </View>
         <Animated.View style={rippleContainerStyles} />
       </Pressable>
     </View>

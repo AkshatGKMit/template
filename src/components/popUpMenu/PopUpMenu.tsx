@@ -20,6 +20,7 @@ import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
+import RippleButton from '@components/rippleButton';
 
 const PopUpMenu = ({
   items,
@@ -193,13 +194,17 @@ const PopUpMenu = ({
 
   return (
     <>
-      <IconButton
-        family={icon?.family ?? IconFamily.materialIcons}
-        name={icon?.name ?? 'more-vert'}
-        size={icon?.size}
+      <RippleButton
         onPress={showOrClose}
         onLayout={_measureButton}
-      />
+        borderRadius={40}
+      >
+        <Icon
+          family={icon?.family ?? IconFamily.materialIcons}
+          name={icon?.name ?? 'more-vert'}
+          size={icon?.size}
+        />
+      </RippleButton>
       {_renderModal()}
     </>
   );
