@@ -24,14 +24,14 @@ import {
 } from 'react-native';
 
 import {
-  CardSide,
-  SwipeDirection,
-  FlipDirection,
-  IconFamily,
-  ShimmerDirection,
+  FLIP_CARD_SIDE,
+  SWIPE_DIRECTION,
+  FLIP_DIRECTION,
+  ICON_FAMILY,
+  SHIMMER_DIRECTION,
   FabAppearance,
-  FabSize,
-  FabBorderRadius,
+  FAB_SIZE,
+  FAB_RADIUS,
 } from '@constants';
 
 declare global {
@@ -63,6 +63,7 @@ declare global {
   type TrailingButtons = TrailingButton[];
 
   interface TrailingContainerProps {
+    style: any;
     trailing?: IconButtonProps;
     iconColor?: string;
   }
@@ -83,6 +84,13 @@ declare global {
 
   interface ExtendedAppBarProps extends Omit<AppBarProps, 'centerTitle'> {
     trailing: TrailingButtons;
+  }
+
+  interface TrailingButtonContainerProps {
+    trailing: TrailingButtons;
+    maxNumberOfButtons: number;
+    styles: any;
+    iconColor?: string;
   }
 
   interface BottomSheetParams extends RefManagerParams {
@@ -125,14 +133,14 @@ declare global {
     front: ReactNode;
     back?: ReactNode;
     duration?: number;
-    side?: (typeof CardSide)[keyof typeof CardSide];
-    direction?: (typeof FlipDirection)[keyof typeof FlipDirection];
+    side?: (typeof FLIP_CARD_SIDE)[keyof typeof FLIP_CARD_SIDE];
+    direction?: (typeof FLIP_DIRECTION)[keyof typeof FLIP_DIRECTION];
     onFront?: () => void;
     onBack?: () => void;
   }
 
-  type FabBorderRadius = (typeof FabBorderRadius)[keyof typeof FabBorderRadius];
-  type FabSize = (typeof FabSize)[keyof typeof FabSize];
+  type FabBorderRadius = (typeof FAB_RADIUS)[keyof typeof FAB_RADIUS];
+  type FabSize = (typeof FAB_SIZE)[keyof typeof FAB_SIZE];
   type FabAppearance = (typeof FabAppearance)[keyof typeof FabAppearance];
 
   interface FabProps {
@@ -168,7 +176,7 @@ declare global {
     style?: StyleProp<ViewStyle>;
   }
 
-  type IconFamilyType = (typeof IconFamily)[keyof typeof IconFamily];
+  type IconFamilyType = (typeof ICON_FAMILY)[keyof typeof ICON_FAMILY];
 
   interface IconProps {
     family: IconFamilyType;
@@ -229,7 +237,7 @@ declare global {
     baseColor: string;
     highlightColor: string;
     shimmerWidth?: number;
-    direction?: (typeof ShimmerDirection)[keyof typeof ShimmerDirection];
+    direction?: (typeof SHIMMER_DIRECTION)[keyof typeof SHIMMER_DIRECTION];
     period?: number;
     style?: StyleProp<ViewStyle>;
     children?: ReactNode;
@@ -247,7 +255,7 @@ declare global {
     textStyle?: StyleProp<TextStyle>;
   }
 
-  type SwipeDirection = (typeof SwipeDirection)[keyof typeof SwipeDirection];
+  type SwipeDirection = (typeof SWIPE_DIRECTION)[keyof typeof SWIPE_DIRECTION];
 
   interface SwipeableProps {
     children: ReactNode;

@@ -1,5 +1,5 @@
-import { StorageKey } from '@constants';
+import { STORAGE_KEY } from '@constants';
 
 declare global {
-  type StorageKey = (typeof StorageKey)[keyof typeof StorageKey];
+  type StorageKey = (typeof STORAGE_KEY)[keyof typeof STORAGE_KEY];
 }

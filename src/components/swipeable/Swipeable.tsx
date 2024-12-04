@@ -10,12 +10,12 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 
-import { ComponentsConstants, defaultLayout, SwipeDirection } from '@constants';
+import { COMPONENTS_CONSTANTS, DEFAULT_LAYOUT, SWIPE_DIRECTION } from '@constants';
 import { Animation } from '@utility/helpers';
 
 import styles from './styles';
 
-const { thresholdAnimationDuration } = ComponentsConstants.swipeable;
+const { THRESHOLD_ANIMATION_DURATION: thresholdAnimationDuration } = COMPONENTS_CONSTANTS.SWIPEABLE;
 
 const Swipeable = ({
   children,
@@ -27,10 +27,10 @@ const Swipeable = ({
   onSwipe,
   onSwipeFinished,
 }: SwipeableProps) => {
-  const [swipeDirection, setSwipeDirection] = useState<SwipeDirection>(SwipeDirection.null);
+  const [swipeDirection, setSwipeDirection] = useState<SwipeDirection>(SWIPE_DIRECTION.NULL);
 
   const lastSwipedDirection = useRef<SwipeDirection>(null);
-  const layoutDimensionsRef = useRef<ObjectLayout>(defaultLayout);
+  const layoutDimensionsRef = useRef<ObjectLayout>(DEFAULT_LAYOUT);
 
   const animatedContainerHeight = Animation.newValue(1);
   const animatedChildrenPositionX = Animation.newValue(0);
@@ -74,7 +74,7 @@ const Swipeable = ({
     (_: GestureResponderEvent, gesture: PanResponderGestureState) => {
       const { dx } = gesture;
 
-      const direction = dx < 0 ? SwipeDirection.left : SwipeDirection.right;
+      const direction = dx < 0 ? SWIPE_DIRECTION.LEFT : SWIPE_DIRECTION.RIGHT;
 
       setSwipeDirection(direction);
 
@@ -191,7 +191,7 @@ const Swipeable = ({
   const _renderActionComponent = useCallback(
     () => (
       <View style={actionStyles}>
-        {swipeDirection === SwipeDirection.left ? rightChild : leftChild}
+        {swipeDirection === SWIPE_DIRECTION.LEFT ? rightChild : leftChild}
       </View>
     ),
     [swipeDirection, leftChild, rightChild, actionStyles],

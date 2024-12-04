@@ -1,14 +1,14 @@
 import { View } from 'react-native';
 
 import IconButton from '@components/iconButton';
-import { AppBarConstants } from '@constants';
+import { APP_BAR_CONSTANTS } from '@constants';
 
-import ThemedStyles from './styles';
-
-export const TrailingContainer = ({ trailing, iconColor }: TrailingContainerProps) => {
-  const styles = ThemedStyles();
-
-  const { iconSize } = AppBarConstants;
+export const TrailingContainer = ({
+  style: styles,
+  trailing,
+  iconColor,
+}: TrailingContainerProps) => {
+  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
 
   return (
     <View style={styles.trailingContainer}>

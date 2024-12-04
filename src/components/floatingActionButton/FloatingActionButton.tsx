@@ -2,7 +2,7 @@ import { Animated, Text, TouchableWithoutFeedback } from 'react-native';
 
 import Icon from '@components/icon';
 import { useAppSelector } from '@config/store';
-import { ComponentsConstants, FabBorderRadius, FabSize } from '@constants';
+import { COMPONENTS_CONSTANTS, FAB_RADIUS, FAB_SIZE } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
 
 import styles from './styles';
@@ -10,15 +10,15 @@ import styles from './styles';
 const FloatingActionButton = (props: FabProps) => {
   const theme = useAppSelector((state) => state.theme.colors);
 
-  const { marginFromScreen } = ComponentsConstants.fab;
+  const { MARGIN_FROM_SCREEN: marginFromScreen } = COMPONENTS_CONSTANTS.FLOATING_ACTION_BUTTON;
 
   const {
     onPress,
     style,
     onLayout,
     children,
-    borderRadius = FabBorderRadius.auto,
-    size = FabSize.normal,
+    borderRadius = FAB_RADIUS.AUTO,
+    size = FAB_SIZE.NORMAL,
     backgroundColor = theme.primary,
   } = props;
 

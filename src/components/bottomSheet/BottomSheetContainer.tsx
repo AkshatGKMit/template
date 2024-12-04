@@ -11,7 +11,7 @@ import { View, Animated, PanResponder, Pressable, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useScalingMetrics from '@config/useScalingMetrics';
-import { BottomSheetConstants } from '@constants';
+import { BOTTOM_SHEET_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 import { Orientation } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
@@ -25,12 +25,12 @@ const defaultData: BottomSheetParams = {
 
 const BottomSheetContainer = forwardRef<BottomSheetRef>((_, ref) => {
   const {
-    sheetSlideAnimDuration,
-    overlayOpacityAnimDuration,
-    maxClosingSnapPointThreshold,
-    minClosingSnapPointThreshold,
+    SHEET_SLIDE_ANIMATION_DURATION: sheetSlideAnimDuration,
+    OVERLAY_OPACITY_ANIMATION_DURATION: overlayOpacityAnimDuration,
+    MAX_CLOSING_SNAP_POINT_THRESHOLD: maxClosingSnapPointThreshold,
+    MIN_CLOSING_SNAP_POINT_THRESHOLD: minClosingSnapPointThreshold,
     maxSnapPointThreshold,
-  } = BottomSheetConstants;
+  } = BOTTOM_SHEET_CONSTANTS;
 
   const insets = useSafeAreaInsets();
   const { hp, WH, orientation } = useScalingMetrics();

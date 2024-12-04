@@ -1,5 +1,5 @@
-import { Errors } from '@constants';
+import { ERRORS } from '@constants';
 
 declare global {
-  type ErrorType = (typeof Errors)[keyof typeof Errors];
+  type ErrorType = (typeof ERRORS)[keyof typeof ERRORS];
 }

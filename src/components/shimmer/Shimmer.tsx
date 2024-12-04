@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, LayoutChangeEvent, Animated, Easing } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { ShimmerDirection } from '@constants';
+import { SHIMMER_DIRECTION } from '@constants';
 import { Colors } from '@themes';
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
@@ -22,7 +22,7 @@ const Shimmer = (props: ShimmerProps) => {
     style,
     children,
     shimmerWidth = layout.w / 2.5,
-    direction = ShimmerDirection.ltr,
+    direction = SHIMMER_DIRECTION.LTR,
     period = 1500,
   } = useMemo(() => props, [layout, props]);
 
@@ -39,7 +39,7 @@ const Shimmer = (props: ShimmerProps) => {
     const start = { x: -1, y: 0.5 };
     const end = { x: 2, y: 0.5 };
 
-    if (direction === ShimmerDirection.ltr) {
+    if (direction === SHIMMER_DIRECTION.LTR) {
       return { start, end };
     }
 
@@ -48,7 +48,7 @@ const Shimmer = (props: ShimmerProps) => {
 
   const translateX = useMemo(() => {
     const outputRange =
-      direction === ShimmerDirection.ltr ? [-layout.w, layout.w] : [layout.w, -layout.w];
+      direction === SHIMMER_DIRECTION.LTR ? [-layout.w, layout.w] : [layout.w, -layout.w];
 
     return shimmerPositionAnim.interpolate({
       inputRange: [-1, 1],

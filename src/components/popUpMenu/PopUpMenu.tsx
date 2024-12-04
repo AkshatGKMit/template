@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -12,14 +12,14 @@ import {
 } from 'react-native';
 
 import Icon from '@components/icon';
+import RippleButton from '@components/rippleButton';
 import useScalingMetrics from '@config/useScalingMetrics';
-import { IconFamily } from '@constants';
+import { ICON_FAMILY } from '@constants';
 import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import ThemedStyles from './styles';
-import RippleButton from '@components/rippleButton';
 
 const PopUpMenu = ({
   items,
@@ -52,60 +52,54 @@ const PopUpMenu = ({
 
   const maxMenuHeight = WH / 3;
 
-  const _measureButton = useCallback(
-    (e: LayoutChangeEvent) => {
-      e.target.measureInWindow((x, y, width, height) => {
-        const top = y + height + gap;
-        const left = x;
+  const _measureButton = (e: LayoutChangeEvent) => {
+    e.target.measureInWindow((x, y, width, height) => {
+      const top = y + height + gap;
+      const left = x;
 
-        setButtonLayout({
-          width,
-          height,
-          top,
-          left,
-          bottom: y + height,
-          right: x + width,
-        });
-
-        setMenuLayout({
-          width: Math.floor(width),
-          height: Math.floor(height),
-          top: Math.floor(top),
-          bottom: Math.floor(top + height),
-          left: Math.floor(left),
-          right: Math.floor(left + width),
-          minWidth: Math.floor(width),
-          maxHeight: maxMenuHeight,
-        });
+      setButtonLayout({
+        width,
+        height,
+        top,
+        left,
+        bottom: y + height,
+        right: x + width,
       });
-    },
-    [WW, WH],
-  );
 
-  const _measureList = useCallback(
-    (e: LayoutChangeEvent) => {
-      const { height, width, x, y } = e.nativeEvent.layout;
+      setMenuLayout({
+        width: Math.floor(width),
+        height: Math.floor(height),
+        top: Math.floor(top),
+        bottom: Math.floor(top + height),
+        left: Math.floor(left),
+        right: Math.floor(left + width),
+        minWidth: Math.floor(width),
+        maxHeight: maxMenuHeight,
+      });
+    });
+  };
 
-      const rightPos = x + width;
-      const bottomPos = y + height;
+  const _measureList = (e: LayoutChangeEvent) => {
+    const { height, width, x, y } = e.nativeEvent.layout;
 
-      const shouldMoveToLeft = rightPos > WW;
-      const shouldMoveToTop = bottomPos > WH;
+    const rightPos = x + width;
+    const bottomPos = y + height;
 
-      if (shouldMoveToLeft) {
-        //* Calculation -> Current X Position - (Right Position - Button Right Position)
-        const newLeftPos = x - (rightPos - buttonLayout.right);
-        setMenuLayout((prevLayout) => ({ ...prevLayout, left: newLeftPos }));
-      }
+    const shouldMoveToLeft = rightPos > WW;
+    const shouldMoveToTop = bottomPos > WH;
 
-      if (shouldMoveToTop) {
-        //* Calculation -> Current Y Position - (2 * Custom Gap Between Button and List) - list height - button height
-        let newTopPos = y - 2 * gap - height - buttonLayout.height;
-        setMenuLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
-      }
-    },
-    [WH, WW, isFocus, buttonLayout],
-  );
+    if (shouldMoveToLeft) {
+      //* Calculation -> Current X Position - (Right Position - Button Right Position)
+      const newLeftPos = x - (rightPos - buttonLayout.right);
+      setMenuLayout((prevLayout) => ({ ...prevLayout, left: newLeftPos }));
+    }
+
+    if (shouldMoveToTop) {
+      //* Calculation -> Current Y Position - (2 * Custom Gap Between Button and List) - list height - button height
+      let newTopPos = y - 2 * gap - height - buttonLayout.height;
+      setMenuLayout((prevLayout) => ({ ...prevLayout, top: newTopPos }));
+    }
+  };
 
   function showOrClose(): void {
     if (isFocus) {
@@ -117,30 +111,28 @@ const PopUpMenu = ({
     }
   }
 
-  const _renderItem = useCallback(
+  const _renderItem =
     (): ListRenderItem<PopUpMenuButton> =>
-      ({ item, index }) => {
-        const { label, onPress, startIcon } = item;
+    ({ item, index }) => {
+      const { label, onPress, startIcon } = item;
 
-        return (
-          <TouchableHighlight
-            underlayColor={theme.underlay()}
-            onPress={() => {
-              showOrClose();
-              onPress?.(item, index);
-            }}
-          >
-            <View style={[styles.item, itemStyle]}>
-              {startIcon && <Icon {...startIcon} />}
-              <Text style={styles.itemLabel}>{label}</Text>
-            </View>
-          </TouchableHighlight>
-        );
-      },
-    [items, styles, theme],
-  );
+      return (
+        <TouchableHighlight
+          underlayColor={theme.underlay()}
+          onPress={() => {
+            showOrClose();
+            onPress?.(item, index);
+          }}
+        >
+          <View style={[styles.item, itemStyle]}>
+            {startIcon && <Icon {...startIcon} />}
+            <Text style={styles.itemLabel}>{label}</Text>
+          </View>
+        </TouchableHighlight>
+      );
+    };
 
-  const _renderList = useCallback(() => {
+  const _renderList = () => {
     const { top, left, minWidth, maxHeight } = menuLayout;
 
     const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -173,7 +165,7 @@ const PopUpMenu = ({
         />
       </Animated.View>
     );
-  }, [menuLayout, isFocus, showSeparator, styles, items]);
+  };
 
   const _renderModal = () => (
     <Modal
@@ -199,7 +191,7 @@ const PopUpMenu = ({
         borderRadius={40}
       >
         <Icon
-          family={icon?.family ?? IconFamily.materialIcons}
+          family={icon?.family ?? ICON_FAMILY.MATERIAL_ICONS}
           name={icon?.name ?? 'more-vert'}
           size={icon?.size}
         />

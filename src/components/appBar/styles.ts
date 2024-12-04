@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-import { AppBarConstants } from '@constants';
+import { APP_BAR_CONSTANTS } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
 import { createThemedStyles } from '@utility/styles';
 
 const ThemedStyles = createThemedStyles((theme) => {
-  const { height, gap, paddingHorizontal, targetSize } = AppBarConstants;
+  const {
+    HEIGHT: height,
+    GAP: gap,
+    PADDING_HORIZONTAL: paddingHorizontal,
+    TARGET_SIZE: targetSize,
+  } = APP_BAR_CONSTANTS;
 
   return StyleSheet.create({
     container: {

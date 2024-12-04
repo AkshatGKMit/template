@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Icon from '@components/icon';
-import { defaultLayout, IconFamily } from '@constants';
+import { DEFAULT_LAYOUT, ICON_FAMILY } from '@constants';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
@@ -38,8 +38,8 @@ const Dropdown = ({
   const theme = useAppSelector((state) => state.theme.colors);
 
   const [isFocus, setFocus] = useState(false);
-  const [buttonLayout, setButtonLayout] = useState(defaultLayout);
-  const [listLayout, setListLayout] = useState(defaultLayout);
+  const [buttonLayout, setButtonLayout] = useState(DEFAULT_LAYOUT);
+  const [listLayout, setListLayout] = useState(DEFAULT_LAYOUT);
 
   const styles = ThemedStyles();
 
@@ -103,8 +103,8 @@ const Dropdown = ({
   function showOrClose(): void {
     if (isFocus) {
       setFocus(!isFocus);
-      setListLayout(defaultLayout);
-      setButtonLayout(defaultLayout);
+      setListLayout(DEFAULT_LAYOUT);
+      setButtonLayout(DEFAULT_LAYOUT);
     }
   }
 
@@ -215,7 +215,7 @@ const Dropdown = ({
             <Icon {...rightIcon} />
           ) : (
             <Icon
-              family={IconFamily.materialIcons}
+              family={ICON_FAMILY.MATERIAL_ICONS}
               name="arrow-drop-down"
             />
           )}

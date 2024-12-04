@@ -1,9 +1,9 @@
-import { StorageKey, StoreConstants } from '@constants';
+import { STORAGE_KEY, STORE_CONSTANTS } from '@constants';
 import { ActionReducerMapBuilder, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { StorageManager } from '@utility/helpers';
 import axios from 'axios';
 
-const { name, thunk } = StoreConstants.user;
+const { NAME: name, THUNK: thunk } = STORE_CONSTANTS.USER;
 
 const initialState: AuthState = {
   loading: false,
@@ -11,7 +11,7 @@ const initialState: AuthState = {
 };
 
 export const loginUser = createAsyncThunk(
-  thunk.login,
+  thunk.LOGIN,
   async (loginRequestData: UserLoginRequestType) => {
     const loginResponse = await axios.post<User>(
       'https://dummyjson.com/auth/login',
@@ -33,7 +33,7 @@ const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<AuthState>) => {
     state.user = actions.payload.data;
     state.loading = false;
 
-    StorageManager.saveStoreValue(StorageKey.user, data);
+    StorageManager.saveStoreValue(STORAGE_KEY.USER, data);
   });
   addCase(loginUser.rejected, (state, actions) => {
     state.error = actions.error;

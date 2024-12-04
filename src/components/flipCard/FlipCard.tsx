@@ -1,7 +1,7 @@
 import { Animated, Pressable } from 'react-native';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { CardSide, FlipDirection } from '@constants';
+import { FLIP_CARD_SIDE, FLIP_DIRECTION } from '@constants';
 import { Animation } from '@utility/helpers';
 
 const FlipCard = (props: FlipCardProps) => {
@@ -12,8 +12,8 @@ const FlipCard = (props: FlipCardProps) => {
     onBack,
     style,
     duration = 500,
-    side = CardSide.front,
-    direction = FlipDirection.horizontal,
+    side = FLIP_CARD_SIDE.FRONT,
+    direction = FLIP_DIRECTION.HORIZONTAL,
   } = props;
 
   const [isFirstFlip, setFirstFlip] = useState(false);
@@ -32,7 +32,7 @@ const FlipCard = (props: FlipCardProps) => {
   }, [flipAnim, isFront, back]);
 
   useEffect(() => {
-    setFront(side === CardSide.front);
+    setFront(side === FLIP_CARD_SIDE.FRONT);
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const FlipCard = (props: FlipCardProps) => {
       outputRange: ['0deg', '180deg'],
     });
 
-    return direction === FlipDirection.horizontal
+    return direction === FLIP_DIRECTION.HORIZONTAL
       ? { transform: [{ rotateY: interpolatedValue }] }
       : { transform: [{ rotateX: interpolatedValue }] };
   }, [flipAnim, direction]);

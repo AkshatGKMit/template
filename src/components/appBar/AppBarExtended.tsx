@@ -1,16 +1,17 @@
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 
 import PopUpMenu from '@components/popUpMenu';
-import { AppBarConstants } from '@constants';
+import { APP_BAR_CONSTANTS } from '@constants';
 
 import AppBarMain from './AppBarMain';
 import ThemedStyles from './styles';
 import { TrailingContainer } from './TrailingContainer';
+import useScalingMetrics from '@config/useScalingMetrics';
 
 const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   const styles = ThemedStyles();
 
-  const { iconSize } = AppBarConstants;
+  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
 
   return (
     <View style={styles.trailingContainer}>
@@ -27,15 +28,18 @@ const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   );
 };
 
-const TrailingButtonContainer = (trailing: TrailingButtons, iconColor?: string) => {
-  const styles = ThemedStyles();
+const TrailingButtonContainer = ({
+  trailing,
+  maxNumberOfButtons,
+  styles,
+  iconColor,
+}: TrailingButtonContainerProps) => {
+  const { GAP: gap, TARGET_SIZE } = APP_BAR_CONSTANTS;
 
-  const { targetSize, gap, maxExtendedTrailing } = AppBarConstants;
+  const trailingLength = Math.min(trailing.length, maxNumberOfButtons);
+  const isExtended = trailing.length > maxNumberOfButtons;
 
-  const trailingLength = Math.min(trailing.length, maxExtendedTrailing);
-  const isExtended = trailing.length > 3;
-
-  const trailingSize = trailingLength * targetSize + gap * (trailingLength - 1);
+  const trailingSize = trailingLength * TARGET_SIZE + gap * (trailingLength - 1);
 
   const displayedButtons = trailing.slice(0, isExtended ? trailingLength - 1 : trailingLength);
   const menuButtons = isExtended ? trailing.slice(trailingLength) : null;
@@ -49,6 +53,7 @@ const TrailingButtonContainer = (trailing: TrailingButtons, iconColor?: string) 
         return (
           <TrailingContainer
             key={index + title}
+            style={styles}
             trailing={iconButton}
             iconColor={iconColor}
           />
@@ -60,12 +65,20 @@ const TrailingButtonContainer = (trailing: TrailingButtons, iconColor?: string) 
 };
 
 const AppBarExtended = (props: ExtendedAppBarProps) => {
+  const { portrait } = useScalingMetrics();
+
+  const styles = ThemedStyles();
+
+  const maxNumberOfButtons = portrait ? 3 : 5;
+
   const { trailing, iconColor } = props;
 
   return (
     <AppBarMain
       {...props}
-      trailing={TrailingButtonContainer(trailing, iconColor)}
+      trailing={
+        <TrailingButtonContainer {...{ trailing, maxNumberOfButtons, styles, iconColor }} />
+      }
     />
   );
 };

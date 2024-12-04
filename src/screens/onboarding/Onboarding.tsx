@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import GradientScreen from '@components/gradientScreen';
 import useScalingMetrics from '@config/useScalingMetrics';
 import Icon from '@components/icon';
-import { IconFamily } from '@constants';
+import { ICON_FAMILY } from '@constants';
 import ThemeContext from '@config/ThemeContext';
 import IconButton from '@components/iconButton';
 import { Animation } from '@utility/helpers';
@@ -83,7 +83,7 @@ const Screen1 = () => {
         ]}
       >
         <Icon
-          family={IconFamily.materialIcons}
+          family={ICON_FAMILY.MATERIAL_ICONS}
           name={'check'}
           style={{ color: 'white', fontSize: 14 }}
         />
@@ -162,7 +162,7 @@ const Onboarding = () => {
           ))}
         </View>
         <IconButton
-          family={IconFamily.materialCommunityIcons}
+          family={ICON_FAMILY.MATERIAL_COMMUNITY_ICONS}
           name="arrow-right"
           onPress={_onNext}
           containerStyle={{

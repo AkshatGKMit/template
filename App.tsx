@@ -18,6 +18,7 @@ import TextField from '@components/textField';
 import Loader from '@components/loader';
 import { loginUser } from '@store/reducers/auth';
 import AppBar from '@components/appBar';
+import PopUpMenu from '@components/popUpMenu';
 // import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {

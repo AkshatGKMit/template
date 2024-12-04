@@ -2,7 +2,7 @@ import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 
 import IconButton from '@components/iconButton';
 import TextBlock from '@components/textBlock';
-import { AppBarConstants } from '@constants';
+import { APP_BAR_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 import { FontFamily, FontSize } from '@themes';
 
@@ -26,7 +26,7 @@ const AppBarMain = ({
     { backgroundColor: backgroundColor ?? theme.primary },
   ];
 
-  const { iconSize } = AppBarConstants;
+  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
 
   const titleStyles: StyleProp<TextStyle> = [
     styles.title,

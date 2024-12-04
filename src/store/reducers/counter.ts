@@ -7,9 +7,9 @@ import {
   createReducer,
 } from '@reduxjs/toolkit';
 
-import { StoreConstants } from '@constants';
+import { STORE_CONSTANTS } from '@constants';
 
-const { name: sliceName, actions } = StoreConstants.counter;
+const { NAME: sliceName, ACTIONS: actions } = STORE_CONSTANTS.COUNTER;
 
 const initialState: CounterState = {
   value: 0,
@@ -17,7 +17,7 @@ const initialState: CounterState = {
 
 export module Case {
   export namespace Increment {
-    export const action = createAction<number | undefined>(`${sliceName}/${actions.increment}`);
+    export const action = createAction<number | undefined>(`${sliceName}/${actions.INCREMENT}`);
 
     export const reducer: CaseReducer<
       CounterState,
@@ -28,7 +28,7 @@ export module Case {
   }
 
   export namespace Decrement {
-    export const action = createAction(`${sliceName}/${actions.decrement}`);
+    export const action = createAction(`${sliceName}/${actions.DECREMENT}`);
 
     export const reducer: CaseReducer<CounterState, ReturnType<ActionCreatorWithoutPayload>> = (
       state,

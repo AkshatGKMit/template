@@ -6,10 +6,10 @@ import {
   createReducer,
 } from '@reduxjs/toolkit';
 
-import { StoreConstants } from '@constants';
+import { STORE_CONSTANTS } from '@constants';
 import { ThemeColorModes, ThemeMode } from '@themes';
 
-const { name: sliceName, actions } = StoreConstants.theme;
+const { NAME: sliceName, ACTIONS: actions } = STORE_CONSTANTS.THEME;
 
 const initialState: ThemeState = {
   mode: ThemeMode.light,
@@ -17,7 +17,7 @@ const initialState: ThemeState = {
 };
 
 export namespace Switch {
-  export const action = createAction<ThemeMode>(`${sliceName}/${actions.switch}`);
+  export const action = createAction<ThemeMode>(`${sliceName}/${actions.SWITCH}`);
 
   export const reducer: CaseReducer<
     ThemeState,
