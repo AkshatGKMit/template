@@ -1,43 +1,33 @@
-import { View, ViewProps } from 'react-native';
+import { StyleProp, View, ViewProps, ViewStyle } from 'react-native';
 
 import { GlobalThemedStyles } from '@themes/globalStyles';
 import AppBar from '@components/appBar';
 import useDeviceSafeArea from '@config/useDeviceSafeArea';
 
 const Scaffold = (props: ScaffoldProps) => {
-  const {
-    children,
-    style,
-    useSafeArea,
-    useSafeAreaInLandscape,
-    useSafeAreaInPortrait,
-    bottomInset,
-    leftInset,
-    rightInset,
-    topInset,
-    appBar,
-  } = props;
+  const { children, style, useSafeArea, bottomInset, leftInset, rightInset, topInset, appBar } =
+    props;
   const { insetTop, insetBottom, insetLeft, insetRight } = useDeviceSafeArea({
     useSafeArea,
-    useSafeAreaInLandscape,
-    useSafeAreaInPortrait,
     bottomInset,
     leftInset,
     rightInset,
     topInset,
   });
 
+  const globalThemedStyles = GlobalThemedStyles();
+
   const paddingStyles = {
-    paddingTop: insetTop,
+    paddingTop: !appBar ? insetTop : null,
     paddingBottom: insetBottom,
     paddingLeft: insetLeft,
     paddingRight: insetRight,
   };
 
-  const globalThemedStyles = GlobalThemedStyles();
+  const screenStyle: StyleProp<ViewStyle> = [globalThemedStyles.screen, paddingStyles];
 
   return (
-    <View style={[globalThemedStyles.screen, paddingStyles]}>
+    <View style={screenStyle}>
       {appBar}
       <View
         {...props}

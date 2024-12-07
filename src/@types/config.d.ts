@@ -14,8 +14,6 @@ declare global {
 
   interface DeviceSafeArea {
     useSafeArea?: boolean;
-    useSafeAreaInLandscape?: boolean;
-    useSafeAreaInPortrait?: boolean;
     bottomInset?: boolean;
     leftInset?: boolean;
     rightInset?: boolean;

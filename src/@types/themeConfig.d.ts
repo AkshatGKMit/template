@@ -30,6 +30,7 @@ declare global {
     error: string;
     divider: string;
     placeholder: string;
+    statusBarColor: string;
     underlay: (opacity?: number) => string;
     all: Object;
     inverted: InvertedOmittedThemeColors;

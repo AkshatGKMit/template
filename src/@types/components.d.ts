@@ -46,8 +46,6 @@ declare global {
 
   interface SafeAreaProps {
     useSafeArea?: boolean;
-    useSafeAreaInLandscape?: boolean;
-    useSafeAreaInPortrait?: boolean;
     topInset?: boolean;
     bottomInset?: boolean;
     leftInset?: boolean;

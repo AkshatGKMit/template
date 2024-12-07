@@ -1,8 +1,9 @@
-import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { View, StyleProp, ViewStyle, TextStyle, StatusBar } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import IconButton from '@components/iconButton';
 import TextBlock from '@components/textBlock';
-import { APP_BAR_CONSTANTS } from '@constants';
+import { APP_BAR_CONSTANTS, isIos } from '@constants';
 import { useAppSelector } from '@store';
 import { FontFamily, FontSize } from '@themes';
 
@@ -17,6 +18,8 @@ const AppBarMain = ({
   leading,
   trailing,
 }: AppBarProps) => {
+  const { top: topInsets } = useSafeAreaInsets();
+
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const styles = ThemedStyles();
@@ -34,27 +37,35 @@ const AppBarMain = ({
   ];
 
   return (
-    <View style={containerStyles}>
-      <View style={styles.trailingContainer}>
-        {leading && (
-          <IconButton
-            color={iconColor}
-            {...leading}
-            size={iconSize}
-          />
-        )}
-      </View>
-      <TextBlock
-        style={titleStyles}
-        fontFamily={FontFamily.normal.heavy}
-        fontSize={FontSize.titleLarge}
-        color={titleColor}
-        numberOfLines={1}
-        ellipsizeMode="tail"
-        children={title}
+    <>
+      <View
+        style={{
+          height: isIos ? topInsets : StatusBar.currentHeight,
+          backgroundColor: theme.statusBarColor,
+        }}
       />
-      {trailing}
-    </View>
+      <View style={containerStyles}>
+        <View style={styles.trailingContainer}>
+          {leading && (
+            <IconButton
+              color={iconColor}
+              {...leading}
+              size={iconSize}
+            />
+          )}
+        </View>
+        <TextBlock
+          style={titleStyles}
+          fontFamily={FontFamily.normal.heavy}
+          fontSize={FontSize.titleLarge}
+          color={titleColor}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          children={title}
+        />
+        {trailing}
+      </View>
+    </>
   );
 };
 
