@@ -31,6 +31,7 @@ declare global {
     divider: string;
     placeholder: string;
     statusBarColor: string;
+    appBarColor: string;
     underlay: (opacity?: number) => string;
     all: Object;
     inverted: InvertedOmittedThemeColors;

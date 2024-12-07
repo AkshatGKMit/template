@@ -50,26 +50,14 @@ const Main = () => {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
 
-  const { loading, error } = useAppSelector(({ auth }) => auth);
-  const theme = useAppSelector(({ theme }) => theme.colors);
-
-  const [username, setUsername] = useState('emilys');
-  const [password, setPassword] = useState('emilyspass');
-
   useEffect(() => {
     dispatch(switchTheme(colorScheme ?? ThemeMode.light));
   }, [colorScheme]);
-
-  const _onLogin = async () => {
-    const dispatchResult = await dispatch(loginUser({ username, password }));
-    console.log('Dispatch Result: ', dispatchResult);
-  };
 
   return (
     <Scaffold
       style={{ padding: 12, gap: 10 }}
       appBar={<ScreenAppBar />}
-      useSafeAreaInPortrait
     ></Scaffold>
   );
 };

@@ -26,7 +26,7 @@ const AppBarMain = ({
 
   const containerStyles: StyleProp<ViewStyle> = [
     styles.container,
-    { backgroundColor: backgroundColor ?? theme.primary },
+    { backgroundColor: backgroundColor ?? theme.appBarColor },
   ];
 
   const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;

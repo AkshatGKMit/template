@@ -1,7 +1,6 @@
-import { StyleProp, View, ViewProps, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 import { GlobalThemedStyles } from '@themes/globalStyles';
-import AppBar from '@components/appBar';
 import useDeviceSafeArea from '@config/useDeviceSafeArea';
 
 const Scaffold = (props: ScaffoldProps) => {
