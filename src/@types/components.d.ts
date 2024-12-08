@@ -2,10 +2,12 @@ import { ReactElement, ReactNode, RefObject } from 'react';
 import {
   Animated,
   EnterKeyHintTypeOptions,
+  FlatListProps,
   GestureResponderEvent,
   InputModeOptions,
   KeyboardTypeOptions,
   LayoutChangeEvent,
+  ListRenderItemInfo,
   NativeSyntheticEvent,
   PanResponderGestureState,
   PressableProps,
@@ -172,6 +174,35 @@ declare global {
   interface GradientScreenProps extends SafeAreaProps {
     children?: ReactNode;
     style?: StyleProp<ViewStyle>;
+  }
+
+  interface GridItemProps extends ViewProps {
+    width: number;
+    aspectRatio: number;
+    children?: ReactNode;
+    style?: StyleProp<ViewStyle>;
+  }
+
+  interface ListEmptyComponentProps {
+    itemCount: number;
+    width: number;
+    aspectRatio: number;
+    columnSpacing: number;
+    numOfColumns: number;
+    rowSpacing: number;
+    children?: ReactNode;
+  }
+
+  interface GridViewProps<T> {
+    data: T[];
+    renderItem: (info: ListRenderItemInfo<T>) => ReactNode;
+    numOfColumns: number;
+    rowSpacing: number;
+    columnSpacing: number;
+    childAspectRatio: number;
+    itemStyle?: StyleProp<Omit<ViewStyle, 'flex' | 'width' | 'aspectRatio'>>;
+    emptyItemsCount?: number;
+    emptyComponent?: ReactNode;
   }
 
   type IconFamilyType = (typeof ICON_FAMILY)[keyof typeof ICON_FAMILY];
