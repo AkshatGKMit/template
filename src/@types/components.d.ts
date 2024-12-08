@@ -4,6 +4,7 @@ import {
   EnterKeyHintTypeOptions,
   FlatListProps,
   GestureResponderEvent,
+  ImageStyle,
   InputModeOptions,
   KeyboardTypeOptions,
   LayoutChangeEvent,
@@ -35,6 +36,7 @@ import {
   FAB_SIZE,
   FAB_RADIUS,
 } from '@constants';
+import { FastImageProps } from 'react-native-fast-image';
 
 declare global {
   interface RefOptions {
@@ -217,6 +219,13 @@ declare global {
   interface IconButtonProps extends TouchableHighlightProps, IconProps {
     underlayColor?: string;
     onPress?: () => void;
+  }
+
+  interface ImageOverlayProps extends FastImageProps {
+    overlayOpacity: number;
+    overlayColor: string;
+    containerStyle?: StyleProp<ViewStyle>;
+    children?: ReactNode;
   }
 
   type LoaderProps = {
