@@ -40,8 +40,10 @@ const iconFamilies = {
   Zocial,
 };
 
-const Icon = ({ family, name, color, size }: IconProps) => {
+const Icon = ({ icon, color, size }: IconProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
+
+  const { family, name } = icon;
 
   const SelectedIcon = iconFamilies[family];
 

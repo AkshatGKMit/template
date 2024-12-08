@@ -9,7 +9,7 @@ import styles from './styles';
 const IconButton = (props: IconButtonProps) => {
   const theme = useAppSelector((state) => state.theme.colors);
 
-  const { family, name, color, size, style, onPress, underlayColor = theme.underlay() } = props;
+  const { icon, color, size, style, onPress, underlayColor = theme.underlay() } = props;
 
   return (
     <TouchableHighlight
@@ -19,8 +19,7 @@ const IconButton = (props: IconButtonProps) => {
       {...props}
     >
       <Icon
-        family={family}
-        name={name}
+        icon={icon}
         color={color}
         size={size}
       />

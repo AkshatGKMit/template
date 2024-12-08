@@ -209,9 +209,13 @@ declare global {
 
   type IconFamilyType = (typeof ICON_FAMILY)[keyof typeof ICON_FAMILY];
 
-  interface IconProps {
+  interface IconType {
     family: IconFamilyType;
     name: string;
+  }
+
+  interface IconProps {
+    icon: IconType;
     size?: FontSize | number;
     color?: string;
   }
