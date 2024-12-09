@@ -18,6 +18,8 @@ const ActionButton = ({
   borderRadius,
   backgroundColor,
   foregroundColor,
+  borderColor,
+  borderWidth,
 }: ActionButtonProps) => {
   const { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
 
@@ -55,6 +57,8 @@ const ActionButton = ({
             gap: 8,
             borderRadius: borderRadius ?? 20,
             backgroundColor: buttonBackgroundColor,
+            borderWidth,
+            borderColor,
           },
         ]}
       >

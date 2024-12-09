@@ -12,7 +12,7 @@ import store, { useAppDispatch } from '@store';
 import { switchTheme } from '@store/reducers/theme';
 import AppBar from '@components/appBar';
 import { Icons } from '@constants';
-import { ElevatedButton, FilledButton, TonalButton } from '@components/button';
+import { ElevatedButton, FilledButton, OutlinedButton, TonalButton } from '@components/button';
 import RippleButton from '@components/rippleButton';
 import TextBlock from '@components/textBlock';
 
@@ -69,11 +69,11 @@ const Main = () => {
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
     >
-      <TonalButton
+      <OutlinedButton
         label="Elevated Button"
         onPress={() => {}}
       />
-      <TonalButton
+      <OutlinedButton
         label="Elevated Button"
         onPress={() => {}}
         disabled

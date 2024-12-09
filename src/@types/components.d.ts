@@ -65,6 +65,8 @@ declare global {
     borderRadius?: number;
     backgroundColor?: string;
     foregroundColor?: string;
+    borderWidth?: number;
+    borderColor?: string;
   }
 
   type OmittedActionButtonProps = Omit<
