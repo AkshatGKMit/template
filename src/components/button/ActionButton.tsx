@@ -1,4 +1,4 @@
-import { View, Pressable, StyleProp, ViewStyle, Animated } from 'react-native';
+import { View, Pressable, Animated } from 'react-native';
 
 import Icon from '@components/icon';
 import TextBlock from '@components/textBlock';
@@ -8,6 +8,7 @@ import { useAppSelector } from '@store';
 import { Typography } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import { colorWithOpacity } from '@utility/helpers';
+import styles from './styles';
 
 const ActionButton = ({
   label,
@@ -15,28 +16,39 @@ const ActionButton = ({
   disabled,
   style,
   icon,
-  borderRadius,
   backgroundColor,
   foregroundColor,
   borderColor,
   borderWidth,
+  styleDisabledBackground = true,
 }: ActionButtonProps) => {
   const { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const {
-    HEIGHT: containerHeight,
-    DISABLED_BACKGROUND_OPACITY,
-    DISABLED_FOREGROUND_OPACITY,
-  } = COMPONENTS_CONSTANTS.BUTTON;
+  const { DISABLED_BACKGROUND_OPACITY, DISABLED_FOREGROUND_OPACITY } = COMPONENTS_CONSTANTS.BUTTON;
 
-  const buttonBackgroundColor = disabled
-    ? colorWithOpacity(theme.all.onSurface, DISABLED_BACKGROUND_OPACITY)
-    : (backgroundColor ?? theme.all.surfaceContainerLow);
+  const buttonBackgroundColor =
+    disabled && styleDisabledBackground
+      ? colorWithOpacity(theme.all.onSurface, DISABLED_BACKGROUND_OPACITY)
+      : (backgroundColor ?? theme.all.surfaceContainerLow);
+
   const buttonForegroundColor = disabled
     ? colorWithOpacity(theme.all.onSurface, DISABLED_FOREGROUND_OPACITY)
     : (foregroundColor ?? theme.all.primary);
+
+  const containerStyle = [
+    rippleContainerStyle,
+    styles.container,
+    {
+      paddingLeft: !!icon ? 16 : undefined,
+      backgroundColor: buttonBackgroundColor,
+      borderWidth,
+      borderColor,
+    },
+  ];
+
+  const textStyle = { opacity: disabled ? DISABLED_FOREGROUND_OPACITY : 1 };
 
   return (
     <Pressable
@@ -45,23 +57,7 @@ const ActionButton = ({
       onPressOut={animatePressOut}
       disabled={disabled}
     >
-      <View
-        style={[
-          rippleContainerStyle,
-          style,
-          {
-            ...globalStyles.rowCenter,
-            height: containerHeight,
-            paddingLeft: !!icon ? 16 : 24,
-            paddingRight: 24,
-            gap: 8,
-            borderRadius: borderRadius ?? 20,
-            backgroundColor: buttonBackgroundColor,
-            borderWidth,
-            borderColor,
-          },
-        ]}
-      >
+      <View style={containerStyle}>
         {icon && (
           <Icon
             icon={icon}
@@ -73,7 +69,7 @@ const ActionButton = ({
           typography={Typography.labelLarge}
           color={buttonForegroundColor}
           numberOfLines={1}
-          style={{ opacity: disabled ? DISABLED_FOREGROUND_OPACITY : 1 }}
+          style={textStyle}
         >
           {label}
         </TextBlock>
