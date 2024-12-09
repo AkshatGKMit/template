@@ -40,7 +40,7 @@ const iconFamilies = {
   Zocial,
 };
 
-const Icon = ({ icon, color, size: typography }: IconProps) => {
+const Icon = ({ icon, color, size }: IconProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { family, name } = icon;
@@ -51,7 +51,7 @@ const Icon = ({ icon, color, size: typography }: IconProps) => {
     <SelectedIcon
       name={name}
       color={color ?? theme.text}
-      size={typography?.fontSize ?? Typography.bodyMedium.fontSize}
+      size={size ?? Typography.bodyMedium.fontSize}
     />
   );
 };

@@ -56,3 +56,12 @@ export const Typography = {
   labelMedium: { fontSize: 12, fontWeight: FontWeight.medium },
   labelSmall: { fontSize: 11, fontWeight: FontWeight.medium },
 } as const;
+
+export const Elevation = {
+  lvl0: 0,
+  lvl1: 1,
+  lvl2: 3,
+  lvl3: 6,
+  lvl4: 8,
+  lvl5: 12,
+} as const;

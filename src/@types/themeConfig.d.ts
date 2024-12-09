@@ -1,5 +1,12 @@
-import { Orientation, ThemeMode, FontFamily, FontWeight } from '@themes';
-import { Typography, Typography } from '@themes/font';
+import {
+  Orientation,
+  ThemeMode,
+  FontFamily,
+  FontWeight,
+  Elevation,
+  Typography,
+  Elevation,
+} from '@themes';
 
 declare global {
   interface WindowDimensions {
@@ -15,6 +22,58 @@ declare global {
     bottom: number;
     left: number;
   };
+
+  interface Colors {
+    primary: string;
+    surfaceTint: string;
+    onPrimary: string;
+    primaryContainer: string;
+    onPrimaryContainer: string;
+    secondary: string;
+    onSecondary: string;
+    secondaryContainer: string;
+    onSecondaryContainer: string;
+    tertiary: string;
+    onTertiary: string;
+    tertiaryContainer: string;
+    onTertiaryContainer: string;
+    error: string;
+    onError: string;
+    errorContainer: string;
+    onErrorContainer: string;
+    background: string;
+    onBackground: string;
+    surface: string;
+    onSurface: string;
+    surfaceVariant: string;
+    onSurfaceVariant: string;
+    outline: string;
+    outlineVariant: string;
+    shadow: string;
+    scrim: string;
+    inverseSurface: string;
+    inverseOnSurface: string;
+    inversePrimary: string;
+    primaryFixed: string;
+    onPrimaryFixed: string;
+    primaryFixedDim: string;
+    onPrimaryFixedVariant: string;
+    secondaryFixed: string;
+    onSecondaryFixed: string;
+    secondaryFixedDim: string;
+    onSecondaryFixedVariant: string;
+    tertiaryFixed: string;
+    onTertiaryFixed: string;
+    tertiaryFixedDim: string;
+    onTertiaryFixedVariant: string;
+    surfaceDim: string;
+    surfaceBright: string;
+    surfaceContainerLowest: string;
+    surfaceContainerLow: string;
+    surfaceContainer: string;
+    surfaceContainerHigh: string;
+    surfaceContainerHighest: string;
+  }
 
   type ThemeMode = (typeof ThemeMode)[keyof typeof ThemeMode];
 
@@ -34,7 +93,7 @@ declare global {
     statusBarColor: string;
     appBarColor: string;
     underlay: (opacity?: number) => string;
-    all: Object;
+    all: Colors;
     inverted: InvertedOmittedThemeColors;
   }
 
@@ -51,6 +110,7 @@ declare global {
   type FontFamily = FontFamilyNormal | FontFamilyItalic;
   type Typography = (typeof Typography)[keyof typeof Typography];
   type FontWeight = (typeof FontWeight)[keyof typeof FontWeight];
+  type Elevation = (typeof Elevation)[keyof typeof Elevation];
 
   interface ThemeConfig {
     colors: ThemeColors;

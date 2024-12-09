@@ -215,7 +215,7 @@ declare global {
 
   interface IconProps {
     icon: IconType;
-    size?: Typography;
+    size?: number;
     color?: string;
   }
 

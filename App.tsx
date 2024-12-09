@@ -27,6 +27,7 @@ import { globalStyles } from '@themes/globalStyles';
 import { Icons } from '@constants';
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
+import { ActionButton } from '@components/button';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -86,31 +87,18 @@ const Main = () => {
 
   const num = 0;
 
-  const DATA: any[] = Object.keys(Icons)
-    .slice(num, num + 1)
-    .map((family) => ({
-      title: family, // Family name
-      data: Object.values(Icons[family] as any), // Array of icons in this family
-    }));
-
   return (
     <Scaffold
-      style={{ padding: 12, gap: 10, flex: 1, flexDirection: 'row' }}
+      style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
     >
-      <TextBlock typography={Typography.bodyLarge}>Display Large</TextBlock>
-      <IconButton icon={Icons.materialIcons.menu} />
-      <SectionList
-        sections={DATA}
-        keyExtractor={(item: any, index) => item.name + index}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Icon icon={item} />
-            <TextBlock style={styles.iconName}>{item.name}</TextBlock>
-          </View>
-        )}
-        renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
+      <ActionButton label="Elevated Button" />
+      <ActionButton
+        label="Elevated Button"
+        icon={Icons.antDesign.addfile}
       />
+      <ActionButton label="Elevated Button" />
+      <ActionButton label="Elevated Button" />
     </Scaffold>
   );
 };
