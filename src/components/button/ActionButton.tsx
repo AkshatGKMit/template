@@ -1,8 +1,8 @@
-import { View, Pressable, StyleProp, ViewStyle } from 'react-native';
+import { View, Pressable, StyleProp, ViewStyle, Animated } from 'react-native';
 
 import Icon from '@components/icon';
 import TextBlock from '@components/textBlock';
-
+import useRippleEffect from '@config/useRippleEffect';
 import { COMPONENTS_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 import { Typography } from '@themes';
@@ -28,6 +28,8 @@ const ActionButton = ({
   backgroundColor?: string;
   foregroundColor?: string;
 }) => {
+  const { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
+
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const {
@@ -46,10 +48,13 @@ const ActionButton = ({
   return (
     <Pressable
       onPress={onPress}
+      onPressIn={animatePressIn}
+      onPressOut={animatePressOut}
       disabled={disabled}
     >
       <View
         style={[
+          rippleContainerStyle,
           style,
           {
             ...globalStyles.rowCenter,
@@ -77,6 +82,7 @@ const ActionButton = ({
         >
           {label}
         </TextBlock>
+        <Animated.View style={rippleStyles} />
       </View>
     </Pressable>
   );
