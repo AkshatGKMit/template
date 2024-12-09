@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useScalingMetrics from '@config/useScalingMetrics';
 import { useAppSelector } from '@store';
-import { Colors } from '@themes';
+import { Colors, Typography } from '@themes';
 
 export function createStyles<T extends NamedStyles<T>>(styles: T): T {
   return StyleSheet.create(styles);
@@ -55,4 +55,14 @@ export const getShadowStyle = (level: Elevation) => {
       },
     }),
   };
+};
+
+export const getTypography = (fontSize: number) => {
+  for (const key in Typography) {
+    if (Typography[key].fontSize === fontSize) {
+      return Typography[key];
+    }
+  }
+
+  return null;
 };

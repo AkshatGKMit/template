@@ -204,6 +204,10 @@ declare global {
     itemStyle?: StyleProp<Omit<ViewStyle, 'flex' | 'width' | 'aspectRatio'>>;
     emptyItemsCount?: number;
     emptyComponent?: ReactNode;
+    Header?: ReactElement;
+    Footer?: ReactElement;
+    onEndReached?: () => void;
+    endThreshold?: number;
   }
 
   type IconFamilyType = (typeof ICON_FAMILY)[keyof typeof ICON_FAMILY];

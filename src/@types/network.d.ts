@@ -1,17 +1,9 @@
-type ApiCallError = { code: number | string; message: string };
+import { AxiosRequestConfig } from 'axios';
 
-type ApiCallConfig<Params = {}> = {
-  params?: Params;
-};
+declare global {
+  type ApiCallError = { code: number | string; message: string };
 
-type ApiCallSuccess<T> = {
-  success: true;
-  responseData: T;
-};
-
-type ApiCallFailure = {
-  success: false;
-  error: ApiCallError;
-};
-
-type ApiCallResponse<T> = ApiCallSuccess<T> | ApiCallFailure;
+  interface ApiCallConfig<Params = {}> extends AxiosRequestConfig {
+    params?: Params;
+  }
+}

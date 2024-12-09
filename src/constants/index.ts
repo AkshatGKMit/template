@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { Typography } from '@themes';
 
 import { ICON_FAMILY, Icons } from './icons';
+import { IMAGES } from './images';
 
 export const isIos = Platform.OS === 'ios';
 
@@ -26,6 +27,12 @@ export const STORE_CONSTANTS = {
     THUNK: {
       LOGIN: 'login',
     },
+  },
+} as const;
+
+export const QUERY_CONSTANTS = {
+  KEYS: {
+    GET_ALL_PRODUCTS: ['products'],
   },
 } as const;
 
@@ -108,6 +115,17 @@ export const COMPONENTS_CONSTANTS = {
     DISABLED_BACKGROUND_OPACITY: 0.12,
     DISABLED_FOREGROUND_OPACITY: 0.55,
   },
+  MENUS: {
+    CONTAINER_MIN_WIDTH: 112,
+    CONTAINER_MAX_WIDTH: 112,
+    BORDER_RADIUS: 4,
+    PADDING_HORIZONTAL: 12,
+    PADDING_VERTICAL: 8,
+    ITEM_HEIGHT: 48,
+    GAP: 12,
+    DIVIDER_HEIGHT: 1,
+    ICON_SIZE: 24,
+  },
 };
 
-export { ICON_FAMILY, Icons, Typography };
+export { ICON_FAMILY, Icons, Typography, IMAGES };

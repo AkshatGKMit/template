@@ -8,7 +8,7 @@ const GridItem = ({ width, aspectRatio, children, style }: GridItemProps) => {
   const styles: StyleProp<ViewStyle> = [
     style,
     globalStyles.flex1,
-    { width: `${width}%`, aspectRatio },
+    { maxWidth: `${width}%`, aspectRatio },
   ];
 
   return <View style={styles}>{children}</View>;
@@ -72,6 +72,10 @@ const GridView = <T,>(props: GridViewProps<T>) => {
     itemStyle,
     emptyItemsCount,
     emptyComponent,
+    Header,
+    Footer,
+    onEndReached,
+    endThreshold,
   } = props;
 
   if (numOfColumns < 2) {
@@ -89,7 +93,7 @@ const GridView = <T,>(props: GridViewProps<T>) => {
       {...props}
       key={numOfColumns}
       numColumns={numOfColumns}
-      style={[globalStyles.flex1]}
+      style={globalStyles.flex1}
       columnWrapperStyle={{ gap: columnSpacing }}
       contentContainerStyle={{ gap: rowSpacing }}
       data={data}
@@ -115,6 +119,10 @@ const GridView = <T,>(props: GridViewProps<T>) => {
           children={emptyComponent}
         />
       }
+      ListHeaderComponent={Header}
+      ListFooterComponent={Footer}
+      onEndReached={() => onEndReached?.()}
+      onEndReachedThreshold={endThreshold}
     />
   );
 };
