@@ -56,16 +56,15 @@ declare global {
     rightInset?: boolean;
   }
 
-  interface TrailingButton {
-    icon: IconProps;
-    title: string;
+  interface TrailingButton extends IconProps {
+    label: string;
     onPress?: () => void;
   }
 
   type TrailingButtons = TrailingButton[];
 
   interface TrailingContainerProps {
-    style: any;
+    style?: any;
     trailing?: IconButtonProps;
     iconColor?: string;
   }
@@ -216,7 +215,7 @@ declare global {
 
   interface IconProps {
     icon: IconType;
-    size?: FontSize | number;
+    size?: FontSize;
     color?: string;
   }
 
@@ -242,18 +241,15 @@ declare global {
     invertedStyle?: boolean;
   }
 
-  interface PopUpMenuButton {
-    id: string;
+  interface PopUpMenuButton extends IconProps {
     label: string;
-    startIcon?: IconProps;
-    onPress?: (item: PopUpMenuButton, index: number) => void;
+    onPress?: () => void;
   }
 
   type PopUpMenuButtons = PopUpMenuButton[];
 
-  interface PopUpMenuProps {
+  interface PopUpMenuProps extends IconProps {
     items: PopUpMenuButtons;
-    icon?: Partial<Omit<IconButtonProps, 'onPress'>>;
     onOpened?: () => void;
     onClose?: () => void;
     gap?: number;

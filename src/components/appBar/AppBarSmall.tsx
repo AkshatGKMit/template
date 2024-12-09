@@ -7,7 +7,7 @@ const AppBarSmall = (props: SmallAppBarProps) => {
   return (
     <AppBarMain
       {...props}
-      trailing={TrailingContainer({ trailing, iconColor })}
+      trailing={TrailingContainer({ iconColor, trailing })}
     />
   );
 };

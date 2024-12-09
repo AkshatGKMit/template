@@ -1,3 +1,4 @@
+import { FontSize } from '@themes';
 import { Platform } from 'react-native';
 
 export const isIos = Platform.OS === 'ios';
@@ -65,7 +66,7 @@ export const DEFAULT_LAYOUT: ObjectLayout = {
 
 export const APP_BAR_CONSTANTS = {
   HEIGHT: 60,
-  ICON_SIZE: 24,
+  ICON_SIZE: FontSize.titleLarge,
   PADDING_HORIZONTAL: 8,
   GAP: 12,
   TARGET_SIZE: 36,

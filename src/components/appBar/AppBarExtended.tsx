@@ -7,6 +7,7 @@ import AppBarMain from './AppBarMain';
 import ThemedStyles from './styles';
 import { TrailingContainer } from './TrailingContainer';
 import useScalingMetrics from '@config/useScalingMetrics';
+import Icons from '@constants/icons';
 
 const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   const styles = ThemedStyles();
@@ -17,12 +18,13 @@ const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
     <View style={styles.trailingContainer}>
       <PopUpMenu
         items={menuButtons!.map((button, index) => {
-          const { icon: startIcon, title: label, onPress } = button;
+          const { icon, label, onPress } = button;
           const id = label + index;
 
-          return { id, label, onPress, startIcon };
+          return { id, label, onPress, icon };
         })}
-        icon={{ size: iconSize }}
+        icon={Icons.materialIcons.moreVert}
+        size={iconSize}
       />
     </View>
   );
@@ -46,9 +48,8 @@ const TrailingButtonContainer = ({
 
   return (
     <View style={[styles.extendedTrailingContainer, { width: trailingSize }]}>
-      {displayedButtons.map(({ icon, title, onPress }, index) => {
-        const { family, name } = icon;
-        const iconButton: IconButtonProps = { family, name, onPress };
+      {displayedButtons.map(({ icon, label: title, onPress }, index) => {
+        const iconButton: IconButtonProps = { icon, onPress };
 
         return (
           <TrailingContainer

@@ -17,13 +17,17 @@ import useScalingMetrics from '@config/useScalingMetrics';
 import { ICON_FAMILY } from '@constants';
 import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
-import { Animation } from '@utility/helpers';
+import { Animation, generateRandomString } from '@utility/helpers';
 
 import ThemedStyles from './styles';
+import Icons from '@constants/icons';
+import TextBlock from '@components/textBlock';
+import { FontSize } from '@themes';
 
 const PopUpMenu = ({
   items,
   icon,
+  size: iconSize,
   onClose,
   onOpened,
   listStyle,
@@ -114,19 +118,24 @@ const PopUpMenu = ({
   const _renderItem =
     (): ListRenderItem<PopUpMenuButton> =>
     ({ item, index }) => {
-      const { label, onPress, startIcon } = item;
+      const { label, onPress, icon } = item;
 
       return (
         <TouchableHighlight
           underlayColor={theme.underlay()}
           onPress={() => {
             showOrClose();
-            onPress?.(item, index);
+            onPress?.();
           }}
         >
           <View style={[styles.item, itemStyle]}>
-            {startIcon && <Icon {...startIcon} />}
-            <Text style={styles.itemLabel}>{label}</Text>
+            {icon && (
+              <Icon
+                icon={icon}
+                size={iconSize}
+              />
+            )}
+            <TextBlock fontSize={iconSize ?? FontSize.bodyMedium}>{label}</TextBlock>
           </View>
         </TouchableHighlight>
       );
@@ -155,7 +164,7 @@ const PopUpMenu = ({
       <Animated.View style={listViewStyles}>
         <FlatList
           data={items}
-          keyExtractor={({ id }) => id.toString()}
+          keyExtractor={({ label }, index) => label + generateRandomString(index) + index}
           renderItem={_renderItem()}
           ItemSeparatorComponent={ListSeparator}
           scrollEnabled={items.length > 7}
@@ -191,9 +200,8 @@ const PopUpMenu = ({
         borderRadius={40}
       >
         <Icon
-          family={icon?.family ?? ICON_FAMILY.MATERIAL_ICONS}
-          name={icon?.name ?? 'more-vert'}
-          size={icon?.size}
+          icon={icon ?? Icons.materialIcons.moreVert}
+          size={iconSize}
         />
       </RippleButton>
       {_renderModal()}
