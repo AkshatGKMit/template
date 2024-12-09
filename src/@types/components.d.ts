@@ -272,8 +272,8 @@ declare global {
   }
 
   interface ShimmerProps {
-    baseColor: string;
-    highlightColor: string;
+    baseColor?: string;
+    highlightColor?: string;
     shimmerWidth?: number;
     direction?: (typeof SHIMMER_DIRECTION)[keyof typeof SHIMMER_DIRECTION];
     period?: number;

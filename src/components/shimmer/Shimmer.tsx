@@ -1,29 +1,31 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, LayoutChangeEvent, Animated, Easing } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SHIMMER_DIRECTION } from '@constants';
 import { Colors } from '@themes';
-import { GlobalThemedStyles } from '@themes/globalStyles';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
 import styles from './styles';
+import { useAppSelector } from '@store';
 
 const Shimmer = (props: ShimmerProps) => {
-  const [layout, setLayout] = useState<{ h: number; w: number }>({ h: 0, w: 0 });
+  const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const shimmerPositionAnim = useRef(new Animated.Value(-1)).current;
+  const [layout, setLayout] = useState({ h: 0, w: 0 });
 
-  const globalStyles = GlobalThemedStyles();
+  const shimmerPositionAnimX = Animation.newValue(-1);
+  const shimmerPositionAnimY = Animation.newValue(-1);
 
   const {
-    baseColor,
-    highlightColor,
+    baseColor = theme.all.inverseOnSurface,
+    highlightColor = theme.all.surfaceBright,
     style,
     children,
     shimmerWidth = layout.w / 2.5,
     direction = SHIMMER_DIRECTION.LTR,
-    period = 1500,
+    period = 3000,
   } = useMemo(() => props, [layout, props]);
 
   function _measure(e: LayoutChangeEvent): void {
@@ -32,8 +34,9 @@ const Shimmer = (props: ShimmerProps) => {
   }
 
   useEffect(() => {
-    Animation.continuous(Animation.timing(shimmerPositionAnim, 1, period, Easing.linear)).start();
-  }, [period, shimmerPositionAnim]);
+    Animation.continuous(Animation.timing(shimmerPositionAnimX, 1, period, Easing.linear)).start();
+    Animation.continuous(Animation.timing(shimmerPositionAnimY, 1, period, Easing.linear)).start();
+  }, [period, shimmerPositionAnimX, shimmerPositionAnimY]);
 
   const shimmerDirection = useMemo(() => {
     const start = { x: -1, y: 0.5 };
@@ -46,15 +49,15 @@ const Shimmer = (props: ShimmerProps) => {
     return { start: end, end: start };
   }, [direction]);
 
-  const translateX = useMemo(() => {
-    const outputRange =
-      direction === SHIMMER_DIRECTION.LTR ? [-layout.w, layout.w] : [layout.w, -layout.w];
+  const translateX = shimmerPositionAnimX.interpolate({
+    inputRange: [-1, 1],
+    outputRange: [-layout.w * Math.sqrt(2), layout.w * Math.sqrt(2)],
+  });
 
-    return shimmerPositionAnim.interpolate({
-      inputRange: [-1, 1],
-      outputRange,
-    });
-  }, [shimmerPositionAnim, layout, direction]);
+  const translateY = shimmerPositionAnimY.interpolate({
+    inputRange: [-1, 1],
+    outputRange: [-layout.h * Math.sqrt(2), layout.h * Math.sqrt(2)],
+  });
 
   const shimmerBackgroundColor = useMemo(
     () =>
@@ -77,17 +80,19 @@ const Shimmer = (props: ShimmerProps) => {
           {
             height: layout.h,
             width: shimmerWidth,
-            transform: [{ translateX }],
+            transform: [{ translateX }, { translateY }],
           },
         ]}
       >
-        <LinearGradient
-          colors={[baseColor, highlightColor, baseColor]}
-          start={shimmerDirection.start}
-          end={shimmerDirection.end}
-          locations={[0.3, 0.5, 0.7]}
-          style={globalStyles.flex1}
-        />
+        <View style={styles.gradientContainer}>
+          <LinearGradient
+            colors={[baseColor, highlightColor, baseColor]}
+            start={shimmerDirection.start}
+            end={shimmerDirection.end}
+            locations={[0.3, 0.5, 0.7]}
+            style={[globalStyles.flex1, { minHeight: layout.h * 1.5 }]}
+          />
+        </View>
       </Animated.View>
     ),
     [layout, props, translateX],
