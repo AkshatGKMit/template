@@ -1,14 +1,23 @@
+import { Colors } from '@themes';
+import { globalStyles } from '@themes/globalStyles';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    ...globalStyles.positionRelative,
+    overflow: 'hidden',
+  },
   rippleContainer: {
     position: 'absolute',
-    zIndex: -1,
+    top: '50%',
+    left: '50%',
     height: '100%',
-    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 1000,
   },
-  parentContainer: {
+  buttonContainer: {
     padding: 4,
+    backgroundColor: Colors.greyShades.shade100,
   },
 });
 

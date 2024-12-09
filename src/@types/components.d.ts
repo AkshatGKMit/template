@@ -262,11 +262,8 @@ declare global {
     itemStyle?: StyleProp<ViewStyle>;
   }
 
-  interface RippleButtonProps extends ViewProps {
-    children?: ReactElement<IconProps> | ReactElement<TextBlockProps>;
-    rippleColor?: string;
-    onPress?: () => void;
-    borderRadius?: number;
+  interface RippleButtonProps extends PressableProps {
+    children?: ReactElement;
   }
 
   interface ScaffoldProps extends SafeAreaProps, ViewProps {

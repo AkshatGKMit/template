@@ -1,30 +1,31 @@
-import { View, Pressable, Animated } from 'react-native';
+import { useState } from 'react';
+import { View, Pressable, Animated, Easing, GestureResponderEvent } from 'react-native';
 
-import { useAppSelector } from '@store';
-import { globalStyles } from '@themes/globalStyles';
+import { COMPONENTS_CONSTANTS } from '@constants';
 import { Animation } from '@utility/helpers';
 
 import styles from './styles';
+import { useAppSelector } from '@store';
 
 const RippleButton = (props: RippleButtonProps) => {
-  const theme = useAppSelector(({ theme }) => theme.colors);
-  const opacity = Animation.newValue(0);
-  const scale = Animation.newValue(0);
+  const { MAX_OPACITY, MIN_SCALE, MAX_SCALE, RIPPLE_DURATION } = COMPONENTS_CONSTANTS.RIPPLE_BUTTON;
 
-  const { children, rippleColor, onPress, borderRadius } = props;
-  const ANIM_DURATION = 120;
+  const theme = useAppSelector(({ theme }) => theme.colors);
+
+  const opacity = Animation.newValue(MAX_OPACITY);
+  const scale = Animation.newValue(MIN_SCALE);
+
+  const { children } = props;
 
   const animatePressIn = () => {
-    Animation.parallel([
-      Animation.timing(opacity, 1, ANIM_DURATION * 1.5),
-      Animation.timing(scale, 1, ANIM_DURATION),
-    ]).start();
+    Animation.timing(scale, MAX_SCALE, RIPPLE_DURATION, Easing.bezier(0.0, 0.0, 0.2, 1)).start();
   };
 
   const animatePressOut = () => {
-    Animation.timing(opacity, 0, ANIM_DURATION).start(({ finished }) => {
+    Animation.timing(opacity, 0, 0).start(({ finished }) => {
       if (finished) {
-        scale.setValue(0);
+        scale.setValue(MIN_SCALE);
+        opacity.setValue(MAX_OPACITY);
       }
     });
   };
@@ -32,29 +33,21 @@ const RippleButton = (props: RippleButtonProps) => {
   const rippleContainerStyles = [
     styles.rippleContainer,
     {
-      opacity,
+      backgroundColor: theme.inverted.main,
       transform: [{ scale }],
-      borderRadius,
-      backgroundColor: rippleColor ?? theme.underlay(0.5),
+      opacity,
     },
   ];
 
   return (
-    <View style={globalStyles.positionRelative}>
-      <Pressable
-        onPress={onPress}
-        onPressIn={animatePressIn}
-        onPressOut={animatePressOut}
-      >
-        <View
-          {...props}
-          style={styles.parentContainer}
-        >
-          {children}
-        </View>
-        <Animated.View style={rippleContainerStyles} />
-      </Pressable>
-    </View>
+    <Pressable
+      {...props}
+      onPressIn={animatePressIn}
+      onPressOut={animatePressOut}
+    >
+      {children}
+      <Animated.View style={rippleContainerStyles} />
+    </Pressable>
   );
 };
 

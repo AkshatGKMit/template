@@ -12,6 +12,9 @@ import store, { useAppDispatch } from '@store';
 import { switchTheme } from '@store/reducers/theme';
 import AppBar from '@components/appBar';
 import { Icons } from '@constants';
+import { ElevatedButton } from '@components/button';
+import RippleButton from '@components/rippleButton';
+import TextBlock from '@components/textBlock';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -65,7 +68,20 @@ const Main = () => {
     <Scaffold
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
-    ></Scaffold>
+    >
+      <ElevatedButton
+        label="Elevated Button"
+        onPress={() => {}}
+      />
+      <ElevatedButton
+        label="Elevated Button"
+        onPress={() => {}}
+        disabled
+      />
+      <RippleButton>
+        <TextBlock>This is ripple button</TextBlock>
+      </RippleButton>
+    </Scaffold>
   );
 };
 
