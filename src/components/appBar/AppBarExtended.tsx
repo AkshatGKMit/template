@@ -7,7 +7,7 @@ import AppBarMain from './AppBarMain';
 import ThemedStyles from './styles';
 import { TrailingContainer } from './TrailingContainer';
 import useScalingMetrics from '@config/useScalingMetrics';
-import Icons from '@constants/icons';
+import { Icons } from '@constants';
 
 const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   const styles = ThemedStyles();

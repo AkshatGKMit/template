@@ -1,5 +1,7 @@
-import { FontSize } from '@themes';
 import { Platform } from 'react-native';
+
+import { FontSize } from '@themes';
+import { ICON_FAMILY, Icons } from './icons';
 
 export const isIos = Platform.OS === 'ios';
 
@@ -33,26 +35,6 @@ export const STORAGE_KEY = {
 export const ERRORS = {
   NO_INTERNET: 'Unable to connect to Internet',
   RUNTIME_ERROR: 'Unexpected error occurred',
-} as const;
-
-export const ICON_FAMILY = {
-  ANT_DESIGN: 'AntDesign',
-  ENTYPO: 'Entypo',
-  EVIL_ICONS: 'EvilIcons',
-  FEATHER: 'Feather',
-  FONT_AWESOME: 'FontAwesome',
-  FONT_AWESOME5: 'FontAwesome5',
-  FONT_AWESOME5Brands: 'FontAwesome5Brands',
-  FONT_AWESOME6: 'FontAwesome6',
-  FONT_AWESOME6Brands: 'FontAwesome6Brands',
-  FONTISTO: 'Fontisto',
-  FOUNDATION: 'Foundation',
-  IONICONS: 'Ionicons',
-  MATERIAL_COMMUNITY_ICONS: 'MaterialCommunityIcons',
-  MATERIAL_ICONS: 'MaterialIcons',
-  OCTICONS: 'Octicons',
-  SIMPLE_LINE_ICONS: 'SimpleLineIcons',
-  ZOCIAL: 'Zocial',
 } as const;
 
 export const DEFAULT_LAYOUT: ObjectLayout = {
@@ -121,3 +103,5 @@ export const COMPONENTS_CONSTANTS = {
     MARGIN_FROM_SCREEN: 16,
   },
 };
+
+export { ICON_FAMILY, Icons, FontSize };

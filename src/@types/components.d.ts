@@ -25,18 +25,17 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
+import { FastImageProps } from 'react-native-fast-image';
 
 import {
   FLIP_CARD_SIDE,
   SWIPE_DIRECTION,
   FLIP_DIRECTION,
-  ICON_FAMILY,
   SHIMMER_DIRECTION,
   FabAppearance,
   FAB_SIZE,
   FAB_RADIUS,
 } from '@constants';
-import { FastImageProps } from 'react-native-fast-image';
 
 declare global {
   interface RefOptions {

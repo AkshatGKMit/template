@@ -24,7 +24,7 @@ import GridView from '@components/gridView/GridView';
 import TextBlock from '@components/textBlock';
 import ImageOverlay from '@components/imageOverlay';
 import { globalStyles } from '@themes/globalStyles';
-import Icons from '@constants/icons';
+import { Icons } from '@constants';
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
 

@@ -1,6 +1,24 @@
-import { ICON_FAMILY } from '@constants';
+export const ICON_FAMILY = {
+  ANT_DESIGN: 'AntDesign',
+  ENTYPO: 'Entypo',
+  EVIL_ICONS: 'EvilIcons',
+  FEATHER: 'Feather',
+  FONT_AWESOME: 'FontAwesome',
+  FONT_AWESOME5: 'FontAwesome5',
+  FONT_AWESOME5Brands: 'FontAwesome5Brands',
+  FONT_AWESOME6: 'FontAwesome6',
+  FONT_AWESOME6Brands: 'FontAwesome6Brands',
+  FONTISTO: 'Fontisto',
+  FOUNDATION: 'Foundation',
+  IONICONS: 'Ionicons',
+  MATERIAL_COMMUNITY_ICONS: 'MaterialCommunityIcons',
+  MATERIAL_ICONS: 'MaterialIcons',
+  OCTICONS: 'Octicons',
+  SIMPLE_LINE_ICONS: 'SimpleLineIcons',
+  ZOCIAL: 'Zocial',
+} as const;
 
-const Icons = {
+export const Icons = {
   antDesign: {
     stepforward: { family: ICON_FAMILY.ANT_DESIGN, name: 'stepforward' },
     stepbackward: { family: ICON_FAMILY.ANT_DESIGN, name: 'stepbackward' },
@@ -22583,5 +22601,3 @@ const Icons = {
     youtube: { family: ICON_FAMILY.ZOCIAL, name: 'youtube' },
   },
 };
-
-export default Icons;
