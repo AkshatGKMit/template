@@ -36,25 +36,25 @@ export const FontWeight = {
 } as const;
 
 export const Typography = {
-  displayLarge: { fontSize: 57, fontWeight: FontWeight.regular },
-  displayMedium: { fontSize: 45, fontWeight: FontWeight.regular },
-  displaySmall: { fontSize: 36, fontWeight: FontWeight.regular },
+  displayLarge: { fontSize: 57, fontFamily: FontFamily.normal.regular },
+  displayMedium: { fontSize: 45, fontFamily: FontFamily.normal.regular },
+  displaySmall: { fontSize: 36, fontFamily: FontFamily.normal.regular },
 
-  headlineLarge: { fontSize: 32, fontWeight: FontWeight.regular },
-  headlineMedium: { fontSize: 28, fontWeight: FontWeight.regular },
-  headlineSmall: { fontSize: 24, fontWeight: FontWeight.regular },
+  headlineLarge: { fontSize: 32, fontFamily: FontFamily.normal.regular },
+  headlineMedium: { fontSize: 28, fontFamily: FontFamily.normal.regular },
+  headlineSmall: { fontSize: 24, fontFamily: FontFamily.normal.regular },
 
-  titleLarge: { fontSize: 22, fontWeight: FontWeight.regular },
-  titleMedium: { fontSize: 16, fontWeight: FontWeight.medium },
-  titleSmall: { fontSize: 14, fontWeight: FontWeight.medium },
+  titleLarge: { fontSize: 22, fontFamily: FontFamily.normal.regular },
+  titleMedium: { fontSize: 16, fontFamily: FontFamily.normal.medium },
+  titleSmall: { fontSize: 14, fontFamily: FontFamily.normal.medium },
 
-  bodyLarge: { fontSize: 16, fontWeight: FontWeight.regular },
-  bodyMedium: { fontSize: 14, fontWeight: FontWeight.regular },
-  bodySmall: { fontSize: 12, fontWeight: FontWeight.regular },
+  bodyLarge: { fontSize: 16, fontFamily: FontFamily.normal.regular },
+  bodyMedium: { fontSize: 14, fontFamily: FontFamily.normal.regular },
+  bodySmall: { fontSize: 12, fontFamily: FontFamily.normal.regular },
 
-  labelLarge: { fontSize: 14, fontWeight: FontWeight.medium },
-  labelMedium: { fontSize: 12, fontWeight: FontWeight.medium },
-  labelSmall: { fontSize: 11, fontWeight: FontWeight.medium },
+  labelLarge: { fontSize: 14, fontFamily: FontFamily.normal.medium },
+  labelMedium: { fontSize: 12, fontFamily: FontFamily.normal.medium },
+  labelSmall: { fontSize: 11, fontFamily: FontFamily.normal.medium },
 } as const;
 
 export const Elevation = {

@@ -26,7 +26,7 @@ const darkTheme: InvertedOmittedThemeColors = {
   main: Colors.black,
   primary: Dark.primary,
   primaryText: Dark.primary,
-  primaryBackground: Dark.background,
+  primaryBackground: Dark.surface,
   secondaryBackground: Dark.surfaceContainer,
   cardColor: Dark.surfaceContainer,
   screenGradient: [Dark.surfaceContainerHighest, Dark.surfaceContainerLowest],

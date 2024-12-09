@@ -49,7 +49,7 @@ export const DEFAULT_LAYOUT: ObjectLayout = {
 
 export const APP_BAR_CONSTANTS = {
   HEIGHT: 60,
-  ICON_TYPOGRAPHY: 16,
+  ICON_TYPOGRAPHY: 24,
   PADDING_HORIZONTAL: 8,
   GAP: 12,
   TARGET_SIZE: 36,

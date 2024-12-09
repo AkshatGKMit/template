@@ -23,6 +23,9 @@ export const globalStyles = createStyles({
   flex1: {
     flex: 1,
   },
+  flexGrow1: {
+    flexGrow: 1,
+  },
   positionRelative: {
     position: 'relative',
   },
@@ -32,5 +35,9 @@ export const globalStyles = createStyles({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  fullDimensions: {
+    height: '100%',
+    width: '100%',
   },
 });

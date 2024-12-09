@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FlatList, StyleProp, View, ViewStyle } from 'react-native';
 
 import { globalStyles } from '@themes/globalStyles';

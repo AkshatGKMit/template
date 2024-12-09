@@ -10,9 +10,9 @@ const TextBlock = (props: TextBlockProps) => {
   const textStyles: StyleProp<TextStyle> = [
     style,
     {
-      fontFamily: fontFamily ?? FontFamily.normal.regular,
-      color: color ?? theme.colors.text,
       ...(typography ?? Typography.bodyMedium),
+      color: color ?? theme.colors.text,
+      fontFamily,
     },
   ];
 

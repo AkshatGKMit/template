@@ -36,6 +36,7 @@ const ThemedStyles = createThemedStyles((theme) => {
     },
     centerAlignedTitle: {
       textAlign: 'center',
+      textAlignVertical: 'center',
     },
   });
 });
