@@ -1,17 +1,11 @@
-import { useEffect, useState } from 'react';
-import { LogBox, StatusBar, useColorScheme } from 'react-native';
+import { useEffect } from 'react';
+import { LogBox, StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import BottomSheet from '@components/bottomSheet';
-import Snackbar from '@components/snackBar';
-import { Colors, ThemeMode } from '@themes';
-import Scaffold from '@components/scaffold/Scaffold';
-import store, { useAppDispatch } from '@store';
-import { switchTheme } from '@store/reducers/theme';
 import AppBar from '@components/appBar';
-import { Icons } from '@constants';
+import BottomSheet from '@components/bottomSheet';
 import {
   ElevatedButton,
   FilledButton,
@@ -19,8 +13,12 @@ import {
   TextButton,
   TonalButton,
 } from '@components/button';
-import RippleButton from '@components/rippleButton';
-import TextBlock from '@components/textBlock';
+import Scaffold from '@components/scaffold/Scaffold';
+import Snackbar from '@components/snackBar';
+import { Icons } from '@constants';
+import { Colors, ThemeMode } from '@themes';
+import store, { useAppDispatch } from '@store';
+import { switchTheme } from '@store/reducers/theme';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -75,18 +73,80 @@ const Main = () => {
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
     >
-      <FilledButton
+      <ElevatedButton
         label="Elevated Button"
         onPress={() => {}}
       />
-      <TextButton
-        label="Elevated Button"
+      <ElevatedButton
+        label="Elevated Button With Icon"
+        onPress={() => {}}
+        icon={Icons.entypo.addToList}
+      />
+      <ElevatedButton
+        label="Disabled Elevated Button"
         onPress={() => {}}
         disabled
       />
-      <RippleButton>
-        <TextBlock>This is ripple button</TextBlock>
-      </RippleButton>
+
+      <FilledButton
+        label="Filled Button"
+        onPress={() => {}}
+      />
+      <FilledButton
+        label="Filled Button With Icon"
+        onPress={() => {}}
+        icon={Icons.entypo.addToList}
+      />
+      <FilledButton
+        label="Disabled Filled Button"
+        onPress={() => {}}
+        disabled
+      />
+
+      <OutlinedButton
+        label="Outlined Button"
+        onPress={() => {}}
+      />
+      <OutlinedButton
+        label="Outlined Button With Icon"
+        onPress={() => {}}
+        icon={Icons.entypo.addToList}
+      />
+      <OutlinedButton
+        label="Disabled Outlined Button"
+        onPress={() => {}}
+        disabled
+      />
+
+      <TextButton
+        label="Text Button"
+        onPress={() => {}}
+      />
+      <TextButton
+        label="Text Button With Icon"
+        onPress={() => {}}
+        icon={Icons.entypo.addToList}
+      />
+      <TextButton
+        label="Disabled Text Button"
+        onPress={() => {}}
+        disabled
+      />
+
+      <TonalButton
+        label="Tonal Button"
+        onPress={() => {}}
+      />
+      <TonalButton
+        label="Tonal Button With Icon"
+        onPress={() => {}}
+        icon={Icons.entypo.addToList}
+      />
+      <TonalButton
+        label="Disabled Tonal Button"
+        onPress={() => {}}
+        disabled
+      />
     </Scaffold>
   );
 };

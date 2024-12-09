@@ -37,6 +37,7 @@ import {
   FAB_RADIUS,
   ICON_FAMILY,
 } from '@constants';
+import { FastImageProps } from 'react-native-fast-image';
 
 declare global {
   interface RefOptions {
