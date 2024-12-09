@@ -18,16 +18,7 @@ const ActionButton = ({
   borderRadius,
   backgroundColor,
   foregroundColor,
-}: {
-  label: string;
-  onPress?: () => void;
-  disabled?: boolean;
-  style?: StyleProp<ViewStyle>;
-  icon?: IconType;
-  borderRadius?: number;
-  backgroundColor?: string;
-  foregroundColor?: string;
-}) => {
+}: ActionButtonProps) => {
   const { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
 
   const theme = useAppSelector(({ theme }) => theme.colors);

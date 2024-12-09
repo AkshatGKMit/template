@@ -56,6 +56,22 @@ declare global {
     rightInset?: boolean;
   }
 
+  interface ActionButtonProps {
+    label: string;
+    onPress?: () => void;
+    disabled?: boolean;
+    style?: StyleProp<ViewStyle>;
+    icon?: IconType;
+    borderRadius?: number;
+    backgroundColor?: string;
+    foregroundColor?: string;
+  }
+
+  type OmittedActionButtonProps = Omit<
+    ActionButtonProps,
+    'style' | 'backgroundColor' | 'foregroundColor'
+  >;
+
   interface TrailingButton extends IconProps {
     label: string;
     onPress?: () => void;

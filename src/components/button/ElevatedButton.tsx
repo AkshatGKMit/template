@@ -1,27 +1,18 @@
+import { View } from 'react-native';
 import { Elevation } from '@themes';
 import { getShadowStyle } from '@utility/styles';
 
 import ActionButton from './ActionButton';
 
-const ElevatedButton = (props: {
-  label: string;
-  onPress?: () => void;
-  disabled?: boolean;
-  icon?: IconType;
-  borderRadius?: number;
-  backgroundColor?: string;
-  foregroundColor?: string;
-  elevation?: Elevation;
-}) => {
-  const { disabled, elevation } = props;
+const ElevatedButton = (props: OmittedActionButtonProps) => {
+  const { disabled } = props;
 
-  const buttonElevation = disabled ? Elevation.lvl0 : (elevation ?? Elevation.lvl1);
+  const buttonElevation = disabled ? Elevation.lvl0 : Elevation.lvl1;
 
   return (
-    <ActionButton
-      {...props}
-      style={{ ...getShadowStyle(buttonElevation) }}
-    />
+    <View style={{ ...getShadowStyle(buttonElevation) }}>
+      <ActionButton {...props} />
+    </View>
   );
 };
 
