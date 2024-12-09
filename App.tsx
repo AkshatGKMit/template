@@ -27,7 +27,7 @@ import { globalStyles } from '@themes/globalStyles';
 import { Icons } from '@constants';
 import Icon from '@components/icon';
 import IconButton from '@components/iconButton';
-import { ActionButton } from '@components/button';
+import { ActionButton, ElevatedButton } from '@components/button';
 
 const App = () => {
   useEffect(() => {}, []);
@@ -72,7 +72,6 @@ const Main = () => {
 
   const fetchData = async () => {
     const dataRes: any = await fetch('https://dummyjson.com/products').then((res) => res.json());
-    // console.log(dataRes);
 
     setData(dataRes.products[0]);
   };
@@ -91,44 +90,8 @@ const Main = () => {
     <Scaffold
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
-    >
-      <ActionButton label="Elevated Button" />
-      <ActionButton
-        label="Elevated Button"
-        icon={Icons.antDesign.addfile}
-      />
-      <ActionButton label="Elevated Button" />
-      <ActionButton label="Elevated Button" />
-    </Scaffold>
+    ></Scaffold>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 40,
-  },
-  header: {
-    fontSize: 24,
-    width: '100%',
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingLeft: 15,
-    fontWeight: 'bold',
-  },
-  item: {
-    flexDirection: 'column',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'white',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingLeft: 15,
-  },
-  iconName: {
-    marginLeft: 10,
-    fontSize: 18,
-  },
-});

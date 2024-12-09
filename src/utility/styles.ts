@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useScalingMetrics from '@config/useScalingMetrics';
 import { useAppSelector } from '@store';
+import { Colors } from '@themes';
 
 export function createStyles<T extends NamedStyles<T>>(styles: T): T {
   return StyleSheet.create(styles);
@@ -36,3 +37,22 @@ export function createThemedStyles<T extends NamedStyles<T> | NamedStyles<any>>(
     return styles;
   };
 }
+
+export const getShadowStyle = (level: Elevation) => {
+  return {
+    ...Platform.select({
+      ios: {
+        shadowColor: Colors.black,
+        shadowOffset: {
+          width: 0,
+          height: level > 0 ? level : 0,
+        },
+        shadowOpacity: level > 0 ? 0.2 : 0,
+        shadowRadius: level > 0 ? level : 0,
+      },
+      android: {
+        elevation: level,
+      },
+    }),
+  };
+};
