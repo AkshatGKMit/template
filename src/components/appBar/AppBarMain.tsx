@@ -5,7 +5,7 @@ import IconButton from '@components/iconButton';
 import TextBlock from '@components/textBlock';
 import { APP_BAR_CONSTANTS, isIos } from '@constants';
 import { useAppSelector } from '@store';
-import { FontFamily, FontSize } from '@themes';
+import { FontFamily, Typography } from '@themes';
 
 import ThemedStyles from './styles';
 
@@ -29,7 +29,7 @@ const AppBarMain = ({
     { backgroundColor: backgroundColor ?? theme.appBarColor },
   ];
 
-  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
+  const { ICON_TYPOGRAPHY: iconSize } = APP_BAR_CONSTANTS;
 
   const titleStyles: StyleProp<TextStyle> = [
     styles.title,
@@ -56,8 +56,8 @@ const AppBarMain = ({
         </View>
         <TextBlock
           style={titleStyles}
-          fontFamily={FontFamily.normal.heavy}
-          fontSize={FontSize.titleLarge}
+          family={FontFamily.normal.heavy}
+          typography={Typography.titleLarge}
           color={titleColor}
           numberOfLines={1}
           ellipsizeMode="tail"

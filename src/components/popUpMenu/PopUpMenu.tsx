@@ -13,16 +13,15 @@ import {
 
 import Icon from '@components/icon';
 import RippleButton from '@components/rippleButton';
+import TextBlock from '@components/textBlock';
 import useScalingMetrics from '@config/useScalingMetrics';
-import { ICON_FAMILY } from '@constants';
+import { ICON_FAMILY, Icons } from '@constants';
 import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
 import { Animation, generateRandomString } from '@utility/helpers';
 
 import ThemedStyles from './styles';
-import Icons from '@constants/icons';
-import TextBlock from '@components/textBlock';
-import { FontSize } from '@themes';
+import { Typography } from '@themes';
 
 const PopUpMenu = ({
   items,
@@ -135,7 +134,7 @@ const PopUpMenu = ({
                 size={iconSize}
               />
             )}
-            <TextBlock fontSize={iconSize ?? FontSize.bodyMedium}>{label}</TextBlock>
+            <TextBlock typography={iconSize ?? Typography.bodyMedium}>{label}</TextBlock>
           </View>
         </TouchableHighlight>
       );

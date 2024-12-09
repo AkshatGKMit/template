@@ -12,7 +12,7 @@ import { Icons } from '@constants';
 const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   const styles = ThemedStyles();
 
-  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
+  const { ICON_TYPOGRAPHY: iconSize } = APP_BAR_CONSTANTS;
 
   return (
     <View style={styles.trailingContainer}>

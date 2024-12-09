@@ -23,28 +23,6 @@ export const FontFamily = {
   },
 } as const;
 
-export const FontSize = {
-  displayLarge: 48,
-  displayMedium: 36,
-  displaySmall: 30,
-
-  headlineLarge: 28,
-  headlineMedium: 25,
-  headlineSmall: 22,
-
-  titleLarge: 24,
-  titleMedium: 20,
-  titleSmall: 15,
-
-  labelLarge: 18,
-  labelMedium: 14,
-  labelSmall: 10,
-
-  bodyLarge: 16,
-  bodyMedium: 12,
-  bodySmall: 8,
-} as const;
-
 export const FontWeight = {
   hairline: '100',
   thin: '200',
@@ -55,4 +33,26 @@ export const FontWeight = {
   bold: '700',
   heavy: '800',
   black: '900',
+} as const;
+
+export const Typography = {
+  displayLarge: { fontSize: 57, fontWeight: FontWeight.regular },
+  displayMedium: { fontSize: 45, fontWeight: FontWeight.regular },
+  displaySmall: { fontSize: 36, fontWeight: FontWeight.regular },
+
+  headlineLarge: { fontSize: 32, fontWeight: FontWeight.regular },
+  headlineMedium: { fontSize: 28, fontWeight: FontWeight.regular },
+  headlineSmall: { fontSize: 24, fontWeight: FontWeight.regular },
+
+  titleLarge: { fontSize: 22, fontWeight: FontWeight.regular },
+  titleMedium: { fontSize: 16, fontWeight: FontWeight.medium },
+  titleSmall: { fontSize: 14, fontWeight: FontWeight.medium },
+
+  bodyLarge: { fontSize: 16, fontWeight: FontWeight.regular },
+  bodyMedium: { fontSize: 14, fontWeight: FontWeight.regular },
+  bodySmall: { fontSize: 12, fontWeight: FontWeight.regular },
+
+  labelLarge: { fontSize: 14, fontWeight: FontWeight.medium },
+  labelMedium: { fontSize: 12, fontWeight: FontWeight.medium },
+  labelSmall: { fontSize: 11, fontWeight: FontWeight.medium },
 } as const;

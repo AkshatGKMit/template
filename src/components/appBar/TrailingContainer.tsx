@@ -8,7 +8,7 @@ export const TrailingContainer = ({
   trailing,
   iconColor,
 }: TrailingContainerProps) => {
-  const { ICON_SIZE: iconSize } = APP_BAR_CONSTANTS;
+  const { ICON_TYPOGRAPHY: iconSize } = APP_BAR_CONSTANTS;
 
   return (
     <View style={styles.trailingContainer}>

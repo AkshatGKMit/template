@@ -1,18 +1,18 @@
 import { Text, StyleProp, TextStyle } from 'react-native';
 
 import { useAppSelector } from '@store';
-import { FontFamily, FontSize } from '@themes';
+import { FontFamily, Typography } from '@themes';
 
 const TextBlock = (props: TextBlockProps) => {
   const theme = useAppSelector(({ theme }) => theme);
-  const { fontFamily, fontSize, style, children, color } = props;
+  const { family: fontFamily, typography, style, children, color } = props;
 
   const textStyles: StyleProp<TextStyle> = [
     style,
     {
       fontFamily: fontFamily ?? FontFamily.normal.regular,
-      fontSize: fontSize ?? FontSize.labelMedium,
       color: color ?? theme.colors.text,
+      ...(typography ?? Typography.bodyMedium),
     },
   ];
 

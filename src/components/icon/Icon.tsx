@@ -18,7 +18,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
 
 import { useAppSelector } from '@store';
-import { FontSize } from '@themes';
+import { Typography } from '@themes';
 
 const iconFamilies = {
   AntDesign,
@@ -40,7 +40,7 @@ const iconFamilies = {
   Zocial,
 };
 
-const Icon = ({ icon, color, size }: IconProps) => {
+const Icon = ({ icon, color, size: typography }: IconProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { family, name } = icon;
@@ -51,7 +51,7 @@ const Icon = ({ icon, color, size }: IconProps) => {
     <SelectedIcon
       name={name}
       color={color ?? theme.text}
-      size={size ?? FontSize.labelMedium}
+      size={typography?.fontSize ?? Typography.bodyMedium.fontSize}
     />
   );
 };

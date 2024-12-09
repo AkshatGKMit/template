@@ -1,4 +1,5 @@
-import { Orientation, ThemeMode, FontFamily, FontSize } from '@themes';
+import { Orientation, ThemeMode, FontFamily, FontWeight } from '@themes';
+import { Typography, Typography } from '@themes/font';
 
 declare global {
   interface WindowDimensions {
@@ -48,7 +49,8 @@ declare global {
   type FontFamilyItalic = (typeof FontFamily.italic)[keyof typeof FontFamily.italic];
 
   type FontFamily = FontFamilyNormal | FontFamilyItalic;
-  type FontSize = (typeof FontSize)[keyof typeof FontSize];
+  type Typography = (typeof Typography)[keyof typeof Typography];
+  type FontWeight = (typeof FontWeight)[keyof typeof FontWeight];
 
   interface ThemeConfig {
     colors: ThemeColors;

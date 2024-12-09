@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 
 import BottomSheet from '@components/bottomSheet';
 import Snackbar from '@components/snackBar';
-import { Colors, FontFamily, ThemeMode } from '@themes';
+import { Colors, FontFamily, FontWeight, ThemeMode, Typography } from '@themes';
 import Scaffold from '@components/scaffold/Scaffold';
 import store, { useAppDispatch, useAppSelector } from '@store';
 import { switchTheme } from '@store/reducers/theme';
@@ -98,16 +98,14 @@ const Main = () => {
       style={{ padding: 12, gap: 10, flex: 1, flexDirection: 'row' }}
       appBar={<ScreenAppBar />}
     >
+      <TextBlock typography={Typography.bodyLarge}>Display Large</TextBlock>
       <IconButton icon={Icons.materialIcons.menu} />
       <SectionList
         sections={DATA}
         keyExtractor={(item: any, index) => item.name + index}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Icon
-              icon={item}
-              size={25}
-            />
+            <Icon icon={item} />
             <TextBlock style={styles.iconName}>{item.name}</TextBlock>
           </View>
         )}

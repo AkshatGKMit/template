@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 
-import { FontSize } from '@themes';
+import { Typography } from '@themes';
+
 import { ICON_FAMILY, Icons } from './icons';
 
 export const isIos = Platform.OS === 'ios';
@@ -48,7 +49,7 @@ export const DEFAULT_LAYOUT: ObjectLayout = {
 
 export const APP_BAR_CONSTANTS = {
   HEIGHT: 60,
-  ICON_SIZE: FontSize.titleLarge,
+  ICON_TYPOGRAPHY: Typography.titleLarge,
   PADDING_HORIZONTAL: 8,
   GAP: 12,
   TARGET_SIZE: 36,
@@ -104,4 +105,4 @@ export const COMPONENTS_CONSTANTS = {
   },
 };
 
-export { ICON_FAMILY, Icons, FontSize };
+export { ICON_FAMILY, Icons, Typography };

@@ -1,5 +1,5 @@
 import { createStyles, createThemedStyles } from '@utility/styles';
-import { FontSize, FontWeight, StyleValues } from '@themes';
+import { FontWeight, StyleValues, Typography } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
 
 const styles = createThemedStyles((theme) => {
@@ -10,9 +10,8 @@ const styles = createThemedStyles((theme) => {
       marginBottom: 5,
     },
     label: {
+      ...Typography.titleSmall,
       color: theme.text,
-      fontSize: FontSize.titleSmall,
-      fontWeight: FontWeight.bold,
       textTransform: 'capitalize',
     },
     textfield: {
@@ -29,11 +28,11 @@ const styles = createThemedStyles((theme) => {
     textInput: {
       flex: 1,
       color: theme.text,
-      fontSize: FontSize.bodyLarge,
+      ...Typography.bodyLarge,
     },
     error: {
       color: theme.error,
-      fontSize: FontSize.bodyMedium,
+      ...Typography.bodyMedium,
     },
     errorTextfield: {
       borderColor: theme.error,

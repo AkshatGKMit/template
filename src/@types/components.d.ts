@@ -35,6 +35,7 @@ import {
   FabAppearance,
   FAB_SIZE,
   FAB_RADIUS,
+  ICON_FAMILY,
 } from '@constants';
 
 declare global {
@@ -214,7 +215,7 @@ declare global {
 
   interface IconProps {
     icon: IconType;
-    size?: FontSize;
+    size?: Typography;
     color?: string;
   }
 
@@ -306,8 +307,8 @@ declare global {
   }
 
   interface TextBlockProps extends TextProps {
-    fontFamily?: FontFamily;
-    fontSize?: FontSize;
+    family?: FontFamily;
+    typography?: Typography;
     color?: string;
     style?: StyleProp<Omit<TextStyle, 'fontFamily' | 'fontSize' | 'color'>>;
   }

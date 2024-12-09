@@ -1,5 +1,5 @@
 import { createStyles, createThemedStyles } from '@utility/styles';
-import { FontSize, FontWeight } from '@themes';
+import { FontWeight, Typography } from '@themes';
 
 const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
   const { inverted } = theme;
@@ -26,12 +26,12 @@ const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
       gap: 2,
     },
     text: {
-      fontSize: FontSize.labelMedium,
+      ...Typography.labelMedium,
       color: inverted.text,
     },
     heading: {
+      ...Typography.bodyLarge,
       fontWeight: FontWeight.bold,
-      fontSize: FontSize.bodyLarge,
       color: inverted.text,
     },
   });
