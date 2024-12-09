@@ -40,4 +40,6 @@ export const globalStyles = createStyles({
     height: '100%',
     width: '100%',
   },
+  fullWidth: { width: '100%' },
+  fullHeight: { height: '100%' },
 });
