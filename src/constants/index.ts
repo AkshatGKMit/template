@@ -28,6 +28,13 @@ export const STORE_CONSTANTS = {
       LOGIN: 'login',
     },
   },
+  FAVORITE: {
+    NAME: 'favorite',
+    THUNK: {
+      GET_FROM_STORAGE: 'GET_FAVORITE_FROM_STORAGE',
+      SAVE_TO_STORAGE: 'SAVE_FAVORITE_TO_STORAGE',
+    },
+  },
 } as const;
 
 export const QUERY_CONSTANTS = {
@@ -39,6 +46,7 @@ export const QUERY_CONSTANTS = {
 
 export const STORAGE_KEY = {
   USER: 'User',
+  FAVORITE_MOVIES_ID: 'FavoriteMoviesId',
 };
 
 export const ERRORS = {
