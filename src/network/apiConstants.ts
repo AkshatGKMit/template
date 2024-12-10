@@ -5,8 +5,38 @@ const ApiConstants = {
   headers: {
     Authorization: API_BEARER_TOKEN,
   },
+  imageSecureBaseUrl: 'https://image.tmdb.org/t/p/w500/',
   endpoints: {
     popularMovies: 'movie/popular',
+  },
+  imageSizes: {
+    logo: {
+      w45: 'w45',
+      w92: 'w92',
+      w154: 'w154',
+      original: 'original',
+    },
+    poster: {
+      w92: 'w92',
+      w154: 'w154',
+      w185: 'w185',
+      w342: 'w342',
+      w500: 'w500',
+      w780: 'w780',
+      original: 'original',
+    },
+    profile: {
+      w45: 'w45',
+      w185: 'w185',
+      h632: 'h632',
+      original: 'original',
+    },
+    still: {
+      w92: 'w92',
+      w185: 'w185',
+      w300: 'w300',
+      original: 'original',
+    },
   },
 };
 
