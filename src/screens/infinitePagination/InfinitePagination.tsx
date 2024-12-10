@@ -1,3 +1,5 @@
+import FastImage from 'react-native-fast-image';
+
 import GridView from '@components/gridView';
 import Loader from '@components/loader';
 import NoInternetScreen from '@components/noInternetScreen';
@@ -6,12 +8,10 @@ import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { QUERY_CONSTANTS } from '@constants';
-import { fetchAllInfiniteProducts, fetchAllProducts } from '@network/apiCalls';
+import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
 import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
-import { View, Text } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
   if (data && !isConnected) {
@@ -31,17 +31,17 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 };
 
 const InfinitePagination = () => {
-  const { GET_ALL_INFINITE_PRODUCTS } = QUERY_CONSTANTS.KEYS;
+  const { GET_INFINITE_POPULAR_MOVIES: GET_ALL_INFINITE_PRODUCTS } = QUERY_CONSTANTS.KEYS;
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const { data, fetchNextPage, online } = useInfinitePagination<GetAllProducts>(
+  const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
     GET_ALL_INFINITE_PRODUCTS,
-    fetchAllInfiniteProducts,
-    {},
+    fetchPopularMoviesInfinitely,
+    { initialPage: 1 },
   );
 
-  const productsData = data?.pages.flatMap((page) => page.data.products);
+  const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   return (
     <Scaffold style={{ padding: 12, gap: 10, flex: 1 }}>
@@ -49,15 +49,17 @@ const InfinitePagination = () => {
         <NoInternetScreen />
       ) : (
         <GridView
-          data={productsData ?? []}
+          data={moviesData}
           renderItem={({ item }) => {
-            const { images, title } = item;
+            const { title, poster_path } = item;
+
+            const image = 'https://image.tmdb.org/t/p/w500/' + poster_path;
 
             return (
               <>
                 <FastImage
-                  source={{ uri: images[0] }}
-                  resizeMode="cover"
+                  source={{ uri: image }}
+                  resizeMode="contain"
                   style={globalStyles.flex1}
                 />
                 <TextBlock>{title}</TextBlock>
@@ -65,7 +67,7 @@ const InfinitePagination = () => {
             );
           }}
           itemStyle={{ backgroundColor: theme.cardColor, borderRadius: 12, padding: 10, gap: 10 }}
-          childAspectRatio={1}
+          childAspectRatio={2 / 3}
           columnSpacing={10}
           rowSpacing={10}
           numOfColumns={2}

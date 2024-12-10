@@ -28,9 +28,9 @@ const useInfinitePagination = <T extends PaginatedResponse>(
   const [isQueryEnabled, setQueryEnabled] = useState(false);
 
   const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<T>> = (lastPage) => {
-    const { limit, skip } = lastPage.data;
+    const { page } = lastPage.data;
 
-    return skip / limit + 1;
+    return page + 1;
   };
 
   const {
@@ -75,8 +75,8 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     if (online.isConnected && !isFetchingNextPage && data) {
       const { length } = data.pages;
 
-      const { total, skip, limit } = data.pages[length - 1].data;
-      if (skip + limit <= total) {
+      const { total_pages: total, page } = data.pages[length - 1].data;
+      if (page < total) {
         fetchNextQueryPage();
       }
     }

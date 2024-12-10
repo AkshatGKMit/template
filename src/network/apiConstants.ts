@@ -6,7 +6,7 @@ const ApiConstants = {
     Authorization: API_BEARER_TOKEN,
   },
   endpoints: {
-    getAllProducts: 'products',
+    popularMovies: 'movie/popular',
   },
 };
 

@@ -1,20 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
 
 import AppBar from '@components/appBar';
-import GridView from '@components/gridView';
+import { ElevatedButton } from '@components/button';
 import Loader from '@components/loader';
 import Scaffold from '@components/scaffold';
-import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
-import { QUERY_CONSTANTS, IMAGES, Icons, ROUTES } from '@constants';
-import { fetchAllProducts } from '@network/apiCalls';
-import { useAppSelector } from '@store';
-import { Colors } from '@themes';
+import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
-import NoInternetScreen from '@components/noInternetScreen';
-import useInfinitePagination from '@config/useInfinitePagination';
-import { ElevatedButton } from '@components/button';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();

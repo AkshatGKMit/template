@@ -32,8 +32,8 @@ export const STORE_CONSTANTS = {
 
 export const QUERY_CONSTANTS = {
   KEYS: {
-    GET_ALL_INFINITE_PRODUCTS: ['products'],
-    GET_ALL_PRODUCTS: (page: number) => ['products', page],
+    GET_INFINITE_POPULAR_MOVIES: ['popular movies'],
+    GET_POPULAR_MOVIES: (page: number) => ['popular movies', page],
   },
 } as const;
 

@@ -20,7 +20,7 @@ const usePagination = <T extends PaginatedResponse>(
     onError = () => {},
   } = config ?? {};
 
-  const [cachedPages, setCachedPages] = useState(0);
+  const [cachedPages, setCachedPages] = useState(1);
 
   const [isQueryEnabled, setQueryEnabled] = useState(false);
 
@@ -55,10 +55,10 @@ const usePagination = <T extends PaginatedResponse>(
 
   const fetchPreviousPage = () => {
     if (data) {
-      const { limit, skip, total } = data.data;
+      const { page, total_pages: total } = data.data;
 
-      if (skip + limit <= total) {
-        setPage(skip / limit - 1);
+      if (page > 0) {
+        setPage(page - 1);
       }
     }
   };
@@ -66,10 +66,10 @@ const usePagination = <T extends PaginatedResponse>(
   const fetchNextPage = () => {
     if (online.isConnected || page < cachedPages) {
       if (data) {
-        const { limit, skip, total } = data.data;
+        const { page, total_pages: total } = data.data;
 
-        if (skip + limit <= total) {
-          setPage(skip / limit + 1);
+        if (page < total) {
+          setPage(page + 1);
 
           if (page === cachedPages) {
             setCachedPages((prevPage) => prevPage + 1);
@@ -85,7 +85,7 @@ const usePagination = <T extends PaginatedResponse>(
   };
 
   const canGoBack = page > 0;
-  const canGoForward = data ? data.data.skip + data.data.limit < data.data.total : false;
+  const canGoForward = data ? data.data.page < data.data.total_pages : false;
 
   return { data, fetchNextPage, fetchPreviousPage, isSuccess, online, canGoBack, canGoForward };
 };

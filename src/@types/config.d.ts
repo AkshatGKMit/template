@@ -40,13 +40,13 @@ declare global {
   interface UsePaginationConfigProps<T> {
     enabled?: boolean;
     maxPages?: number;
-    initialPage?: number;
     showErrorSnackbar?: boolean;
     onSuccess?: (data: AxiosResponse<T>) => void;
     onError?: (error: Error) => void;
   }
 
   interface UseInfinitePaginationConfigProps<T> extends UsePaginationConfigProps<T> {
+    initialPage?: number;
     onSuccess?: (data: InfiniteData<AxiosResponse<T>>) => void;
   }
 }

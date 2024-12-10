@@ -4,26 +4,26 @@ import { ErrorHandler } from './errorHandler';
 import { _get } from './instanceMethods';
 import { QueryFunctionContext, QueryKey } from '@tanstack/react-query';
 
-const { getAllProducts } = ApiConstants.endpoints;
+const { popularMovies } = ApiConstants.endpoints;
 
-export async function fetchAllProducts(page: number) {
+export async function fetchPopularMovie(page: number) {
   const limit = 10;
 
   try {
-    const response = await _get<GetAllProducts>(getAllProducts, {
+    const response = await _get<PaginatedMovies>(popularMovies, {
       params: {
-        limit,
-        skip: page * limit,
+        page,
       },
     });
+
     return response;
   } catch (error) {
     throw ErrorHandler(error as AxiosError);
   }
 }
 
-export async function fetchAllInfiniteProducts({
+export async function fetchPopularMoviesInfinitely({
   pageParam,
 }: QueryFunctionContext<QueryKey, number>) {
-  return await fetchAllProducts(pageParam ?? 1);
+  return await fetchPopularMovie(pageParam ?? 1);
 }
