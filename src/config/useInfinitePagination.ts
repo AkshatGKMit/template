@@ -15,7 +15,7 @@ import useOnlineStatus from './useInternetConnectionInfo';
 
 const useInfinitePagination = <T extends PaginatedResponse>(
   key: any,
-  queryFn: QueryFunction<AxiosResponse<T>, QueryKey, unknown>,
+  queryFn: QueryFunction<AxiosResponse<T>, QueryKey, number>,
   config?: UseInfinitePaginationConfigProps<T>,
 ) => {
   const {

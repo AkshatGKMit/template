@@ -6,7 +6,7 @@ import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { QUERY_CONSTANTS } from '@constants';
-import { fetchAllProducts } from '@network/apiCalls';
+import { fetchAllInfiniteProducts, fetchAllProducts } from '@network/apiCalls';
 import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
@@ -31,13 +31,13 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 };
 
 const InfinitePagination = () => {
-  const { GET_ALL_PRODUCTS } = QUERY_CONSTANTS.KEYS;
+  const { GET_ALL_INFINITE_PRODUCTS } = QUERY_CONSTANTS.KEYS;
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { data, fetchNextPage, online } = useInfinitePagination<GetAllProducts>(
-    GET_ALL_PRODUCTS,
-    fetchAllProducts,
+    GET_ALL_INFINITE_PRODUCTS,
+    fetchAllInfiniteProducts,
     {},
   );
 
