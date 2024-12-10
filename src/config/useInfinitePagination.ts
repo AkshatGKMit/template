@@ -1,8 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import NetInfo from '@react-native-community/netinfo';
 import {
   GetNextPageParamFunction,
   InfiniteData,
+  onlineManager,
   QueryFunction,
   QueryKey,
   useInfiniteQuery,
@@ -21,6 +23,11 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     onSuccess = () => {},
     onError = () => {},
   } = config ?? {};
+
+  const [online, setOnline] = useState({
+    isConnected: false,
+    showNoConnectionScreenMessage: false,
+  });
 
   const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<T>> = (lastPage) => {
     const { limit, skip } = lastPage.data;
@@ -56,11 +63,29 @@ const useInfinitePagination = <T extends PaginatedResponse>(
   useEffect(() => {
     if (data) {
       onSuccess(data);
+      setOnline((prevState) => ({ ...prevState, showNoConnectionScreenMessage: false }));
     }
   }, [isSuccess]);
 
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      const isConnected = !!state.isConnected;
+
+      onlineManager.setOnline(isConnected);
+
+      setOnline(() => ({
+        isConnected,
+        showNoConnectionScreenMessage: !isConnected && !data,
+      }));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [data]);
+
   const fetchNextPage = () => {
-    if (!isFetchingNextPage && data) {
+    if (online.isConnected && !isFetchingNextPage && data) {
       const { length } = data.pages;
 
       const { total, skip, limit } = data.pages[length - 1].data;
@@ -70,7 +95,7 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     }
   };
 
-  return { data, fetchNextPage };
+  return { data, fetchNextPage, online };
 };
 
 export default useInfinitePagination;

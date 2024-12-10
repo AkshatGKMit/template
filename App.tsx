@@ -54,6 +54,7 @@ const Main = () => {
   function onlineManagerEvent(setOnline: (online: boolean) => void) {
     return NetInfo.addEventListener((state) => {
       setOnline(!!state.isConnected);
+      onlineManager.setOnline(!!state.isConnected);
     });
   }
 

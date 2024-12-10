@@ -1,15 +1,11 @@
-import { AxiosResponse } from 'axios';
-import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import { GetNextPageParamFunction, useInfiniteQuery } from '@tanstack/react-query';
 
 import AppBar from '@components/appBar';
 import GridView from '@components/gridView';
 import Loader from '@components/loader';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
-import Snackbar from '@components/snackBar';
 import TextBlock from '@components/textBlock';
 import { QUERY_CONSTANTS, IMAGES, Icons } from '@constants';
 import { fetchAllProducts } from '@network/apiCalls';
@@ -17,7 +13,6 @@ import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import NoInternetScreen from '@components/noInternetScreen';
-import { isConnectedToInternet } from '@utility/queryHelpers';
 import useInfinitePagination from '@config/useInfinitePagination';
 
 const ScreenAppBar = () => {
@@ -38,18 +33,33 @@ const ScreenAppBar = () => {
   );
 };
 
+const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
+  if (!isConnected) {
+    return (
+      <TextBlock
+        color={theme.error}
+        style={{ textAlign: 'center' }}
+      >
+        No Internet Connection
+      </TextBlock>
+    );
+  }
+
+  if (data) {
+    return <Loader size={'large'} />;
+  }
+};
+
 const Home = () => {
   const { GET_ALL_PRODUCTS } = QUERY_CONSTANTS.KEYS;
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const { data, fetchNextPage } = useInfinitePagination<GetAllProducts>(
+  const { data, fetchNextPage, online } = useInfinitePagination<GetAllProducts>(
     GET_ALL_PRODUCTS,
     fetchAllProducts,
     {},
   );
-
-  const isInternet = isConnectedToInternet(data);
 
   const productsData = data?.pages.flatMap((page) => page.data.products);
 
@@ -58,7 +68,7 @@ const Home = () => {
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
     >
-      {!isInternet ? (
+      {online.showNoConnectionScreenMessage ? (
         <NoInternetScreen />
       ) : (
         <GridView
@@ -86,7 +96,8 @@ const Home = () => {
           emptyComponent={
             <Shimmer style={{ flex: 1, backgroundColor: Colors.black, borderRadius: 12 }} />
           }
-          Footer={data && <Loader size={'large'} />}
+          Footer={Footer(data, online.isConnected, theme)}
+          endThreshold={1.5}
           onEndReached={fetchNextPage}
         />
       )}
