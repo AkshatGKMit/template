@@ -1,14 +1,19 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import InfinitePagination from '@screens/infinitePagination/InfinitePagination';
-import Home from '@screens/home/Home';
-import { Icons, ROUTES } from '@constants';
-import AppBarSmall from '@components/appBar/AppBarSmall';
 import { useNavigation } from '@react-navigation/native';
+
+import AppBarSmall from '@components/appBar/AppBarSmall';
+import Home from '@screens/home/Home';
+import InfinitePagination from '@screens/infinitePagination/InfinitePagination';
+import Pagination from '@screens/pagination/Pagination';
+import { Icons, ROUTES } from '@constants';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const { HOME: HOME_ROUTE, INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.STACK;
+const {
+  HOME: HOME_ROUTE,
+  PAGINATION: PAGINATION_ROUTE,
+  INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
+} = ROUTES.STACK;
 
 const Navigator = () => {
   const { goBack } = useNavigation<StackNavigation>();
@@ -19,6 +24,18 @@ const Navigator = () => {
         name={HOME_ROUTE}
         component={Home}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={PAGINATION_ROUTE}
+        component={Pagination}
+        options={{
+          header: () => (
+            <AppBarSmall
+              title={PAGINATION_ROUTE}
+              leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name={INFINITE_PAGINATION_ROUTE}

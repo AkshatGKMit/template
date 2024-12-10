@@ -48,6 +48,7 @@ export const ERRORS = {
 export const ROUTES = {
   STACK: {
     HOME: 'Home',
+    PAGINATION: 'Pagination',
     INFINITE_PAGINATION: 'Infinite Pagination',
   },
 } as const;

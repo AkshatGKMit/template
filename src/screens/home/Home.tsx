@@ -54,13 +54,19 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 const Home = () => {
   const { navigate } = useNavigation<StackNavigation>();
 
-  const { INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.STACK;
+  const { PAGINATION: PAGINATION_ROUTE, INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } =
+    ROUTES.STACK;
 
   return (
     <Scaffold
       style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}
       appBar={<ScreenAppBar />}
     >
+      <ElevatedButton
+        label={PAGINATION_ROUTE}
+        onPress={() => navigate(PAGINATION_ROUTE)}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
+      />
       <ElevatedButton
         label={INFINITE_PAGINATION_ROUTE}
         onPress={() => navigate(INFINITE_PAGINATION_ROUTE)}
