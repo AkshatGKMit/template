@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
 import AppBarSmall from '@components/appBar/AppBarSmall';
+import Favorites from '@screens/favorites/Favorites';
 import Home from '@screens/home/Home';
 import InfinitePagination from '@screens/infinitePagination/InfinitePagination';
 import Pagination from '@screens/pagination/Pagination';
@@ -13,7 +14,7 @@ const {
   HOME: HOME_ROUTE,
   PAGINATION: PAGINATION_ROUTE,
   INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
-  FAVORITE_INFINITE_PAGINATION: FAVORITE_INFINITE_PAGINATION_ROUTE,
+  FAVORITES: FAVORITES_ROUTE,
 } = ROUTES.STACK;
 
 const Navigator = () => {
@@ -45,6 +46,18 @@ const Navigator = () => {
           header: () => (
             <AppBarSmall
               title={INFINITE_PAGINATION_ROUTE}
+              leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={FAVORITES_ROUTE}
+        component={Favorites}
+        options={{
+          header: () => (
+            <AppBarSmall
+              title={FAVORITES_ROUTE}
               leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
             />
           ),

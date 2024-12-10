@@ -46,8 +46,11 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 const Home = () => {
   const { navigate } = useNavigation<StackNavigation>();
 
-  const { PAGINATION: PAGINATION_ROUTE, INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } =
-    ROUTES.STACK;
+  const {
+    PAGINATION: PAGINATION_ROUTE,
+    INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
+    FAVORITES: FAVORITES_ROUTE,
+  } = ROUTES.STACK;
 
   return (
     <Scaffold
@@ -62,6 +65,12 @@ const Home = () => {
       <ElevatedButton
         label={INFINITE_PAGINATION_ROUTE}
         onPress={() => navigate(INFINITE_PAGINATION_ROUTE)}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
+      />
+      <ElevatedButton
+        label={FAVORITES_ROUTE}
+        onPress={() => navigate(FAVORITES_ROUTE)}
+        leadingIcon={Icons.materialIcons.favorite}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
     </Scaffold>

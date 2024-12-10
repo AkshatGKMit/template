@@ -40,6 +40,7 @@ declare global {
   interface UsePaginationConfigProps<T> {
     enabled?: boolean;
     maxPages?: number;
+    staleTime?: number;
     showErrorSnackbar?: boolean;
     onSuccess?: (data: AxiosResponse<T>) => void;
     onError?: (error: Error) => void;

@@ -5,14 +5,21 @@ import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
+import useFavoriteMutation from '@config/useFavoriteMutation';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { QUERY_CONSTANTS } from '@constants';
-import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
+import { fetchFavoritesInfinitely, fetchPopularMoviesInfinitely } from '@network/apiCalls';
 import { useAppDispatch, useAppSelector } from '@store';
 import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
+import { InfiniteData } from '@tanstack/react-query';
 import { Colors } from '@themes';
+import { AxiosResponse } from 'axios';
 
-const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
+const Footer = <T,>(
+  data: InfiniteData<AxiosResponse<PaginatedMovies>> | undefined,
+  isConnected: boolean,
+  theme: ThemeColors,
+) => {
   if (data && !isConnected) {
     return (
       <TextBlock
@@ -25,22 +32,30 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
   }
 
   if (data) {
-    return <Loader size={'large'} />;
+    const lastPageIndex = (data.pages.length ?? 1) - 1;
+    const currentPageData = data?.pages[lastPageIndex].data;
+
+    const { page, total_pages } = currentPageData;
+
+    if (page !== total_pages) {
+      return <Loader size={'large'} />;
+    }
   }
 };
 
-const InfinitePagination = () => {
-  const { GET_INFINITE_POPULAR_MOVIES } = QUERY_CONSTANTS.KEYS;
+const Favorites = () => {
+  const { GET_FAVORITES } = QUERY_CONSTANTS.KEYS;
 
   const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);
   const favorite = useAppSelector(({ favorite }) => favorite);
 
   const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
-    GET_INFINITE_POPULAR_MOVIES,
-    fetchPopularMoviesInfinitely,
-    { initialPage: 1 },
+    GET_FAVORITES,
+    fetchFavoritesInfinitely,
+    { initialPage: 1, staleTime: Infinity },
   );
+  const { mutate } = useFavoriteMutation();
 
   const onPressFavorite = (id: number, isFavorite: boolean) => {
     let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
@@ -93,7 +108,4 @@ const InfinitePagination = () => {
   );
 };
 
-export default InfinitePagination;
-function mutate(arg0: { id: number; favorite: boolean }) {
-  throw new Error('Function not implemented.');
-}
+export default Favorites;

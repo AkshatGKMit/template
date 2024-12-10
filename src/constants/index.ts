@@ -43,6 +43,7 @@ export const QUERY_CONSTANTS = {
     GET_INFINITE_POPULAR_MOVIES: ['popular movies'],
     GET_POPULAR_MOVIES: (page: number) => ['popular movies', page],
     ADD_FAVORITE: ['add favorite'],
+    GET_FAVORITES: ['get favorites'],
   },
 } as const;
 
@@ -61,7 +62,7 @@ export const ROUTES = {
     HOME: 'Home',
     PAGINATION: 'Pagination',
     INFINITE_PAGINATION: 'Infinite Pagination',
-    FAVORITE_INFINITE_PAGINATION: 'Favorite Infinite Pagination',
+    FAVORITES: 'Favorite Infinite Pagination',
   },
 } as const;
 
