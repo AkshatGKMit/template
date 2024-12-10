@@ -15,7 +15,7 @@ export async function fetchAllProducts({ pageParam }: QueryFunctionContext) {
     const response = await _get<GetAllProducts>(getAllProducts, {
       params: {
         limit,
-        skip: (pageParam as number) * limit,
+        skip: ((pageParam as number) ?? 1) * limit,
       },
     });
     return response;

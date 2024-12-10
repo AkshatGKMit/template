@@ -45,6 +45,13 @@ export const ERRORS = {
   RUNTIME_ERROR: 'Unexpected error occurred',
 } as const;
 
+export const Routes = {
+  Stack: {
+    Home: 'Home',
+    Cache: 'Cache',
+  },
+} as const;
+
 export const DEFAULT_LAYOUT: ObjectLayout = {
   height: 0,
   width: 0,
