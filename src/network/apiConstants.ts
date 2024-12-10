@@ -1,8 +1,10 @@
-import { API_BASE_URL } from '@env';
+import { API_BASE_URL, API_BEARER_TOKEN } from '@env';
 
 const ApiConstants = {
   BASE_URL: API_BASE_URL,
-  headers: {},
+  headers: {
+    Authorization: API_BEARER_TOKEN,
+  },
   endpoints: {
     getAllProducts: 'products',
   },

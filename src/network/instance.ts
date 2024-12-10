@@ -1,6 +1,5 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 
-import { ErrorHandler } from './errorHandler';
 import ApiConstants from './apiConstants';
 
 const { BASE_URL, headers } = ApiConstants;
