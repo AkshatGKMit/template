@@ -5,6 +5,7 @@ import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
+import useFavoriteMutation from '@config/useFavoriteMutation';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { QUERY_CONSTANTS } from '@constants';
 import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
@@ -41,18 +42,19 @@ const InfinitePagination = () => {
     fetchPopularMoviesInfinitely,
     { initialPage: 1 },
   );
+  const { mutate } = useFavoriteMutation();
 
-  const onPressFavorite = (id: number, isFavorite: boolean) => {
+  const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
     let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
 
     if (isFavorite) {
-      newFavorites = newFavorites.filter((favId) => favId !== id);
+      newFavorites = newFavorites.filter((favId) => favId !== movie.id);
     } else {
-      newFavorites.push(id);
+      newFavorites.push(movie.id);
     }
 
     dispatch(saveFavoriteToStorage(newFavorites));
-    mutate({ id, favorite: !isFavorite });
+    mutate({ movie, favorite: !isFavorite });
   };
 
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
@@ -71,7 +73,7 @@ const InfinitePagination = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.movies.includes(id)}
-                setFavorite={(isFavorite) => onPressFavorite(id, isFavorite)}
+                setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
               />
             );
           }}
@@ -94,6 +96,3 @@ const InfinitePagination = () => {
 };
 
 export default InfinitePagination;
-function mutate(arg0: { id: number; favorite: boolean }) {
-  throw new Error('Function not implemented.');
-}
