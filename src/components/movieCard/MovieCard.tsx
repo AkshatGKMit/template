@@ -8,6 +8,7 @@ import { Colors, Typography } from '@themes';
 import ApiConstants from '@network/apiConstants';
 
 import styles from './styles';
+import ImageOverlay from '@components/imageOverlay';
 
 const MovieCard = ({
   movie,
@@ -27,17 +28,16 @@ const MovieCard = ({
   } = ApiConstants;
 
   return (
-    <View style={styles.movie}>
-      <View style={styles.imageView}>
-        <FastImage
-          style={styles.image}
-          defaultSource={IMAGES.FILM_LOADER}
-          source={{
-            uri: `${imageSecureBaseUrl}${PosterSizes.w342}${poster_path}`,
-            priority: FastImage.priority.normal,
-          }}
-        />
-
+    <>
+      <ImageOverlay
+        style={styles.image}
+        resizeMode="cover"
+        defaultSource={IMAGES.FILM_LOADER}
+        source={{
+          uri: `${imageSecureBaseUrl}${PosterSizes.w342}${poster_path}`,
+          priority: FastImage.priority.normal,
+        }}
+      >
         {adult ? (
           <View style={styles.adult}>
             <Text style={styles.adultText}>Adult</Text>
@@ -49,21 +49,21 @@ const MovieCard = ({
             icon={isFavorite ? Icons.materialIcons.favorite : Icons.materialIcons.favoriteOutline}
             color={isFavorite ? Colors.red : Colors.white}
             size={20}
-            onPress={() => setFavorite(!isFavorite)}
+            onPress={() => setFavorite(isFavorite)}
           />
         </View>
-      </View>
+      </ImageOverlay>
 
       {year ? <TextBlock>{year}</TextBlock> : null}
 
       <TextBlock
         typography={Typography.titleMedium}
         ellipsizeMode="tail"
-        numberOfLines={3}
+        numberOfLines={1}
       >
         {title}
       </TextBlock>
-    </View>
+    </>
   );
 };
 

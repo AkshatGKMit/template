@@ -12,6 +12,7 @@ import store, { useAppDispatch } from '@store';
 import { switchTheme } from '@store/reducers/theme';
 import { Colors, ThemeMode } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
+import { getFavoriteFromStorage } from '@store/actions/favoriteActions';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -41,11 +42,16 @@ const Main = () => {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
 
+  function reduxSetup() {
+    dispatch(getFavoriteFromStorage());
+  }
+
   function onAppStateChange(status: AppStateStatus) {
     focusManager.setFocused(status === 'active');
   }
 
   useEffect(() => {
+    reduxSetup();
     const appStateSubscription = AppState.addEventListener('change', onAppStateChange);
 
     return () => {

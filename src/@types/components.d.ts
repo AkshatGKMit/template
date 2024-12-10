@@ -255,8 +255,8 @@ declare global {
   }
 
   interface ImageOverlayProps extends FastImageProps {
-    overlayOpacity: number;
-    overlayColor: string;
+    overlayOpacity?: number;
+    overlayColor?: string;
     containerStyle?: StyleProp<ViewStyle>;
     children?: ReactNode;
   }

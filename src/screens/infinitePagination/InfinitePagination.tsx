@@ -1,7 +1,6 @@
-import FastImage from 'react-native-fast-image';
-
 import GridView from '@components/gridView';
 import Loader from '@components/loader';
+import MovieCard from '@components/movieCard';
 import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
@@ -9,9 +8,9 @@ import TextBlock from '@components/textBlock';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { QUERY_CONSTANTS } from '@constants';
 import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
-import { useAppSelector } from '@store';
+import { useAppDispatch, useAppSelector } from '@store';
+import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
 import { Colors } from '@themes';
-import { globalStyles } from '@themes/globalStyles';
 
 const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
   if (data && !isConnected) {
@@ -33,7 +32,9 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 const InfinitePagination = () => {
   const { GET_INFINITE_POPULAR_MOVIES: GET_ALL_INFINITE_PRODUCTS } = QUERY_CONSTANTS.KEYS;
 
-  const theme = useAppSelector(({ theme }) => theme.colors);
+  const dispatch = useAppDispatch();
+  const { colors: theme } = useAppSelector(({ theme }) => theme);
+  const favorite = useAppSelector(({ favorite }) => favorite);
 
   const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
     GET_ALL_INFINITE_PRODUCTS,
@@ -50,20 +51,25 @@ const InfinitePagination = () => {
       ) : (
         <GridView
           data={moviesData}
-          renderItem={({ item }) => {
-            const { title, poster_path } = item;
-
-            const image = 'https://image.tmdb.org/t/p/w500/' + poster_path;
+          renderItem={({ item: movie }) => {
+            const { id } = movie;
 
             return (
-              <>
-                <FastImage
-                  source={{ uri: image }}
-                  resizeMode="contain"
-                  style={globalStyles.flex1}
-                />
-                <TextBlock>{title}</TextBlock>
-              </>
+              <MovieCard
+                movie={movie}
+                isFavorite={favorite.movies.includes(id)}
+                setFavorite={(isFavorite) => {
+                  let newFavorites = [...favorite.movies];
+
+                  if (isFavorite) {
+                    newFavorites.filter((favId) => favId !== id);
+                  } else {
+                    newFavorites.push(id);
+                  }
+
+                  dispatch(saveFavoriteToStorage(newFavorites));
+                }}
+              />
             );
           }}
           itemStyle={{ backgroundColor: theme.cardColor, borderRadius: 12, padding: 10, gap: 10 }}

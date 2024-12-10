@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   imageView: {
+    flex: 1,
     borderWidth: 1,
     borderRadius: 4,
   },

@@ -1,11 +1,18 @@
 import { View, StyleProp, ViewStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
+import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import { colorWithOpacity } from '@utility/helpers';
 
 const ImageOverlay = (props: ImageOverlayProps) => {
-  const { overlayOpacity, overlayColor, style, children, containerStyle } = props;
+  const {
+    overlayOpacity = 0.25,
+    overlayColor = Colors.black,
+    style,
+    children,
+    containerStyle,
+  } = props;
 
   const overlayStyles: StyleProp<ViewStyle> = [
     globalStyles.flex1,

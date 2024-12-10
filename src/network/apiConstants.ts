@@ -5,7 +5,7 @@ const ApiConstants = {
   headers: {
     Authorization: API_BEARER_TOKEN,
   },
-  imageSecureBaseUrl: 'https://image.tmdb.org/t/p/w500/',
+  imageSecureBaseUrl: 'https://image.tmdb.org/t/p/',
   endpoints: {
     popularMovies: 'movie/popular',
   },
