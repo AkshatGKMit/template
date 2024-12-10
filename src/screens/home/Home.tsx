@@ -17,6 +17,7 @@ import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import NoInternetScreen from '@components/noInternetScreen';
+import { isConnectedToInternet } from '@utility/queryHelpers';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -43,28 +44,27 @@ const Home = () => {
 
   const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<GetAllProducts, any>> = (
     lastPage,
-    pages,
   ) => {
-    const { limit, skip, total } = lastPage.data;
+    const { limit, skip } = lastPage.data;
 
     return skip / limit + 1;
   };
 
-  const { isError, data, error, fetchStatus, isFetchingNextPage, fetchNextPage } = useInfiniteQuery(
-    {
-      queryKey: GET_ALL_PRODUCTS,
-      queryFn: fetchAllProducts,
-      initialPageParam: 0,
-      getNextPageParam,
-      staleTime: 100000,
-    },
-  );
+  const { isError, data, error, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey: GET_ALL_PRODUCTS,
+    queryFn: fetchAllProducts,
+    initialPageParam: 0,
+    getNextPageParam,
+    staleTime: 100000,
+  });
 
   useEffect(() => {
     if (isError && error) {
       Snackbar.show({ heading: error.name, text: error.message });
     }
   }, [isError]);
+
+  const isInternet = isConnectedToInternet(data);
 
   const productsData = data?.pages.flatMap((page) => page.data.products);
 
@@ -73,7 +73,7 @@ const Home = () => {
       style={{ padding: 12, gap: 10, flex: 1 }}
       appBar={<ScreenAppBar />}
     >
-      {fetchStatus === 'paused' ? (
+      {!isInternet ? (
         <NoInternetScreen />
       ) : (
         <GridView
