@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-query';
 
 import Snackbar from '@components/snackBar';
+import useOnlineStatus from './useInternetConnectionInfo';
 
 const useInfinitePagination = <T extends PaginatedResponse>(
   key: any,
@@ -23,11 +24,6 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     onSuccess = () => {},
     onError = () => {},
   } = config ?? {};
-
-  const [online, setOnline] = useState({
-    isConnected: false,
-    showNoConnectionScreenMessage: false,
-  });
 
   const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<T>> = (lastPage) => {
     const { limit, skip } = lastPage.data;
@@ -50,6 +46,8 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     ...config,
   });
 
+  const online = useOnlineStatus(data);
+
   useEffect(() => {
     if (isError) {
       onError(error);
@@ -63,26 +61,8 @@ const useInfinitePagination = <T extends PaginatedResponse>(
   useEffect(() => {
     if (data) {
       onSuccess(data);
-      setOnline((prevState) => ({ ...prevState, showNoConnectionScreenMessage: false }));
     }
   }, [isSuccess]);
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      const isConnected = !!state.isConnected;
-
-      onlineManager.setOnline(isConnected);
-
-      setOnline(() => ({
-        isConnected,
-        showNoConnectionScreenMessage: !isConnected && !data,
-      }));
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [data]);
 
   const fetchNextPage = () => {
     if (online.isConnected && !isFetchingNextPage && data) {

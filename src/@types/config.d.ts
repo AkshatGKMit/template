@@ -32,6 +32,11 @@ declare global {
     hide: () => void;
   }
 
+  interface Online {
+    isConnected: boolean;
+    showNoConnectionScreenMessage: boolean;
+  }
+
   interface UseInfinitePaginationConfigProps<T> {
     enabled?: boolean;
     maxPages?: number;

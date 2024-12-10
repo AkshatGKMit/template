@@ -34,7 +34,7 @@ const ScreenAppBar = () => {
 };
 
 const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
-  if (!isConnected) {
+  if (data && !isConnected) {
     return (
       <TextBlock
         color={theme.error}
