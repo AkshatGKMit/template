@@ -2,14 +2,8 @@ import { useEffect } from 'react';
 import { AppState, AppStateStatus, LogBox, StatusBar, useColorScheme, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import NetInfo from '@react-native-community/netinfo';
 import { Provider } from 'react-redux';
-import {
-  focusManager,
-  QueryClient,
-  QueryClientProvider,
-  onlineManager,
-} from '@tanstack/react-query';
+import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import BottomSheet from '@components/bottomSheet';
 import Snackbar from '@components/snackBar';
@@ -51,16 +45,7 @@ const Main = () => {
     focusManager.setFocused(status === 'active');
   }
 
-  function onlineManagerEvent(setOnline: (online: boolean) => void) {
-    return NetInfo.addEventListener((state) => {
-      setOnline(!!state.isConnected);
-      onlineManager.setOnline(!!state.isConnected);
-    });
-  }
-
   useEffect(() => {
-    onlineManager.setEventListener(onlineManagerEvent);
-
     const appStateSubscription = AppState.addEventListener('change', onAppStateChange);
 
     return () => {

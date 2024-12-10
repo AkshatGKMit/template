@@ -19,11 +19,14 @@ const useInfinitePagination = <T extends PaginatedResponse>(
   config?: UseInfinitePaginationConfigProps<T>,
 ) => {
   const {
+    enabled = true,
     initialPage = 0,
     showErrorSnackbar = true,
     onSuccess = () => {},
     onError = () => {},
   } = config ?? {};
+
+  const [enableQuery, setEnableQuery] = useState(true);
 
   const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<T>> = (lastPage) => {
     const { limit, skip } = lastPage.data;
@@ -43,6 +46,7 @@ const useInfinitePagination = <T extends PaginatedResponse>(
     queryFn,
     initialPageParam: initialPage,
     getNextPageParam,
+    enabled: enableQuery,
     ...config,
   });
 
@@ -63,6 +67,10 @@ const useInfinitePagination = <T extends PaginatedResponse>(
       onSuccess(data);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    setEnableQuery(online.isConnected && enabled);
+  }, [enabled, online]);
 
   const fetchNextPage = () => {
     if (online.isConnected && !isFetchingNextPage && data) {
