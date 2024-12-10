@@ -29,7 +29,7 @@ interface PaginatedMovies extends PaginatedResponse {
 }
 
 interface AddFavoriteParams {
-  id: number;
+  movie: Movie;
   favorite: boolean;
 }
 

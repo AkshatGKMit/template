@@ -57,7 +57,9 @@ const Favorites = () => {
   );
   const { mutate } = useFavoriteMutation();
 
-  const onPressFavorite = (id: number, isFavorite: boolean) => {
+  const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
+    const { id } = movie;
+
     let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
 
     if (isFavorite) {
@@ -67,7 +69,7 @@ const Favorites = () => {
     }
 
     dispatch(saveFavoriteToStorage(newFavorites));
-    mutate({ id, favorite: !isFavorite });
+    mutate({ movie, favorite: !isFavorite });
   };
 
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
@@ -86,7 +88,7 @@ const Favorites = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.movies.includes(id)}
-                setFavorite={(isFavorite) => onPressFavorite(id, isFavorite)}
+                setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
               />
             );
           }}
