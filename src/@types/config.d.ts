@@ -37,12 +37,16 @@ declare global {
     showNoConnectionScreenMessage: boolean;
   }
 
-  interface UseInfinitePaginationConfigProps<T> {
+  interface UsePaginationConfigProps<T> {
     enabled?: boolean;
     maxPages?: number;
     initialPage?: number;
     showErrorSnackbar?: boolean;
-    onSuccess?: (data: InfiniteData<AxiosResponse<T>>) => void;
+    onSuccess?: (data: AxiosResponse<T>) => void;
     onError?: (error: Error) => void;
+  }
+
+  interface UseInfinitePaginationConfigProps<T> extends UsePaginationConfigProps<T> {
+    onSuccess?: (data: InfiniteData<AxiosResponse<T>>) => void;
   }
 }

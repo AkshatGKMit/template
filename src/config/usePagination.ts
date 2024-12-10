@@ -11,7 +11,7 @@ const usePagination = <T extends PaginatedResponse>(
   queryFn: QueryFunction<AxiosResponse<T>, QueryKey, unknown>,
   page: number,
   setPage: (page: number) => void,
-  config?: any,
+  config?: UsePaginationConfigProps<T>,
 ) => {
   const {
     enabled = true,
