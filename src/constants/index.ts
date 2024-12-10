@@ -33,6 +33,7 @@ export const STORE_CONSTANTS = {
     THUNK: {
       GET_FROM_STORAGE: 'GET_FAVORITE_FROM_STORAGE',
       SAVE_TO_STORAGE: 'SAVE_FAVORITE_TO_STORAGE',
+      FETCH_FAVORITE_FROM_API: 'FETCH_FAVORITE_FROM_API',
     },
   },
 } as const;
@@ -41,6 +42,7 @@ export const QUERY_CONSTANTS = {
   KEYS: {
     GET_INFINITE_POPULAR_MOVIES: ['popular movies'],
     GET_POPULAR_MOVIES: (page: number) => ['popular movies', page],
+    ADD_FAVORITE: ['add favorite'],
   },
 } as const;
 
@@ -59,6 +61,7 @@ export const ROUTES = {
     HOME: 'Home',
     PAGINATION: 'Pagination',
     INFINITE_PAGINATION: 'Infinite Pagination',
+    FAVORITE_INFINITE_PAGINATION: 'Favorite Infinite Pagination',
   },
 } as const;
 

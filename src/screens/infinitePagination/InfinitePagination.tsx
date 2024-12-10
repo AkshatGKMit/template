@@ -42,6 +42,19 @@ const InfinitePagination = () => {
     { initialPage: 1 },
   );
 
+  const onPressFavorite = (id: number, isFavorite: boolean) => {
+    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
+
+    if (isFavorite) {
+      newFavorites = newFavorites.filter((favId) => favId !== id);
+    } else {
+      newFavorites.push(id);
+    }
+
+    dispatch(saveFavoriteToStorage(newFavorites));
+    mutate({ id, favorite: !isFavorite });
+  };
+
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   return (
@@ -58,17 +71,7 @@ const InfinitePagination = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.movies.includes(id)}
-                setFavorite={(isFavorite) => {
-                  let newFavorites = [...favorite.movies];
-
-                  if (isFavorite) {
-                    newFavorites.filter((favId) => favId !== id);
-                  } else {
-                    newFavorites.push(id);
-                  }
-
-                  dispatch(saveFavoriteToStorage(newFavorites));
-                }}
+                setFavorite={(isFavorite) => onPressFavorite(id, isFavorite)}
               />
             );
           }}
@@ -91,3 +94,6 @@ const InfinitePagination = () => {
 };
 
 export default InfinitePagination;
+function mutate(arg0: { id: number; favorite: boolean }) {
+  throw new Error('Function not implemented.');
+}

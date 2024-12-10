@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+
 import instance from './instance';
 
 async function _get<T, Params = {}>(
@@ -10,7 +11,7 @@ async function _get<T, Params = {}>(
   return response;
 }
 
-async function _post<T, Body, Params = {}>(
+async function _post<T, Body = {}, Params = {}>(
   url: string,
   data: Body,
   config?: ApiCallConfig<Params>,
@@ -20,7 +21,7 @@ async function _post<T, Body, Params = {}>(
   return response;
 }
 
-async function _put<T, Body, Params = {}>(
+async function _put<T, Body = {}, Params = {}>(
   url: string,
   data: Body,
   config?: ApiCallConfig<Params>,
@@ -30,7 +31,7 @@ async function _put<T, Body, Params = {}>(
   return response;
 }
 
-async function _delete<T, Body, Params = {}>(
+async function _delete<T, Body = {}, Params = {}>(
   url: string,
   data: Body,
   config?: ApiCallConfig<Params>,

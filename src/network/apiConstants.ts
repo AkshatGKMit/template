@@ -8,6 +8,8 @@ const ApiConstants = {
   imageSecureBaseUrl: 'https://image.tmdb.org/t/p/',
   endpoints: {
     popularMovies: 'movie/popular',
+    addFavorite: 'account/21352023/favorite',
+    getFavorite: 'account/21352023/favorite/movies',
   },
   imageSizes: {
     logo: {

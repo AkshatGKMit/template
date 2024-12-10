@@ -7,6 +7,7 @@ import MovieCard from '@components/movieCard';
 import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
+import useFavoriteMutation from '@config/useFavoriteMutation';
 import usePagination from '@config/usePagination';
 import { Icons, QUERY_CONSTANTS } from '@constants';
 import { fetchPopularMovie } from '@network/apiCalls';
@@ -62,6 +63,20 @@ const Pagination = () => {
 
   const { data, fetchNextPage, fetchPreviousPage, isSuccess, online, canGoBack, canGoForward } =
     usePagination(GET_POPULAR_MOVIES(page), () => fetchPopularMovie(page), page, setPage);
+  const { mutate } = useFavoriteMutation();
+
+  const onPressFavorite = (id: number, isFavorite: boolean) => {
+    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
+
+    if (isFavorite) {
+      newFavorites = newFavorites.filter((favId) => favId !== id);
+    } else {
+      newFavorites.push(id);
+    }
+
+    dispatch(saveFavoriteToStorage(newFavorites));
+    mutate({ id, favorite: !isFavorite });
+  };
 
   const productsData: Movies = data?.data.results ?? [];
 
@@ -79,17 +94,7 @@ const Pagination = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.movies.includes(id)}
-                setFavorite={(isFavorite) => {
-                  let newFavorites = [...favorite.movies];
-
-                  if (isFavorite) {
-                    newFavorites.filter((favId) => favId !== id);
-                  } else {
-                    newFavorites.push(id);
-                  }
-
-                  dispatch(saveFavoriteToStorage(newFavorites));
-                }}
+                setFavorite={(isFavorite) => onPressFavorite(id, isFavorite)}
               />
             );
           }}

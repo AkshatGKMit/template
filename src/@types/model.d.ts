@@ -27,3 +27,14 @@ type Movies = Movie[];
 interface PaginatedMovies extends PaginatedResponse {
   results: Movies;
 }
+
+interface AddFavoriteParams {
+  id: number;
+  favorite: boolean;
+}
+
+interface AddFavoriteResponse {
+  success: boolean;
+  status_code: number;
+  status_message: string;
+}
