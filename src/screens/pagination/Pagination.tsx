@@ -7,6 +7,7 @@ import MovieCard from '@components/movieCard';
 import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
+import TextBlock from '@components/textBlock';
 import useFavoriteMutation from '@config/useFavoriteMutation';
 import usePagination from '@config/usePagination';
 import { Icons, QUERY_CONSTANTS } from '@constants';
@@ -16,7 +17,8 @@ import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 
-const Footer = <T,>(
+const Footer = (
+  currentPage: number,
   fetchPrevious: () => void,
   fetchNext: () => void,
   showPrevious: boolean,
@@ -26,28 +28,29 @@ const Footer = <T,>(
     <View
       style={
         (globalStyles.fullWidth,
-        { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 12 })
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingHorizontal: 12,
+        })
       }
     >
-      {showPrevious ? (
-        <OutlinedButton
-          label="Previous"
-          leadingIcon={Icons.ionicons.arrowBack}
-          onPress={fetchPrevious}
-        />
-      ) : (
-        <View />
-      )}
+      <OutlinedButton
+        label="Back"
+        leadingIcon={Icons.ionicons.arrowBack}
+        onPress={fetchPrevious}
+        disabled={!showPrevious}
+      />
 
-      {showNext ? (
-        <TonalButton
-          label="Next"
-          trailingIcon={Icons.ionicons.arrowForward}
-          onPress={fetchNext}
-        />
-      ) : (
-        <View />
-      )}
+      <TextBlock>Page {currentPage}</TextBlock>
+
+      <TonalButton
+        label="Next"
+        trailingIcon={Icons.ionicons.arrowForward}
+        onPress={fetchNext}
+        disabled={!showNext}
+      />
     </View>
   );
 };
@@ -81,7 +84,10 @@ const Pagination = () => {
   const productsData: Movies = data?.data.results ?? [];
 
   return (
-    <Scaffold style={{ padding: 12, gap: 10, flex: 1 }}>
+    <Scaffold
+      style={{ padding: 12, gap: 10, flex: 1 }}
+      bottomInset
+    >
       {online.showNoConnectionScreenMessage ? (
         <NoInternetScreen />
       ) : (
@@ -113,8 +119,8 @@ const Pagination = () => {
             <Shimmer style={{ flex: 1, backgroundColor: Colors.black, borderRadius: 12 }} />
           }
           Footer={
-            isSuccess
-              ? Footer(fetchPreviousPage, fetchNextPage, canGoBack, canGoForward)
+            isSuccess && data
+              ? Footer(data.data.page, fetchPreviousPage, fetchNextPage, canGoBack, canGoForward)
               : undefined
           }
         />

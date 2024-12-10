@@ -10,3 +10,5 @@ Add text button in snackbar
 {cr:2024-12-09T11:55:09} pagination data normal query state manipulation
 {cr:2024-12-09T14:18:12} Add header and footer in grid view
 {cr:2024-12-09T14:35:20} Add list loading component in grid view
+{cr:2024-12-10T18:43:11} Add scroll to top in grid view when new page is called in paginated data
+{cr:2024-12-10T20:25:26} Fix Disabled button icon color
