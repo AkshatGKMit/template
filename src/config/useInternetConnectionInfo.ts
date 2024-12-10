@@ -8,7 +8,7 @@ interface OnlineStatus {
 
 const useOnlineStatus = <T>(data: T | undefined) => {
   const [online, setOnline] = useState<OnlineStatus>({
-    isConnected: true,
+    isConnected: false,
     showNoConnectionScreenMessage: false,
   });
 
