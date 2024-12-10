@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import { GetNextPageParamFunction, useInfiniteQuery } from '@tanstack/react-query';
@@ -15,8 +14,9 @@ import TextBlock from '@components/textBlock';
 import { QUERY_CONSTANTS, IMAGES, Icons } from '@constants';
 import { fetchAllProducts } from '@network/apiCalls';
 import { useAppSelector } from '@store';
-import { FontFamily, Typography, Colors } from '@themes';
+import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
+import NoInternetScreen from '@components/noInternetScreen';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -74,19 +74,7 @@ const Home = () => {
       appBar={<ScreenAppBar />}
     >
       {fetchStatus === 'paused' ? (
-        <View style={[globalStyles.flex1, globalStyles.columnCenter, { gap: 20 }]}>
-          <FastImage
-            defaultSource={IMAGES.NO_INTERNET}
-            resizeMode="contain"
-            style={{ aspectRatio: 1, width: '60%' }}
-          />
-          <TextBlock
-            family={FontFamily.normal.black}
-            typography={Typography.titleLarge}
-          >
-            No Internet Connection
-          </TextBlock>
-        </View>
+        <NoInternetScreen />
       ) : (
         <GridView
           data={productsData ?? []}
