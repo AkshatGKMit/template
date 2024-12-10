@@ -14,7 +14,7 @@ const useOnlineStatus = <T>(data: T | undefined) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      const isConnected = !!state.isInternetReachable;
+      const isConnected = !!state.isConnected;
       setOnline({
         isConnected,
         showNoConnectionScreenMessage: !isConnected && !data,

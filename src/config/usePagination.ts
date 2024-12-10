@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { QueryFunction, QueryKey, useQuery } from '@tanstack/react-query';
+import { QueryFunction, QueryKey, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Snackbar from '@components/snackBar';
 
@@ -20,7 +20,7 @@ const usePagination = <T extends PaginatedResponse>(
     onError = () => {},
   } = config ?? {};
 
-  const [cachedPages, setCachedPages] = useState(1);
+  const queryClient = useQueryClient();
 
   const [isQueryEnabled, setQueryEnabled] = useState(false);
 
@@ -64,16 +64,23 @@ const usePagination = <T extends PaginatedResponse>(
   };
 
   const fetchNextPage = () => {
+    const currentKey = key[0];
+
+    const currentActiveKeys = queryClient
+      .getQueryCache()
+      .getAll()
+      .filter(({ queryKey }) => queryKey[0] === currentKey);
+
+    const lastKeyIndex = currentActiveKeys.length - 1;
+
+    const cachedPages = currentActiveKeys[lastKeyIndex].queryKey[1] as number;
+
     if (online.isConnected || page < cachedPages) {
       if (data) {
         const { page, total_pages: total } = data.data;
 
         if (page < total) {
           setPage(page + 1);
-
-          if (page === cachedPages) {
-            setCachedPages((prevPage) => prevPage + 1);
-          }
         }
       }
     } else {
@@ -84,7 +91,7 @@ const usePagination = <T extends PaginatedResponse>(
     }
   };
 
-  const canGoBack = page > 0;
+  const canGoBack = page > 1;
   const canGoForward = data ? data.data.page < data.data.total_pages : false;
 
   return { data, fetchNextPage, fetchPreviousPage, isSuccess, online, canGoBack, canGoForward };
