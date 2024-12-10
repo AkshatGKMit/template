@@ -64,6 +64,7 @@ const Home = () => {
       <ElevatedButton
         label={INFINITE_PAGINATION_ROUTE}
         onPress={() => navigate(INFINITE_PAGINATION_ROUTE)}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
     </Scaffold>
   );

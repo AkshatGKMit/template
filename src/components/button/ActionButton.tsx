@@ -14,8 +14,8 @@ const ActionButton = ({
   label,
   onPress,
   disabled,
-  style,
-  icon,
+  leadingIcon,
+  trailingIcon,
   backgroundColor,
   foregroundColor,
   borderColor,
@@ -41,7 +41,8 @@ const ActionButton = ({
     rippleContainerStyle,
     styles.container,
     {
-      paddingLeft: !!icon ? 16 : undefined,
+      paddingLeft: !!leadingIcon ? 16 : undefined,
+      paddingRight: !!trailingIcon ? 16 : undefined,
       backgroundColor: buttonBackgroundColor,
       borderWidth,
       borderColor,
@@ -58,9 +59,9 @@ const ActionButton = ({
       disabled={disabled}
     >
       <View style={containerStyle}>
-        {icon && (
+        {leadingIcon && (
           <Icon
-            icon={icon}
+            icon={leadingIcon}
             size={Typography.labelLarge.fontSize}
             color={buttonForegroundColor}
           />
@@ -73,6 +74,13 @@ const ActionButton = ({
         >
           {label}
         </TextBlock>
+        {trailingIcon && (
+          <Icon
+            icon={trailingIcon}
+            size={Typography.labelLarge.fontSize}
+            color={buttonForegroundColor}
+          />
+        )}
         <Animated.View style={rippleStyles} />
       </View>
     </Pressable>

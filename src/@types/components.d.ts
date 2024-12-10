@@ -61,8 +61,8 @@ declare global {
     label: string;
     onPress?: () => void;
     disabled?: boolean;
-    style?: StyleProp<ViewStyle>;
-    icon?: IconType;
+    leadingIcon?: IconType;
+    trailingIcon?: IconType;
     backgroundColor?: string;
     foregroundColor?: string;
     borderWidth?: number;
@@ -72,7 +72,6 @@ declare global {
 
   type OmittedActionButtonProps = Omit<
     ActionButtonProps,
-    | 'style'
     | 'backgroundColor'
     | 'foregroundColor'
     | 'borderWidth'
