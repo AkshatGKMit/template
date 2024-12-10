@@ -1,16 +1,15 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import NetInfo from '@react-native-community/netinfo';
 import {
   GetNextPageParamFunction,
   InfiniteData,
-  onlineManager,
   QueryFunction,
   QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query';
 
 import Snackbar from '@components/snackBar';
+
 import useOnlineStatus from './useInternetConnectionInfo';
 
 const useInfinitePagination = <T extends PaginatedResponse>(

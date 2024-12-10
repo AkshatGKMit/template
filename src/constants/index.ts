@@ -33,7 +33,7 @@ export const STORE_CONSTANTS = {
 export const QUERY_CONSTANTS = {
   KEYS: {
     GET_ALL_INFINITE_PRODUCTS: ['products'],
-    GET_ALL_PRODUCTS: ['products'],
+    GET_ALL_PRODUCTS: (page: number) => ['products', page],
   },
 } as const;
 
