@@ -1,3 +1,5 @@
+import { FetchInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 
 declare global {
@@ -28,5 +30,14 @@ declare global {
   interface SnackbarRef {
     show: (params: SnackbarParams) => void;
     hide: () => void;
+  }
+
+  interface UseInfinitePaginationConfigProps<T> {
+    enabled?: boolean;
+    maxPages?: number;
+    initialPage?: number;
+    showErrorSnackbar?: boolean;
+    onSuccess?: (data: InfiniteData<AxiosResponse<T>>) => void;
+    onError?: (error: Error) => void;
   }
 }

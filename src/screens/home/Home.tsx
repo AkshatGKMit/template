@@ -18,6 +18,7 @@ import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import NoInternetScreen from '@components/noInternetScreen';
 import { isConnectedToInternet } from '@utility/queryHelpers';
+import useInfinitePagination from '@config/useInfinitePagination';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -42,27 +43,11 @@ const Home = () => {
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const getNextPageParam: GetNextPageParamFunction<number, AxiosResponse<GetAllProducts, any>> = (
-    lastPage,
-  ) => {
-    const { limit, skip } = lastPage.data;
-
-    return skip / limit + 1;
-  };
-
-  const { isError, data, error, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: GET_ALL_PRODUCTS,
-    queryFn: fetchAllProducts,
-    initialPageParam: 0,
-    getNextPageParam,
-    staleTime: 100000,
-  });
-
-  useEffect(() => {
-    if (isError && error) {
-      Snackbar.show({ heading: error.name, text: error.message });
-    }
-  }, [isError]);
+  const { data, fetchNextPage } = useInfinitePagination<GetAllProducts>(
+    GET_ALL_PRODUCTS,
+    fetchAllProducts,
+    {},
+  );
 
   const isInternet = isConnectedToInternet(data);
 
@@ -102,19 +87,7 @@ const Home = () => {
             <Shimmer style={{ flex: 1, backgroundColor: Colors.black, borderRadius: 12 }} />
           }
           Footer={data && <Loader size={'large'} />}
-          onEndReached={() => {
-            console.log('End Triggered');
-            if (!isFetchingNextPage && data) {
-              const { length } = data.pages;
-
-              const { total, skip, limit } = data.pages[length - 1].data;
-              if (skip + limit <= total) {
-                console.log('Skip: ', skip + limit, '\nTotal: ', total);
-
-                fetchNextPage();
-              }
-            }
-          }}
+          onEndReached={fetchNextPage}
         />
       )}
     </Scaffold>
