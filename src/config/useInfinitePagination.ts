@@ -10,7 +10,7 @@ import {
 
 import Snackbar from '@components/snackBar';
 
-import useOnlineStatus from './useInternetConnectionInfo';
+import useOnlineStatus from './useOnlineStatus';
 
 const useInfinitePagination = <T extends PaginatedResponse>(
   key: any,

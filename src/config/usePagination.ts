@@ -4,7 +4,7 @@ import { QueryFunction, QueryKey, useQuery } from '@tanstack/react-query';
 
 import Snackbar from '@components/snackBar';
 
-import useOnlineStatus from './useInternetConnectionInfo';
+import useOnlineStatus from './useOnlineStatus';
 
 const usePagination = <T extends PaginatedResponse>(
   key: any,
