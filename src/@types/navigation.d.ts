@@ -1,8 +1,8 @@
 import { NavigationProp } from '@react-navigation/native';
 
-import { Routes } from '@constants';
+import { ROUTES } from '@constants';
 
-const { Stack } = Routes;
+const { STACK: Stack } = ROUTES;
 
 type GetParams<T extends StackScreenNames> = T extends typeof Stack.Details
   ? { id: number }

@@ -7,13 +7,14 @@ import Loader from '@components/loader';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
-import { QUERY_CONSTANTS, IMAGES, Icons } from '@constants';
+import { QUERY_CONSTANTS, IMAGES, Icons, ROUTES } from '@constants';
 import { fetchAllProducts } from '@network/apiCalls';
 import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 import NoInternetScreen from '@components/noInternetScreen';
 import useInfinitePagination from '@config/useInfinitePagination';
+import { ElevatedButton } from '@components/button';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -51,56 +52,19 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 };
 
 const Home = () => {
-  const { GET_ALL_PRODUCTS } = QUERY_CONSTANTS.KEYS;
+  const { navigate } = useNavigation<StackNavigation>();
 
-  const theme = useAppSelector(({ theme }) => theme.colors);
-
-  const { data, fetchNextPage, online } = useInfinitePagination<GetAllProducts>(
-    GET_ALL_PRODUCTS,
-    fetchAllProducts,
-    {},
-  );
-
-  const productsData = data?.pages.flatMap((page) => page.data.products);
+  const { INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.STACK;
 
   return (
     <Scaffold
-      style={{ padding: 12, gap: 10, flex: 1 }}
+      style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}
       appBar={<ScreenAppBar />}
     >
-      {online.showNoConnectionScreenMessage ? (
-        <NoInternetScreen />
-      ) : (
-        <GridView
-          data={productsData ?? []}
-          renderItem={({ item }) => {
-            const { images, title } = item;
-
-            return (
-              <>
-                <FastImage
-                  source={{ uri: images[0] }}
-                  resizeMode="cover"
-                  style={globalStyles.flex1}
-                />
-                <TextBlock>{title}</TextBlock>
-              </>
-            );
-          }}
-          itemStyle={{ backgroundColor: theme.cardColor, borderRadius: 12, padding: 10, gap: 10 }}
-          childAspectRatio={1}
-          columnSpacing={10}
-          rowSpacing={10}
-          numOfColumns={2}
-          emptyItemsCount={5}
-          emptyComponent={
-            <Shimmer style={{ flex: 1, backgroundColor: Colors.black, borderRadius: 12 }} />
-          }
-          Footer={Footer(data, online.isConnected, theme)}
-          endThreshold={1.5}
-          onEndReached={fetchNextPage}
-        />
-      )}
+      <ElevatedButton
+        label={INFINITE_PAGINATION_ROUTE}
+        onPress={() => navigate(INFINITE_PAGINATION_ROUTE)}
+      />
     </Scaffold>
   );
 };

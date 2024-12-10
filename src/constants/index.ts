@@ -45,10 +45,10 @@ export const ERRORS = {
   RUNTIME_ERROR: 'Unexpected error occurred',
 } as const;
 
-export const Routes = {
-  Stack: {
-    Home: 'Home',
-    Cache: 'Cache',
+export const ROUTES = {
+  STACK: {
+    HOME: 'Home',
+    INFINITE_PAGINATION: 'Infinite Pagination',
   },
 } as const;
 
