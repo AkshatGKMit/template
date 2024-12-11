@@ -7,6 +7,8 @@ import Scaffold from '@components/scaffold';
 import TextBlock from '@components/textBlock';
 import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
+import { useEffect } from 'react';
+import useHeader from '@config/useHeader';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -26,25 +28,10 @@ const ScreenAppBar = () => {
   );
 };
 
-const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
-  if (data && !isConnected) {
-    return (
-      <TextBlock
-        color={theme.error}
-        style={{ textAlign: 'center' }}
-      >
-        No Internet Connection
-      </TextBlock>
-    );
-  }
-
-  if (data) {
-    return <Loader size={'large'} />;
-  }
-};
-
 const Home = () => {
   const { navigate } = useNavigation<StackNavigation>();
+
+  useHeader<StackNavigation>(<ScreenAppBar />);
 
   const {
     PAGINATION: PAGINATION_ROUTE,
@@ -53,10 +40,7 @@ const Home = () => {
   } = ROUTES.STACK;
 
   return (
-    <Scaffold
-      style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}
-      appBar={<ScreenAppBar />}
-    >
+    <Scaffold style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}>
       <ElevatedButton
         label={PAGINATION_ROUTE}
         onPress={() => navigate(PAGINATION_ROUTE)}

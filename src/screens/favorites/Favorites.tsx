@@ -1,3 +1,9 @@
+import { AxiosResponse } from 'axios';
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { InfiniteData } from '@tanstack/react-query';
+
+import AppBarSmall from '@components/appBar/AppBarSmall';
 import GridView from '@components/gridView';
 import Loader from '@components/loader';
 import MovieCard from '@components/movieCard';
@@ -6,15 +12,13 @@ import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useFavoriteMutation from '@config/useFavoriteMutation';
+import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
-import { QUERY_CONSTANTS } from '@constants';
-import { fetchFavoritesInfinitely, fetchPopularMoviesInfinitely } from '@network/apiCalls';
+import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
+import { fetchFavoritesInfinitely } from '@network/apiCalls';
 import { useAppDispatch, useAppSelector } from '@store';
 import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
-import { InfiniteData } from '@tanstack/react-query';
 import { Colors } from '@themes';
-import { AxiosResponse } from 'axios';
-import { useEffect } from 'react';
 
 const Footer = <T,>(
   data: InfiniteData<AxiosResponse<PaginatedMovies>> | undefined,
@@ -45,7 +49,17 @@ const Footer = <T,>(
 };
 
 const Favorites = () => {
+  const { goBack } = useNavigation<StackNavigation>();
+
+  const { FAVORITES: FAVORITES_ROUTE } = ROUTES.STACK;
   const { GET_FAVORITES } = QUERY_CONSTANTS.KEYS;
+
+  useHeader<StackNavigation>(
+    <AppBarSmall
+      title={FAVORITES_ROUTE}
+      leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
+    />,
+  );
 
   const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);

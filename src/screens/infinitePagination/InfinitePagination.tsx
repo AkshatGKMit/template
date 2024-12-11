@@ -1,3 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
+
+import AppBarSmall from '@components/appBar/AppBarSmall';
 import GridView from '@components/gridView';
 import Loader from '@components/loader';
 import MovieCard from '@components/movieCard';
@@ -6,8 +9,9 @@ import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useFavoriteMutation from '@config/useFavoriteMutation';
+import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
-import { QUERY_CONSTANTS } from '@constants';
+import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
 import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
 import { useAppDispatch, useAppSelector } from '@store';
 import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
@@ -31,7 +35,17 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 };
 
 const InfinitePagination = () => {
+  const { goBack } = useNavigation<StackNavigation>();
+
+  const { INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.STACK;
   const { GET_INFINITE_POPULAR_MOVIES } = QUERY_CONSTANTS.KEYS;
+
+  useHeader<StackNavigation>(
+    <AppBarSmall
+      title={INFINITE_PAGINATION_ROUTE}
+      leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
+    />,
+  );
 
   const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);

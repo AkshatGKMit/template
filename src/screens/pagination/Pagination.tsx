@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { OutlinedButton, TonalButton } from '@components/button';
 import GridView from '@components/gridView';
@@ -10,12 +11,14 @@ import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useFavoriteMutation from '@config/useFavoriteMutation';
 import usePagination from '@config/usePagination';
-import { Icons, QUERY_CONSTANTS } from '@constants';
+import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
 import { fetchPopularMovie } from '@network/apiCalls';
 import { useAppDispatch, useAppSelector } from '@store';
 import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
+import AppBarSmall from '@components/appBar/AppBarSmall';
+import useHeader from '@config/useHeader';
 
 const Footer = (
   currentPage: number,
@@ -56,6 +59,17 @@ const Footer = (
 };
 
 const Pagination = () => {
+  const { goBack } = useNavigation<StackNavigation>();
+
+  const { PAGINATION: PAGINATION_ROUTE } = ROUTES.STACK;
+
+  useHeader<StackNavigation>(
+    <AppBarSmall
+      title={PAGINATION_ROUTE}
+      leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
+    />,
+  );
+
   const { GET_POPULAR_MOVIES } = QUERY_CONSTANTS.KEYS;
 
   const dispatch = useAppDispatch();
