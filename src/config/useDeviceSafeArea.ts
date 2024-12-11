@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useScalingMetrics from '@config/useScalingMetrics';
-
 const useDeviceSafeArea = ({
   useSafeArea,
   bottomInset,
