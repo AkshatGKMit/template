@@ -7,6 +7,7 @@ import {
   Typography,
   Elevation,
 } from '@themes';
+import { Light } from '@themes/colors';
 
 declare global {
   interface WindowDimensions {
@@ -23,59 +24,9 @@ declare global {
     left: number;
   };
 
-  interface Colors {
-    primary: string;
-    surfaceTint: string;
-    onPrimary: string;
-    primaryContainer: string;
-    onPrimaryContainer: string;
-    secondary: string;
-    onSecondary: string;
-    secondaryContainer: string;
-    onSecondaryContainer: string;
-    tertiary: string;
-    onTertiary: string;
-    tertiaryContainer: string;
-    onTertiaryContainer: string;
-    error: string;
-    onError: string;
-    errorContainer: string;
-    onErrorContainer: string;
-    background: string;
-    onBackground: string;
-    surface: string;
-    onSurface: string;
-    surfaceVariant: string;
-    onSurfaceVariant: string;
-    outline: string;
-    outlineVariant: string;
-    shadow: string;
-    scrim: string;
-    inverseSurface: string;
-    inverseOnSurface: string;
-    inversePrimary: string;
-    primaryFixed: string;
-    onPrimaryFixed: string;
-    primaryFixedDim: string;
-    onPrimaryFixedVariant: string;
-    secondaryFixed: string;
-    onSecondaryFixed: string;
-    secondaryFixedDim: string;
-    onSecondaryFixedVariant: string;
-    tertiaryFixed: string;
-    onTertiaryFixed: string;
-    tertiaryFixedDim: string;
-    onTertiaryFixedVariant: string;
-    surfaceDim: string;
-    surfaceBright: string;
-    surfaceContainerLowest: string;
-    surfaceContainerLow: string;
-    surfaceContainer: string;
-    surfaceContainerHigh: string;
-    surfaceContainerHighest: string;
-  }
-
   type ThemeMode = (typeof ThemeMode)[keyof typeof ThemeMode];
+
+  type Colors = typeof Light;
 
   interface ThemeColors {
     main: string;
@@ -91,7 +42,10 @@ declare global {
     divider: string;
     placeholder: string;
     statusBarColor: string;
-    appBarColor: string;
+    appBar: {
+      background: string;
+      foreground: string;
+    };
     underlay: (opacity?: number) => string;
     all: Colors;
     inverted: InvertedOmittedThemeColors;

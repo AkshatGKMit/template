@@ -12,15 +12,18 @@ const lightTheme: InvertedOmittedThemeColors = {
   cardColor: Light.surfaceContainer,
   screenGradient: [Light.surfaceContainerHighest, Light.surfaceContainerLowest],
   text: Light.onSurface,
-  secondaryText: Light.surfaceVariant,
+  secondaryText: Light.onSurface,
   error: Light.error,
   divider: Light.outlineVariant,
   placeholder: Light.outline,
-  statusBarColor: Light.primaryContainer,
-  appBarColor: Light.primaryContainer,
+  statusBarColor: Light.surface,
+  appBar: {
+    background: Light.surface,
+    foreground: Light.onSurface,
+  },
   underlay: (opacity?: number) => colorWithOpacity(Light.outlineVariant, opacity ?? 0.25),
   all: Light,
-};
+} as const;
 
 const darkTheme: InvertedOmittedThemeColors = {
   main: Colors.black,
@@ -31,15 +34,18 @@ const darkTheme: InvertedOmittedThemeColors = {
   cardColor: Dark.surfaceContainer,
   screenGradient: [Dark.surfaceContainerHighest, Dark.surfaceContainerLowest],
   text: Dark.onSurface,
-  secondaryText: Dark.surfaceVariant,
+  secondaryText: Dark.onSurface,
   error: Dark.error,
   divider: Dark.outlineVariant,
   placeholder: Dark.outline,
-  statusBarColor: Dark.primaryContainer,
-  appBarColor: Dark.primaryContainer,
+  statusBarColor: Dark.surface,
+  appBar: {
+    background: Dark.surface,
+    foreground: Dark.onSurface,
+  },
   underlay: (opacity?: number) => colorWithOpacity(Dark.outlineVariant, opacity ?? 0.25),
   all: Dark,
-};
+} as const;
 
 export const ThemeColorModes: ThemeColorModes = {
   light: {
