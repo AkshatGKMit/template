@@ -14,6 +14,7 @@ import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
 import { InfiniteData } from '@tanstack/react-query';
 import { Colors } from '@themes';
 import { AxiosResponse } from 'axios';
+import { useEffect } from 'react';
 
 const Footer = <T,>(
   data: InfiniteData<AxiosResponse<PaginatedMovies>> | undefined,
@@ -57,6 +58,12 @@ const Favorites = () => {
   );
   const { mutate } = useFavoriteMutation();
 
+  const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
+
+  useEffect(() => {
+    dispatch(saveFavoriteToStorage(moviesData.map(({ id }) => id)));
+  }, [moviesData]);
+
   const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
     const { id } = movie;
 
@@ -71,8 +78,6 @@ const Favorites = () => {
     dispatch(saveFavoriteToStorage(newFavorites));
     mutate({ movie, favorite: !isFavorite });
   };
-
-  const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   return (
     <Scaffold style={{ padding: 12, gap: 10, flex: 1 }}>

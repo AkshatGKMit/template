@@ -28,23 +28,24 @@ const usePagination = <T extends PaginatedResponse>(
     queryKey: key,
     queryFn,
     enabled: isQueryEnabled,
+    networkMode: 'offlineFirst',
     ...config,
   });
 
   const online = useOnlineStatus(data);
 
   useEffect(() => {
-    if (isError) {
+    if (isError && error) {
       onError(error);
 
-      if (showErrorSnackbar && error) {
+      if (showErrorSnackbar) {
         Snackbar.show({ heading: error.name, text: error.message });
       }
     }
   }, [isError]);
 
   useEffect(() => {
-    if (data) {
+    if (isSuccess && data) {
       onSuccess(data);
     }
   }, [isSuccess]);

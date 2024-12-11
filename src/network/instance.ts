@@ -9,4 +9,9 @@ const instance = axios.create({
   headers,
 });
 
+instance.interceptors.request.use((value) => {
+  console.log(value.url);
+  return value;
+});
+
 export default instance;
