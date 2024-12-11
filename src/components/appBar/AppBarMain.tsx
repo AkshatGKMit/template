@@ -9,25 +9,24 @@ import { FontFamily, Typography } from '@themes';
 
 import ThemedStyles from './styles';
 
-const AppBarMain = ({
-  title,
-  titleColor,
-  centerTitle,
-  backgroundColor,
-  iconColor,
-  leading,
-  trailing,
-}: AppBarProps) => {
+const AppBarMain = (props: AppBarProps) => {
   const { top: topInsets } = useSafeAreaInsets();
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
+  const {
+    title,
+    titleColor,
+    centerTitle,
+    iconColor,
+    leading,
+    trailing,
+    backgroundColor = theme.appBar.background,
+  } = props;
+
   const styles = ThemedStyles();
 
-  const containerStyles: StyleProp<ViewStyle> = [
-    styles.container,
-    { backgroundColor: backgroundColor ?? theme.appBarColor },
-  ];
+  const containerStyles: StyleProp<ViewStyle> = [styles.container, { backgroundColor }];
 
   const { ICON_TYPOGRAPHY: iconSize } = APP_BAR_CONSTANTS;
 
@@ -38,12 +37,7 @@ const AppBarMain = ({
 
   return (
     <>
-      <View
-        style={{
-          height: isIos ? topInsets : StatusBar.currentHeight,
-          backgroundColor: theme.statusBarColor,
-        }}
-      />
+      <View style={{ height: topInsets, backgroundColor }} />
       <View style={containerStyles}>
         <View style={styles.trailingContainer}>
           {leading && (
