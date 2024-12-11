@@ -2,8 +2,8 @@ import { AxiosResponse } from 'axios';
 import { InfiniteData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { QUERY_CONSTANTS, STORAGE_KEY } from '@constants';
-import { StorageManager } from '@utility/helpers';
 import { mutateAddFavorites } from '@network/apiCalls';
+import { StorageManager } from '@utility/helpers';
 
 const useFavorite = () => {
   const queryClient = useQueryClient();

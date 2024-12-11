@@ -13,7 +13,7 @@ import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
 import { fetchPopularMoviesInfinitely } from '@network/apiCalls';
-import { useAppDispatch, useAppSelector } from '@store';
+import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 
 const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColors) => {
