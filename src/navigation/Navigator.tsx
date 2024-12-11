@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Favorites from '@screens/favorites/Favorites';
-import Home from '@screens/home/Home';
+import Home from '../screens/home/Home';
 import InfinitePagination from '@screens/infinitePagination/InfinitePagination';
 import Pagination from '@screens/pagination/Pagination';
 import { ROUTES } from '@constants';

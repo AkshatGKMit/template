@@ -30,14 +30,12 @@ export namespace Switch {
   };
 }
 
-const switchTheme = Switch.action;
+export const switchTheme = Switch.action;
 
 const reducerBuilder = ({ addCase }: ActionReducerMapBuilder<ThemeState>) => {
   addCase(switchTheme, Switch.reducer);
 };
 
 const themeReducer = createReducer<ThemeState>(initialState, reducerBuilder);
-
-export { switchTheme };
 
 export default themeReducer;

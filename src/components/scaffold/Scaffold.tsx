@@ -4,8 +4,7 @@ import { GlobalThemedStyles } from '@themes/globalStyles';
 import useDeviceSafeArea from '@config/useDeviceSafeArea';
 
 const Scaffold = (props: ScaffoldProps) => {
-  const { children, style, useSafeArea, bottomInset, leftInset, rightInset, topInset, appBar } =
-    props;
+  const { children, style, useSafeArea, bottomInset, leftInset, rightInset, topInset } = props;
   const { insetTop, insetBottom, insetLeft, insetRight } = useDeviceSafeArea({
     useSafeArea,
     bottomInset,
@@ -17,23 +16,20 @@ const Scaffold = (props: ScaffoldProps) => {
   const globalThemedStyles = GlobalThemedStyles();
 
   const paddingStyles = {
-    paddingTop: !appBar ? insetTop : null,
+    paddingTop: insetTop,
     paddingBottom: insetBottom,
     paddingLeft: insetLeft,
     paddingRight: insetRight,
   };
 
-  const screenStyle: StyleProp<ViewStyle> = [globalThemedStyles.screen, paddingStyles];
+  const screenStyle: StyleProp<ViewStyle> = [style, globalThemedStyles.screen, paddingStyles];
 
   return (
-    <View style={screenStyle}>
-      {appBar}
-      <View
-        {...props}
-        style={style}
-      >
-        {children}
-      </View>
+    <View
+      {...props}
+      style={screenStyle}
+    >
+      {children}
     </View>
   );
 };

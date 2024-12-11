@@ -9,6 +9,7 @@ import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
 import { useEffect } from 'react';
 import useHeader from '@config/useHeader';
+import { FC } from 'react';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -30,15 +31,12 @@ const ScreenAppBar = () => {
 
 const Home = () => {
   const { navigate } = useNavigation<StackNavigation>();
-
   useHeader<StackNavigation>(<ScreenAppBar />);
-
   const {
     PAGINATION: PAGINATION_ROUTE,
     INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
     FAVORITES: FAVORITES_ROUTE,
   } = ROUTES.STACK;
-
   return (
     <Scaffold style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}>
       <ElevatedButton

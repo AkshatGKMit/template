@@ -1,13 +1,5 @@
-import { useEffect, useState } from 'react';
-import {
-  AppState,
-  AppStateStatus,
-  Button,
-  LogBox,
-  StatusBar,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { useEffect } from 'react';
+import { AppState, AppStateStatus, LogBox, StatusBar, useColorScheme, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';

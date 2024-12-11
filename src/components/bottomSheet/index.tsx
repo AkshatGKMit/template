@@ -26,7 +26,7 @@ BottomSheet.show = (params: BottomSheetParams) => {
 };
 
 BottomSheet.hide = (params: BottomSheetParams) => {
-  refManager.getRef()?.hide(params);
+  refManager.getRef()?.hide();
 };
 
 export default BottomSheet;
