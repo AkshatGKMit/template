@@ -9,7 +9,6 @@ import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useFavorite from '@config/useFavorite';
-import useFavoriteMutation from '@config/useFavoriteMutation';
 import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
@@ -47,16 +46,14 @@ const InfinitePagination = () => {
     />,
   );
 
-  const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);
-  const { favorite } = useFavorite();
+  const { favorite, addOrRemoveFavorite } = useFavorite();
 
   const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
     GET_INFINITE_POPULAR_MOVIES,
     fetchPopularMoviesInfinitely,
     { initialPage: 1 },
   );
-  const { mutate } = useFavoriteMutation();
 
   const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
     let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
@@ -67,7 +64,7 @@ const InfinitePagination = () => {
       newFavorites.push(movie.id);
     }
 
-    mutate({ movie, favorite: !isFavorite });
+    addOrRemoveFavorite({ movie, favorite: !isFavorite });
   };
 
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];

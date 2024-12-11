@@ -11,7 +11,6 @@ import NoInternetScreen from '@components/noInternetScreen';
 import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
-import useFavoriteMutation from '@config/useFavoriteMutation';
 import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
@@ -62,19 +61,19 @@ const Favorites = () => {
   );
 
   const { colors: theme } = useAppSelector(({ theme }) => theme);
-  const { favorite, saveNewValues } = useFavorite();
+  const { favorite, addOrRemoveFavorite, saveNewValues } = useFavorite();
 
   const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
     GET_FAVORITES,
     fetchFavoritesInfinitely,
     { initialPage: 1, staleTime: Infinity },
   );
-  const { mutate } = useFavoriteMutation();
 
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   useEffect(() => {
-    saveNewValues(moviesData.map(({ id }) => id));
+    const newIds = new Set(moviesData.map(({ id }) => id));
+    saveNewValues([...newIds]);
   }, [moviesData]);
 
   const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
@@ -88,7 +87,7 @@ const Favorites = () => {
       newFavorites.push(id);
     }
 
-    mutate({ movie, favorite: !isFavorite });
+    addOrRemoveFavorite({ movie, favorite: !isFavorite });
   };
 
   return (

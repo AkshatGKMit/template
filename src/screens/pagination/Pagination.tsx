@@ -11,12 +11,11 @@ import Scaffold from '@components/scaffold';
 import Shimmer from '@components/shimmer';
 import TextBlock from '@components/textBlock';
 import useFavorite from '@config/useFavorite';
-import useFavoriteMutation from '@config/useFavoriteMutation';
 import useHeader from '@config/useHeader';
 import usePagination from '@config/usePagination';
 import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
 import { fetchPopularMovie } from '@network/apiCalls';
-import { useAppDispatch, useAppSelector } from '@store';
+import { useAppSelector } from '@store';
 import { Colors } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
 
@@ -72,15 +71,13 @@ const Pagination = () => {
 
   const { GET_POPULAR_MOVIES } = QUERY_CONSTANTS.KEYS;
 
-  const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);
-  const { favorite } = useFavorite();
+  const { favorite, addOrRemoveFavorite } = useFavorite();
 
   const [page, setPage] = useState(1);
 
   const { data, fetchNextPage, fetchPreviousPage, isSuccess, online, canGoBack, canGoForward } =
     usePagination(GET_POPULAR_MOVIES(page), () => fetchPopularMovie(page), page, setPage);
-  const { mutate } = useFavoriteMutation();
 
   const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
     let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
@@ -91,7 +88,7 @@ const Pagination = () => {
       newFavorites.push(movie.id);
     }
 
-    mutate({ movie, favorite: !isFavorite });
+    addOrRemoveFavorite({ movie, favorite: !isFavorite });
   };
 
   const productsData: Movies = data?.data.results ?? [];
