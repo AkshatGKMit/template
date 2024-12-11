@@ -55,18 +55,6 @@ const InfinitePagination = () => {
     { initialPage: 1 },
   );
 
-  const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
-    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
-
-    if (isFavorite) {
-      newFavorites = newFavorites.filter((favId) => favId !== movie.id);
-    } else {
-      newFavorites.push(movie.id);
-    }
-
-    addOrRemoveFavorite({ movie, favorite: !isFavorite });
-  };
-
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   return (
@@ -83,7 +71,9 @@ const InfinitePagination = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.includes(id)}
-                setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
+                setFavorite={(isCurrentFavorite) =>
+                  addOrRemoveFavorite({ movie, favorite: !isCurrentFavorite })
+                }
               />
             );
           }}

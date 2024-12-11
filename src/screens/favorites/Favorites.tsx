@@ -76,20 +76,6 @@ const Favorites = () => {
     saveNewValues([...newIds]);
   }, [moviesData]);
 
-  const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
-    const { id } = movie;
-
-    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
-
-    if (isFavorite) {
-      newFavorites = newFavorites.filter((favId) => favId !== id);
-    } else {
-      newFavorites.push(id);
-    }
-
-    addOrRemoveFavorite({ movie, favorite: !isFavorite });
-  };
-
   return (
     <Scaffold style={{ padding: 12, gap: 10, flex: 1 }}>
       {online.showNoConnectionScreenMessage ? (
@@ -104,7 +90,9 @@ const Favorites = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.includes(id)}
-                setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
+                setFavorite={(isCurrentFavorite) =>
+                  addOrRemoveFavorite({ movie, favorite: !isCurrentFavorite })
+                }
               />
             );
           }}

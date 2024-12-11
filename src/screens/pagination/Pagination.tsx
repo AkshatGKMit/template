@@ -79,18 +79,6 @@ const Pagination = () => {
   const { data, fetchNextPage, fetchPreviousPage, isSuccess, online, canGoBack, canGoForward } =
     usePagination(GET_POPULAR_MOVIES(page), () => fetchPopularMovie(page), page, setPage);
 
-  const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
-    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
-
-    if (isFavorite) {
-      newFavorites = newFavorites.filter((favId) => favId !== movie.id);
-    } else {
-      newFavorites.push(movie.id);
-    }
-
-    addOrRemoveFavorite({ movie, favorite: !isFavorite });
-  };
-
   const productsData: Movies = data?.data.results ?? [];
 
   return (
@@ -110,7 +98,9 @@ const Pagination = () => {
               <MovieCard
                 movie={movie}
                 isFavorite={favorite.includes(id)}
-                setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
+                setFavorite={(isCurrentFavorite) =>
+                  addOrRemoveFavorite({ movie, favorite: !isCurrentFavorite })
+                }
               />
             );
           }}

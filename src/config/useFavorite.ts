@@ -22,6 +22,20 @@ const useFavorite = () => {
     );
   };
 
+  const mutateFavorite = ({ movie, favorite }: AddFavoriteParams) => {
+    const { id } = movie;
+
+    let newFavorites: number[] = [...favoriteIds];
+
+    if (favorite) {
+      newFavorites = newFavorites.filter((favId) => favId !== id);
+    } else {
+      newFavorites.push(id);
+    }
+
+    return mutateAddFavorites(movie.id, favorite);
+  };
+
   const onMutating = async ({ favorite, movie: { id } }: AddFavoriteParams) => {
     const newFavoriteIds = favorite
       ? [...favoriteIds, id]
@@ -58,7 +72,7 @@ const useFavorite = () => {
 
   const mutation = useMutation<AxiosResponse<AddFavoriteResponse>, Error, AddFavoriteParams>({
     mutationKey: ADD_FAVORITE,
-    mutationFn: ({ movie, favorite }) => mutateAddFavorites(movie.id, favorite),
+    mutationFn: mutateFavorite,
     onMutate: onMutating,
     onSuccess: onMutationSuccess,
   });
