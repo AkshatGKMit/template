@@ -3,7 +3,12 @@ import { AppState, AppStateStatus, LogBox, StatusBar, useColorScheme, View } fro
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  focusManager,
+  QueryClient,
+  QueryClientProvider,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import BottomSheet from '@components/bottomSheet';
 import Snackbar from '@components/snackBar';
@@ -13,7 +18,7 @@ import store, { useAppDispatch } from '@store';
 import { switchTheme } from '@store/reducers/theme';
 import { Colors, ThemeMode } from '@themes';
 import { globalStyles } from '@themes/globalStyles';
-import { getFavoriteFromStorage } from '@store/actions/favoriteActions';
+import useFavorite from '@config/useFavorite';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -42,17 +47,13 @@ const App = () => {
 const Main = () => {
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
-
-  function reduxSetup() {
-    dispatch(getFavoriteFromStorage());
-  }
+  useFavorite();
 
   function onAppStateChange(status: AppStateStatus) {
     focusManager.setFocused(status === 'active');
   }
 
   useEffect(() => {
-    reduxSetup();
     const appStateSubscription = AppState.addEventListener('change', onAppStateChange);
 
     return () => {

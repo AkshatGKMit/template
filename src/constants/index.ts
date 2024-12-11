@@ -44,6 +44,7 @@ export const QUERY_CONSTANTS = {
     GET_POPULAR_MOVIES: (page: number) => ['popular movies', page],
     ADD_FAVORITE: ['add favorite'],
     GET_FAVORITES: ['get favorites'],
+    GET_FAVORITES_FROM_STORAGE: ['GET_FAVORITES_FROM_STORAGE'],
   },
 } as const;
 

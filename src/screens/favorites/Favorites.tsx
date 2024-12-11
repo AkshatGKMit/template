@@ -16,9 +16,9 @@ import useHeader from '@config/useHeader';
 import useInfinitePagination from '@config/useInfinitePagination';
 import { Icons, QUERY_CONSTANTS, ROUTES } from '@constants';
 import { fetchFavoritesInfinitely } from '@network/apiCalls';
-import { useAppDispatch, useAppSelector } from '@store';
-import { saveFavoriteToStorage } from '@store/actions/favoriteActions';
+import { useAppSelector } from '@store';
 import { Colors } from '@themes';
+import useFavorite from '@config/useFavorite';
 
 const Footer = <T,>(
   data: InfiniteData<AxiosResponse<PaginatedMovies>> | undefined,
@@ -61,9 +61,8 @@ const Favorites = () => {
     />,
   );
 
-  const dispatch = useAppDispatch();
   const { colors: theme } = useAppSelector(({ theme }) => theme);
-  const favorite = useAppSelector(({ favorite }) => favorite);
+  const { favorite, saveNewValues } = useFavorite();
 
   const { data, fetchNextPage, online } = useInfinitePagination<PaginatedMovies>(
     GET_FAVORITES,
@@ -75,13 +74,13 @@ const Favorites = () => {
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   useEffect(() => {
-    dispatch(saveFavoriteToStorage(moviesData.map(({ id }) => id)));
+    saveNewValues(moviesData.map(({ id }) => id));
   }, [moviesData]);
 
   const onPressFavorite = (movie: Movie, isFavorite: boolean) => {
     const { id } = movie;
 
-    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite.movies));
+    let newFavorites: number[] = JSON.parse(JSON.stringify(favorite));
 
     if (isFavorite) {
       newFavorites = newFavorites.filter((favId) => favId !== id);
@@ -89,7 +88,6 @@ const Favorites = () => {
       newFavorites.push(id);
     }
 
-    dispatch(saveFavoriteToStorage(newFavorites));
     mutate({ movie, favorite: !isFavorite });
   };
 
@@ -106,7 +104,7 @@ const Favorites = () => {
             return (
               <MovieCard
                 movie={movie}
-                isFavorite={favorite.movies.includes(id)}
+                isFavorite={favorite.includes(id)}
                 setFavorite={(isFavorite) => onPressFavorite(movie, isFavorite)}
               />
             );

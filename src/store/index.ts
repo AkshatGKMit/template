@@ -3,7 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import authReducer from './reducers/auth';
 import counterReducer from './reducers/counter';
-import favoriteReducer from './reducers/favorites';
 import themeReducer from './reducers/theme';
 
 const store = configureStore({
@@ -11,7 +10,6 @@ const store = configureStore({
     theme: themeReducer,
     counter: counterReducer,
     auth: authReducer,
-    favorite: favoriteReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });

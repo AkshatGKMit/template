@@ -12,7 +12,3 @@ interface AuthState {
   loading: boolean;
   error?: Partial<ApiCallError>;
 }
-
-interface FavoriteState {
-  movies: number[];
-}
