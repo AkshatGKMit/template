@@ -27,27 +27,6 @@ export function colorWithOpacity(color: string, alpha: string | number): string 
   return `${color}${alphaHex}`;
 }
 
-export namespace StorageManager {
-  export async function getStoreValue<T>(key: StorageKey): Promise<T | undefined> {
-    try {
-      const item = await AsyncStorage.getItem(key);
-
-      if (!item) {
-        return undefined;
-      }
-
-      return JSON.parse(item) as T;
-    } catch (error) {
-      console.error(`Async Storage: Error retrieving item for key "${key}":`, error);
-      return undefined;
-    }
-  }
-
-  export async function saveStoreValue(key: StorageKey, value: any) {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
-  }
-}
-
 export namespace Animation {
   export function newValue(value: number) {
     return useRef(new Animated.Value(value)).current;

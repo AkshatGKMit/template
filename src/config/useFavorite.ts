@@ -3,7 +3,7 @@ import { InfiniteData, useMutation, useQuery, useQueryClient } from '@tanstack/r
 
 import { QUERY_CONSTANTS, STORAGE_KEY } from '@constants';
 import { mutateAddFavorites } from '@network/apiCalls';
-import { StorageManager } from '@utility/helpers';
+import StorageManager from '@utility/storage';
 
 const useFavorite = () => {
   const queryClient = useQueryClient();
@@ -12,12 +12,12 @@ const useFavorite = () => {
   const { data: favoriteIds, refetch: refetchFavorites } = useQuery({
     queryKey: GET_FAVORITES_FROM_STORAGE,
     queryFn: async () =>
-      (await StorageManager.getStoreValue<number[]>(STORAGE_KEY.FAVORITE_MOVIES_ID)) ?? [],
+      (await StorageManager.getValue<number[]>(STORAGE_KEY.FAVORITE_MOVIES_ID)) ?? [],
     initialData: [],
   });
 
   const saveNewValues = async (ids: number[]) => {
-    await StorageManager.saveStoreValue(STORAGE_KEY.FAVORITE_MOVIES_ID, ids).then(() =>
+    await StorageManager.saveValue(STORAGE_KEY.FAVORITE_MOVIES_ID, ids).then(() =>
       refetchFavorites(),
     );
   };
@@ -41,7 +41,7 @@ const useFavorite = () => {
       ? [...favoriteIds, id]
       : favoriteIds.filter((favId) => id !== favId);
 
-    await StorageManager.saveStoreValue(STORAGE_KEY.FAVORITE_MOVIES_ID, newFavoriteIds);
+    await StorageManager.saveValue(STORAGE_KEY.FAVORITE_MOVIES_ID, newFavoriteIds);
     refetchFavorites();
 
     return { newFavoriteIds };
