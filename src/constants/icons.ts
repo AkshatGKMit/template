@@ -22601,3 +22601,23 @@ export const Icons = {
     youtube: { family: ICON_FAMILY.ZOCIAL, name: 'youtube' },
   },
 };
+
+export const {
+  antDesign: AntDesignIcons,
+  entypo: EntypoIcons,
+  evilIcons: EvilIconsIcons,
+  feather: FeatherIcons,
+  fontAwesome: FontAwesomeIcons,
+  fontAwesome5: FontAwesome5Icons,
+  fontAwesome5Brands: FontAwesome5BrandsIcons,
+  fontAwesome6: FontAwesome6Icons,
+  fontAwesome6Brands: FontAwesome6BrandsIcons,
+  fontisto: FontistoIcons,
+  foundation: FoundationIcons,
+  ionicons: IoniconsIcons,
+  materialCommunityIcons: MaterialCommunityIconsIcons,
+  materialIcons: MaterialIconsIcons,
+  octicons: OcticonsIcons,
+  simpleLineIcons: SimpleLineIconsIcons,
+  zocial: ZocialIcons,
+} = Icons;
