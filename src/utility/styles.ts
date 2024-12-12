@@ -38,11 +38,11 @@ export function createThemedStyles<T extends NamedStyles<T> | NamedStyles<any>>(
   };
 }
 
-export const getShadowStyle = (level: Elevation) => {
+export const getShadowStyle = (level: Elevation, color?: string) => {
   return {
     ...Platform.select({
       ios: {
-        shadowColor: Colors.black,
+        shadowColor: color ?? Colors.black,
         shadowOffset: {
           width: 0,
           height: level > 0 ? level : 0,

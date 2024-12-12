@@ -139,7 +139,6 @@ export const COMMON_BUTTON_CONSTANTS = {
   COLOR: {
     DISABLED_CONTAINER: ColorType.onSurface,
     DISABLED_LABEL_COLOR: ColorType.onSurface,
-    DISABLED_ICON_COLOR: ColorType.onSurface,
   },
   MEASUREMENTS: {
     CONTAINER_HEIGHT: 40,
@@ -152,7 +151,6 @@ export const COMMON_BUTTON_CONSTANTS = {
     GAP: 8,
     DISABLED_CONTAINER_OPACITY: Opacity.level2,
     DISABLED_LABEL_OPACITY: Opacity.level4,
-    DISABLED_ICON_OPACITY: Opacity.level4,
   },
   ELEVATED: {
     COLOR: {
@@ -160,9 +158,6 @@ export const COMMON_BUTTON_CONSTANTS = {
       CONTAINER_SHADOW: ColorType.shadow,
       LABEL_COLOR: ColorType.primary,
       ICON_COLOR: ColorType.primary,
-      DISABLED_CONTAINER: ColorType.onSurface,
-      DISABLED_LABEL_COLOR: ColorType.onSurface,
-      DISABLED_ICON_COLOR: ColorType.onSurface,
     },
     MEASUREMENTS: {
       CONTAINER_ELEVATION: Elevation.lvl1,
@@ -201,6 +196,10 @@ export const COMMON_BUTTON_CONSTANTS = {
       CONTAINER_COLOR: ColorType.transparent,
       LABEL_COLOR: ColorType.primary,
       ICON_COLOR: ColorType.primary,
+      DISABLED_LABEL_COLOR: ColorType.onSurface,
+      DISABLED_LABEL_OPACITY: Opacity.level4,
+      DISABLED_ICON_COLOR: ColorType.onSurface,
+      DISABLED_ICON_OPACITY: Opacity.level4,
     },
   },
 };

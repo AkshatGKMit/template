@@ -1,7 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 import AppBar from '@components/appBar';
-import { ElevatedButton } from '@components/button';
+import {
+  ElevatedButton,
+  FilledButton,
+  OutlinedButton,
+  TextButton,
+  TonalButton,
+} from '@components/button';
 import Scaffold from '@components/scaffold';
 import useHeader from '@config/useHeader';
 import { Icons, ROUTES } from '@constants';
@@ -44,20 +50,26 @@ const Home = () => {
         onPress={() => navigate(PAGINATION_ROUTE)}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
-      <ElevatedButton
+      <FilledButton
         label={INFINITE_PAGINATION_ROUTE}
         onPress={() => navigate(INFINITE_PAGINATION_ROUTE)}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
-      <ElevatedButton
+      <TonalButton
         label={FAVORITES_ROUTE}
         onPress={() => navigate(FAVORITES_ROUTE)}
         leadingIcon={Icons.materialIcons.favorite}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
-      <ElevatedButton
+      <OutlinedButton
         label={SAGA_ROUTE}
         onPress={() => navigate(SAGA_ROUTE)}
+        leadingIcon={Icons.fontisto.shoppingStore}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
+      />
+      <TextButton
+        label={SAGA_ROUTE}
+        onPress={() => {}}
         leadingIcon={Icons.fontisto.shoppingStore}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
