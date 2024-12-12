@@ -133,6 +133,17 @@ declare global {
     borderRadius?: number;
   }
 
+  interface DialogParams extends RefManagerParams {
+    isDismissible?: boolean;
+    backdropColor?: string;
+    borderRadius?: number;
+  }
+
+  interface DialogRef {
+    show: (params: DialogParams) => void;
+    hide: () => void;
+  }
+
   interface DropDownItem {
     id: string | number;
     label: string;

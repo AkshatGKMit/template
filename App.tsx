@@ -3,14 +3,10 @@ import { AppState, AppStateStatus, LogBox, StatusBar, useColorScheme, View } fro
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import {
-  focusManager,
-  QueryClient,
-  QueryClientProvider,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import BottomSheet from '@components/bottomSheet';
+import Dialog from '@components/dialog';
 import Snackbar from '@components/snackBar';
 import ToggleWifi from '@config/ToggleWifi';
 import Navigator from '@navigation/Navigator';
@@ -38,6 +34,7 @@ const App = () => {
           <Main />
           <BottomSheet />
           <Snackbar />
+          <Dialog />
         </SafeAreaProvider>
       </QueryClientProvider>
     </Provider>
