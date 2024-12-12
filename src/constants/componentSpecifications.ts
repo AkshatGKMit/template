@@ -4,21 +4,21 @@ import ColorType from './colorType';
 import { Opacity } from '@themes/colors';
 
 export const APP_BAR_CONSTANTS = {
-  COLOR: {
-    BACKGROUND: ColorType.surface,
-    ON_SCROLL_BACKGROUND: ColorType.surfaceContainer,
+  THEME: {
+    BACKGROUND_COLOR: ColorType.surface,
+    ON_SCROLL_BACKGROUND_COLOR: ColorType.surfaceContainer,
 
-    LEADING_ICON: ColorType.onSurface,
-    TRAILING_ICON: ColorType.onSurfaceVariant,
-    HEADLINE: ColorType.onSurface,
+    LEADING_ICON_COLOR: ColorType.onSurface,
+    TRAILING_ICON_COLOR: ColorType.onSurfaceVariant,
+    HEADLINE_COLOR: ColorType.onSurface,
+    HEADLINE_TYPOGRAPHY: Typography.titleLarge,
+    CONTAINER_ELEVATION: Elevation.lvl0,
+    ON_SCROLL_CONTAINER_ELEVATION: Elevation.lvl2,
   },
   MEASUREMENTS: {
     CONTAINER_HEIGHT: 64,
-    CONTAINER_ELEVATION: Elevation.lvl0,
-    ON_SCROLL_CONTAINER_ELEVATION: Elevation.lvl2,
     LEADING_ICON_SIZE: 24,
     TRAILING_ICON_SIZE: 24,
-    HEADLINE_TYPOGRAPHY: Typography.titleLarge,
     AVATAR_SHAPE: 15,
     AVATAR_SIZE: 30,
     PADDING_HORIZONTAL: 16,
@@ -27,22 +27,22 @@ export const APP_BAR_CONSTANTS = {
 };
 
 export const MENU_CONSTANTS = {
-  COLOR: {
-    CONTAINER: ColorType.surfaceContainer,
-    SHADOW: ColorType.shadow,
-    SELECTED_ITEM_CONTAINER: ColorType.secondaryContainer,
-    SELECTED_ITEM_LABEL: ColorType.onSecondaryContainer,
-    ITEM_LABEL: ColorType.onSurface,
-    ITEM_ICON: ColorType.onSurfaceVariant,
-    DIVIDER: ColorType.onSurfaceVariant,
-    LEADING_ICON: ColorType.onSurface,
+  THEME: {
+    CONTAINER_COLOR: ColorType.surfaceContainer,
+    SHADOW_COLOR: ColorType.shadow,
+    SELECTED_ITEM_CONTAINER_COLOR: ColorType.secondaryContainer,
+    SELECTED_ITEM_LABEL_COLOR: ColorType.onSecondaryContainer,
+    ITEM_LABEL_COLOR: ColorType.onSurface,
+    ITEM_ICON_COLOR: ColorType.onSurfaceVariant,
+    DIVIDER_COLOR: ColorType.onSurfaceVariant,
+    LEADING_ICON_COLOR: ColorType.onSurface,
+    CONTAINER_ELEVATION: Elevation.lvl2,
+    LABEL_TYPOGRAPHY: Typography.labelLarge,
   },
   MEASUREMENTS: {
     CONTAINER_MIN_WIDTH: 112,
     CONTAINER_MAX_WIDTH: 280,
-    CONTAINER_ELEVATION: Elevation.lvl2,
     CONTAINER_HEIGHT: 48,
-    LABEL_TYPOGRAPHY: Typography.labelLarge,
     BORDER_RADIUS: 4,
     HORIZONTAL_PADDING: 12,
     ITEM_HEIGHT: 48,
@@ -54,21 +54,21 @@ export const MENU_CONSTANTS = {
 };
 
 export const BOTTOM_TAB_CONSTANTS = {
-  COLOR: {
-    CONTAINER: ColorType.surfaceContainer,
-    CONTAINER_SHADOW: ColorType.shadow,
-    LABEL_ACTIVE: ColorType.onSurface,
-    LABEL_INACTIVE: ColorType.onSurfaceVariant,
-    ICON_ACTIVE: ColorType.onSecondaryContainer,
-    ICON_INACTIVE: ColorType.onSurface,
-    BADGE_COLOR: ColorType.error,
-    ACTIVE_INDICATOR: ColorType.secondaryContainer,
-  },
-  MEASUREMENTS: {
-    CONTAINER_HEIGHT: 80,
+  THEME: {
+    CONTAINER_COLOR: ColorType.surfaceContainer,
+    CONTAINER_SHADOW_COLOR: ColorType.shadow,
+    LABEL_ACTIVE_COLOR: ColorType.onSurface,
+    LABEL_INACTIVE_COLOR: ColorType.onSurfaceVariant,
+    ICON_ACTIVE_COLOR: ColorType.onSecondaryContainer,
+    ICON_INACTIVE_COLOR: ColorType.onSurface,
+    BADGE_COLOR_COLOR: ColorType.error,
+    ACTIVE_INDICATOR_COLOR: ColorType.secondaryContainer,
     CONTAINER_ELEVATION: Elevation.lvl2,
     LABEL_TYPOGRAPHY: Typography.labelMedium,
     LABEL_ACTIVE_WEIGHT: FONT_WEIGHT.BOLD,
+  },
+  MEASUREMENTS: {
+    CONTAINER_HEIGHT: 80,
     ICON_SIZE: 24,
     BADGE_SIZE: 6,
     BADGE_SHAPE: 3,
@@ -85,13 +85,13 @@ export const BOTTOM_TAB_CONSTANTS = {
 
 export const DIVIDER_CONSTANTS = {
   THICKNESS: 1,
-  COLOR: ColorType.outlineVariant,
+  THEME: { COLOR: ColorType.outlineVariant },
 };
 
 export const FAB_CONSTANTS = {
-  COLOR: {
-    CONTAINER: ColorType.primaryContainer,
-    ICON: ColorType.onPrimaryContainer,
+  THEME: {
+    CONTAINER_COLOR: ColorType.primaryContainer,
+    ICON_COLOR: ColorType.onPrimaryContainer,
   },
   MEASUREMENTS: {
     NORMAL: {
@@ -119,10 +119,11 @@ export const FAB_CONSTANTS = {
 };
 
 export const EXTENDED_FAB_CONSTANTS = {
-  COLOR: {
-    CONTAINER: ColorType.primaryContainer,
-    LABEL: ColorType.onPrimaryContainer,
-    ICON: ColorType.onPrimaryContainer,
+  THEME: {
+    CONTAINER_COLOR: ColorType.primaryContainer,
+    LABEL_COLOR: ColorType.onPrimaryContainer,
+    ICON_COLOR: ColorType.onPrimaryContainer,
+    LABEL_TYPOGRAPHY: Typography.labelLarge,
   },
   MEASUREMENTS: {
     CONTAINER_HEIGHT: 56,
@@ -131,160 +132,163 @@ export const EXTENDED_FAB_CONSTANTS = {
     CONTAINER_SHAPE: 16,
     PADDING: 16,
     ICON_SIZE: 24,
-    LABEL_TYPOGRAPHY: Typography.labelLarge,
   },
 };
 
 export const COMMON_BUTTON_CONSTANTS = {
-  COLOR: {
-    DISABLED_CONTAINER: ColorType.onSurface,
+  THEME: {
+    DISABLED_CONTAINER_COLOR: ColorType.onSurface,
     DISABLED_LABEL_COLOR: ColorType.onSurface,
+    DISABLED_CONTAINER_OPACITY: Opacity.level2,
+    DISABLED_LABEL_OPACITY: Opacity.level4,
+    LABEL_TYPOGRAPHY: Typography.labelLarge,
   },
   MEASUREMENTS: {
     CONTAINER_HEIGHT: 40,
     CONTAINER_SHAPE: 20,
     ICON_SIZE: 18,
-    LABEL_TYPOGRAPHY: Typography.labelLarge,
     PADDING_HORIZONTAL: 24,
     LEFT_PADDING_WITH_ICON: 16,
     RIGHT_PADDING_WITH_ICON: 16,
     GAP: 8,
-    DISABLED_CONTAINER_OPACITY: Opacity.level2,
-    DISABLED_LABEL_OPACITY: Opacity.level4,
   },
   ELEVATED: {
-    COLOR: {
+    THEME: {
       CONTAINER_COLOR: ColorType.surfaceContainerLow,
-      CONTAINER_SHADOW: ColorType.shadow,
+      CONTAINER_SHADOW_COLOR: ColorType.shadow,
       LABEL_COLOR: ColorType.primary,
       ICON_COLOR: ColorType.primary,
-    },
-    MEASUREMENTS: {
       CONTAINER_ELEVATION: Elevation.lvl1,
       DISABLED_CONTAINER_ELEVATION: Elevation.lvl0,
     },
   },
   FILLED: {
-    COLOR: {
+    THEME: {
       CONTAINER_COLOR: ColorType.primary,
       LABEL_COLOR: ColorType.onPrimary,
       ICON_COLOR: ColorType.onPrimary,
     },
   },
   TONAL: {
-    COLOR: {
+    THEME: {
       CONTAINER_COLOR: ColorType.secondaryContainer,
       LABEL_COLOR: ColorType.onSecondaryContainer,
       ICON_COLOR: ColorType.onSecondaryContainer,
     },
   },
   OUTLINED: {
-    COLOR: {
+    THEME: {
       CONTAINER_COLOR: ColorType.transparent,
       LABEL_COLOR: ColorType.onSecondaryContainer,
       ICON_COLOR: ColorType.onSecondaryContainer,
       OUTLINE_COLOR: ColorType.outline,
       DISABLED_OUTLINE_COLOR: ColorType.onSurface,
+      DISABLED_OUTLINE_OPACITY: Opacity.level2,
     },
     MEASUREMENTS: {
       OUTLINE_WIDTH: 1,
-      DISABLED_OUTLINE_OPACITY: Opacity.level2,
     },
   },
   TEXT: {
-    COLOR: {
+    THEME: {
       CONTAINER_COLOR: ColorType.transparent,
       LABEL_COLOR: ColorType.primary,
       ICON_COLOR: ColorType.primary,
       DISABLED_LABEL_COLOR: ColorType.onSurface,
-      DISABLED_LABEL_OPACITY: Opacity.level4,
       DISABLED_ICON_COLOR: ColorType.onSurface,
+      DISABLED_LABEL_OPACITY: Opacity.level4,
       DISABLED_ICON_OPACITY: Opacity.level4,
     },
   },
 };
 
 export const ICON_BUTTON_CONSTANTS = {
-  COLOR: {
+  THEME: {
     DISABLED_CONTAINER: ColorType.onSurface,
     DISABLED_ICON_COLOR: ColorType.onSurface,
+    DISABLED_CONTAINER_OPACITY: Opacity.level2,
+    DISABLED_ICON_OPACITY: Opacity.level4,
   },
   MEASUREMENTS: {
     CONTAINER_SIZE: 40,
     SHAPE: 20,
     TARGET_SIZE: 48,
     ICON_SIZE: 24,
-    DISABLED_CONTAINER_OPACITY: Opacity.level2,
-    DISABLED_ICON_OPACITY: Opacity.level4,
   },
   FILLED: {
-    CONTAINER: ColorType.primary,
-    ICON: ColorType.onPrimary,
+    THEME: {
+      CONTAINER_COLOR: ColorType.primary,
+      ICON_COLOR: ColorType.onPrimary,
+    },
   },
   TONAL: {
-    CONTAINER: ColorType.secondaryContainer,
-    ICON: ColorType.onSecondaryContainer,
+    THEME: {
+      CONTAINER_COLOR: ColorType.secondaryContainer,
+      ICON_COLOR: ColorType.onSecondaryContainer,
+    },
   },
   OUTLINED: {
-    COLOR: {
-      CONTAINER: ColorType.inverseOnSurface,
-      OUTLINE: ColorType.inverseSurface,
-      DISABLED_OUTLINE: ColorType.onSurface,
-      ICON: ColorType.onSurface,
+    THEME: {
+      CONTAINER_COLOR: ColorType.inverseOnSurface,
+      OUTLINE_COLOR: ColorType.inverseSurface,
+      DISABLED_OUTLINE_COLOR: ColorType.onSurface,
+      ICON_COLOR: ColorType.onSurface,
+      DISABLED_OUTLINE_OPACITY: Opacity.level2,
     },
     MEASUREMENTS: {
       OUTLINE_WIDTH: 1,
-      DISABLED_OUTLINE_OPACITY: Opacity.level2,
     },
   },
   STANDARD: {
-    CONTAINER: ColorType.transparent,
-    ICON: ColorType.primary,
+    THEME: {
+      CONTAINER_COLOR: ColorType.transparent,
+      ICON_COLOR: ColorType.primary,
+    },
   },
 };
 
 export const DIALOG_CONSTANTS = {
-  COLOR: {
-    CONTAINER: ColorType.surfaceContainerHigh,
-    HEADLINE: ColorType.onSurface,
-    BODY: ColorType.onSurfaceVariant,
+  THEME: {
+    CONTAINER_COLOR: ColorType.surfaceContainerHigh,
+    HEADLINE_COLOR: ColorType.onSurface,
+    BODY_COLOR: ColorType.onSurfaceVariant,
+    CONTAINER_ELEVATION: Elevation.lvl3,
+    HEADLINE_TYPOGRAPHY: Typography.headlineSmall,
+    BODY_TYPOGRAPHY: Typography.bodyMedium,
   },
   MEASUREMENTS: {
     CONTAINER_MIN_WIDTH: 280,
     CONTAINER_MAX_WIDTH: 560,
-    CONTAINER_ELEVATION: Elevation.lvl3,
     CONTAINER_SHAPE: 28,
     PADDING: 24,
     BUTTONS_GAP: 8,
     TITLE_BODY_GAP: 16,
     BODY_ACTION_BUTTON_GAP: 24,
-    HEADLINE_TYPOGRAPHY: Typography.headlineSmall,
-    BODY_TYPOGRAPHY: Typography.bodyMedium,
   },
 };
 
 export const SWITCH_CONSTANTS = {
-  COLOR: {
+  THEME: {
     ENABLED: {
-      SELECTED_TRACK: ColorType.primary,
-      UNSELECTED_TRACK: ColorType.surfaceContainerHighest,
-      SELECTED_ICON: ColorType.onPrimaryContainer,
-      UNSELECTED_ICON: ColorType.surfaceContainerHighest,
-      SELECTED_HANDLE: ColorType.onPrimary,
-      UNSELECTED_HANDLE: ColorType.outline,
+      SELECTED_TRACK_COLOR: ColorType.primary,
+      UNSELECTED_TRACK_COLOR: ColorType.surfaceContainerHighest,
+      SELECTED_ICON_COLOR: ColorType.onPrimaryContainer,
+      UNSELECTED_ICON_COLOR: ColorType.surfaceContainerHighest,
+      SELECTED_HANDLE_COLOR: ColorType.onPrimary,
+      UNSELECTED_HANDLE_COLOR: ColorType.outline,
     },
     DISABLED: {
-      TRACK_OPACITY: Opacity.level2,
-      SELECTED_TRACK: ColorType.onSurface,
-      UNSELECTED_TRACK: ColorType.surfaceContainerHighest,
-      UNSELECTED_TRACK_OUTLINE: ColorType.onSurface,
+      SELECTED_TRACK_COLOR: ColorType.onSurface,
+      UNSELECTED_TRACK_COLOR: ColorType.surfaceContainerHighest,
+      UNSELECTED_TRACK_OUTLINE_COLOR: ColorType.onSurface,
+      SELECTED_ICON_COLOR: ColorType.onSurface,
+      UNSELECTED_ICON_COLOR: ColorType.surfaceContainerHighest,
+      SELECTED_HANDLE_COLOR: ColorType.surface,
+      UNSELECTED_HANDLE_COLOR: ColorType.onSurface,
+      SELECTED_HANDLE_OPACITY: Opacity.full,
       ICON_OPACITY: Opacity.level4,
-      SELECTED_ICON: ColorType.onSurface,
-      UNSELECTED_ICON: ColorType.surfaceContainerHighest,
-      SELECTED_HANDLE: ColorType.surface,
-      SELECTED_HANDLE_OPACITY: 1,
+      TRACK_OPACITY: Opacity.level2,
       UNSELECTED_HANDLE_OPACITY: Opacity.level4,
-      UNSELECTED_HANDLE: ColorType.onSurface,
     },
   },
   MEASUREMENTS: {

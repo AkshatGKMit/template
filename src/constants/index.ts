@@ -170,3 +170,4 @@ export const COMPONENTS_CONSTANTS = {
 };
 
 export { ICON_FAMILY, Icons, Typography, IMAGES };
+export * from './componentSpecifications';

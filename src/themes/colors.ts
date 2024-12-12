@@ -5,6 +5,7 @@ export const Opacity = {
   level2: 0.12,
   level3: 0.16,
   level4: 0.38,
+  full: 1,
 };
 
 export const Colors = {
