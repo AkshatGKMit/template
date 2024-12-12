@@ -1,7 +1,7 @@
 import { colorWithOpacity } from '@utility/helpers';
 
 import { Colors, Dark, Light, Palettes } from './colors';
-import { FontFamily, Typography, FontWeight, Elevation } from './font';
+import { FontFamily, Typography, FONT_WEIGHT, Elevation } from './font';
 
 const lightTheme: InvertedOmittedThemeColors = {
   main: Colors.white,
@@ -73,4 +73,4 @@ export const StyleValues = {
   headerHeight: 50,
 };
 
-export { FontFamily, Typography, FontWeight, Colors, Elevation };
+export { FontFamily, Typography, FONT_WEIGHT, Colors, Elevation };

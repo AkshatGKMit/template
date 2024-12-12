@@ -1,5 +1,5 @@
 import { createStyles, createThemedStyles } from '@utility/styles';
-import { FontWeight, Typography } from '@themes';
+import { FONT_WEIGHT, Typography } from '@themes';
 
 const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
   const { inverted } = theme;
@@ -31,7 +31,7 @@ const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
     },
     heading: {
       ...Typography.bodyLarge,
-      fontWeight: FontWeight.bold,
+      fontWeight: FONT_WEIGHT.BOLD,
       color: inverted.text,
     },
   });

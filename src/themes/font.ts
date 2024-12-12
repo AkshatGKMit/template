@@ -23,16 +23,16 @@ export const FontFamily = {
   },
 } as const;
 
-export const FontWeight = {
-  hairline: '100',
-  thin: '200',
-  light: '300',
-  regular: '400',
-  medium: '500',
-  semiBold: '600',
-  bold: '700',
-  heavy: '800',
-  black: '900',
+export const FONT_WEIGHT = {
+  HAIRLINE: '100',
+  THIN: '200',
+  LIGHT: '300',
+  REGULAR: '400',
+  MEDIUM: '500',
+  SEMI_BOLD: '600',
+  BOLD: '700',
+  HEAVY: '800',
+  BLACK: '900',
 } as const;
 
 export const Typography = {
