@@ -1,21 +1,23 @@
-import { ICON_BUTTON_CONSTANTS } from '@constants/componentSpecifications';
+import { ICON_BUTTON_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 import { colorWithOpacity } from '@utility/helpers';
 
 import IconButtonMain from './IconButtonMain';
 
-const { COLOR, MEASUREMENTS } = ICON_BUTTON_CONSTANTS.OUTLINED;
+const { THEME, MEASUREMENTS } = ICON_BUTTON_CONSTANTS.OUTLINED;
+
+const { OUTLINE_WIDTH } = MEASUREMENTS;
 
 const {
-  CONTAINER: CONTAINER_COLOR,
-  ICON: ICON_COLOR,
-  OUTLINE: OUTLINE_COLOR,
-  DISABLED_OUTLINE: DISABLED_OUTLINE_COLOR,
-} = COLOR;
-const { OUTLINE_WIDTH, DISABLED_OUTLINE_OPACITY } = MEASUREMENTS;
+  CONTAINER_COLOR,
+  ICON_COLOR,
+  OUTLINE_COLOR,
+  DISABLED_OUTLINE_COLOR,
+  DISABLED_OUTLINE_OPACITY,
+} = THEME;
 
 const OutlinedIconButton = (props: IconButtonProps) => {
-  const theme = useAppSelector((state) => state.theme.colors);
+  const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { disabled } = props;
 

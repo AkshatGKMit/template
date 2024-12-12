@@ -1,19 +1,25 @@
+import { COMMON_BUTTON_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
-import { Colors } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
 
 import ActionButton from './ActionButton';
-import { COMMON_BUTTON_CONSTANTS } from '@constants/componentSpecifications';
+
+const { THEME, MEASUREMENTS } = COMMON_BUTTON_CONSTANTS.OUTLINED;
+
+const { OUTLINE_WIDTH } = MEASUREMENTS;
+
+const {
+  CONTAINER_COLOR,
+  DISABLED_OUTLINE_COLOR,
+  LABEL_COLOR,
+  OUTLINE_COLOR,
+  DISABLED_OUTLINE_OPACITY,
+} = THEME;
 
 const OutlinedButton = (props: OmittedActionButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { disabled } = props;
-
-  const { COLOR, MEASUREMENTS } = COMMON_BUTTON_CONSTANTS.OUTLINED;
-
-  const { DISABLED_OUTLINE_OPACITY, OUTLINE_WIDTH } = MEASUREMENTS;
-  const { CONTAINER_COLOR, DISABLED_OUTLINE_COLOR, LABEL_COLOR, OUTLINE_COLOR } = COLOR;
 
   const outlineColor = disabled
     ? colorWithOpacity(theme.all[DISABLED_OUTLINE_COLOR], DISABLED_OUTLINE_OPACITY)

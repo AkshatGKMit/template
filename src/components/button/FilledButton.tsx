@@ -1,12 +1,12 @@
+import { COMMON_BUTTON_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 
 import ActionButton from './ActionButton';
-import { COMMON_BUTTON_CONSTANTS } from '@constants/componentSpecifications';
+
+const { CONTAINER_COLOR, LABEL_COLOR } = COMMON_BUTTON_CONSTANTS.FILLED.THEME;
 
 const FilledButton = (props: OmittedActionButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
-
-  const { CONTAINER_COLOR, LABEL_COLOR } = COMMON_BUTTON_CONSTANTS.FILLED.COLOR;
 
   return (
     <ActionButton

@@ -3,11 +3,19 @@ import { View, Pressable, Animated } from 'react-native';
 import Icon from '@components/icon';
 import TextBlock from '@components/textBlock';
 import useRippleEffect from '@config/useRippleEffect';
-import { COMMON_BUTTON_CONSTANTS } from '@constants/componentSpecifications';
+import { COMMON_BUTTON_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 import { Typography } from '@themes';
 import { colorWithOpacity } from '@utility/helpers';
+
 import styles from './styles';
+
+const {
+  DISABLED_CONTAINER_COLOR,
+  DISABLED_LABEL_COLOR,
+  DISABLED_CONTAINER_OPACITY,
+  DISABLED_LABEL_OPACITY,
+} = COMMON_BUTTON_CONSTANTS.THEME;
 
 const ActionButton = ({
   label,
@@ -25,14 +33,9 @@ const ActionButton = ({
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
-  const { MEASUREMENTS, COLOR } = COMMON_BUTTON_CONSTANTS;
-
-  const { DISABLED_CONTAINER_OPACITY, DISABLED_LABEL_OPACITY } = MEASUREMENTS;
-  const { DISABLED_CONTAINER, DISABLED_LABEL_COLOR } = COLOR;
-
   const buttonBackgroundColor =
     disabled && styleDisabledBackground
-      ? colorWithOpacity(theme.all[DISABLED_CONTAINER], DISABLED_CONTAINER_OPACITY)
+      ? colorWithOpacity(theme.all[DISABLED_CONTAINER_COLOR], DISABLED_CONTAINER_OPACITY)
       : (backgroundColor ?? theme.all.surfaceContainerLow);
 
   const buttonForegroundColor = disabled

@@ -1,9 +1,9 @@
-import { ICON_BUTTON_CONSTANTS } from '@constants/componentSpecifications';
+import { ICON_BUTTON_CONSTANTS } from '@constants';
 import { useAppSelector } from '@store';
 
 import IconButtonMain from './IconButtonMain';
 
-const { CONTAINER: CONTAINER_COLOR, ICON: ICON_COLOR } = ICON_BUTTON_CONSTANTS.TONAL;
+const { CONTAINER_COLOR, ICON_COLOR } = ICON_BUTTON_CONSTANTS.TONAL.THEME;
 
 const TonalIconButton = (props: IconButtonProps) => {
   const theme = useAppSelector((state) => state.theme.colors);
