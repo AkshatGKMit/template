@@ -64,23 +64,12 @@ declare global {
     leadingIcon?: IconType;
     trailingIcon?: IconType;
     backgroundColor?: string;
-    foregroundColor?: string;
+    labelColor?: string;
+    iconColor?: string;
     borderWidth?: number;
     borderColor?: string;
     styleDisabledBackground?: boolean;
   }
-
-  type OmittedActionButtonProps = Omit<
-    ActionButtonProps,
-    | 'backgroundColor'
-    | 'foregroundColor'
-    | 'borderWidth'
-    | 'borderColor'
-    | 'styleDisabled'
-    | 'styleDisabledBackground'
-  >;
-
-  type TextButtonProps = Omit<OmittedActionButtonProps, 'icon'>;
 
   interface TrailingButton extends IconProps {
     label: string;

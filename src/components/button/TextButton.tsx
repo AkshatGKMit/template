@@ -4,10 +4,17 @@ import { colorWithOpacity } from '@utility/helpers';
 
 import ActionButton from './ActionButton';
 
-const { CONTAINER_COLOR, LABEL_COLOR, DISABLED_LABEL_COLOR, DISABLED_LABEL_OPACITY } =
-  COMMON_BUTTON_CONSTANTS.TEXT.THEME;
+const {
+  CONTAINER_COLOR,
+  LABEL_COLOR,
+  ICON_COLOR,
+  DISABLED_LABEL_COLOR,
+  DISABLED_ICON_COLOR,
+  DISABLED_LABEL_OPACITY,
+  DISABLED_ICON_OPACITY,
+} = COMMON_BUTTON_CONSTANTS.TEXT.THEME;
 
-const TextButton = (props: OmittedActionButtonProps) => {
+const TextButton = (props: ActionButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { disabled } = props;
@@ -16,12 +23,17 @@ const TextButton = (props: OmittedActionButtonProps) => {
     ? colorWithOpacity(theme.all[DISABLED_LABEL_COLOR], DISABLED_LABEL_OPACITY)
     : theme.all[LABEL_COLOR];
 
+  const iconColor = disabled
+    ? colorWithOpacity(theme.all[DISABLED_ICON_COLOR], DISABLED_ICON_OPACITY)
+    : theme.all[ICON_COLOR];
+
   return (
     <ActionButton
-      {...props}
       backgroundColor={theme.all[CONTAINER_COLOR]}
-      foregroundColor={labelColor}
+      labelColor={labelColor}
+      iconColor={iconColor}
       styleDisabledBackground={false}
+      {...props}
     />
   );
 };

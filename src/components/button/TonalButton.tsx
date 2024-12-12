@@ -3,16 +3,17 @@ import { useAppSelector } from '@store';
 
 import ActionButton from './ActionButton';
 
-const { CONTAINER_COLOR, LABEL_COLOR } = COMMON_BUTTON_CONSTANTS.TONAL.THEME;
+const { CONTAINER_COLOR, LABEL_COLOR, ICON_COLOR } = COMMON_BUTTON_CONSTANTS.TONAL.THEME;
 
-const TonalButton = (props: OmittedActionButtonProps) => {
+const TonalButton = (props: ActionButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   return (
     <ActionButton
-      {...props}
       backgroundColor={theme.all[CONTAINER_COLOR]}
-      foregroundColor={theme.all[LABEL_COLOR]}
+      labelColor={theme.all[LABEL_COLOR]}
+      iconColor={theme.all[ICON_COLOR]}
+      {...props}
     />
   );
 };

@@ -139,8 +139,10 @@ export const COMMON_BUTTON_CONSTANTS = {
   THEME: {
     DISABLED_CONTAINER_COLOR: ColorType.onSurface,
     DISABLED_LABEL_COLOR: ColorType.onSurface,
+    DISABLED_ICON_COLOR: ColorType.onSurface,
     DISABLED_CONTAINER_OPACITY: Opacity.level2,
     DISABLED_LABEL_OPACITY: Opacity.level4,
+    DISABLED_ICON_OPACITY: Opacity.level4,
     LABEL_TYPOGRAPHY: Typography.labelLarge,
   },
   MEASUREMENTS: {

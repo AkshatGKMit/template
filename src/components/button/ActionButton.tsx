@@ -10,12 +10,18 @@ import { colorWithOpacity } from '@utility/helpers';
 
 import styles from './styles';
 
+const { THEME, MEASUREMENTS } = COMMON_BUTTON_CONSTANTS;
+
 const {
   DISABLED_CONTAINER_COLOR,
   DISABLED_LABEL_COLOR,
+  DISABLED_ICON_COLOR,
   DISABLED_CONTAINER_OPACITY,
   DISABLED_LABEL_OPACITY,
-} = COMMON_BUTTON_CONSTANTS.THEME;
+  DISABLED_ICON_OPACITY,
+} = THEME;
+
+const { LEFT_PADDING_WITH_ICON, RIGHT_PADDING_WITH_ICON } = MEASUREMENTS;
 
 const ActionButton = ({
   label,
@@ -24,7 +30,8 @@ const ActionButton = ({
   leadingIcon,
   trailingIcon,
   backgroundColor,
-  foregroundColor,
+  labelColor,
+  iconColor,
   borderColor,
   borderWidth,
   styleDisabledBackground = true,
@@ -38,16 +45,20 @@ const ActionButton = ({
       ? colorWithOpacity(theme.all[DISABLED_CONTAINER_COLOR], DISABLED_CONTAINER_OPACITY)
       : (backgroundColor ?? theme.all.surfaceContainerLow);
 
-  const buttonForegroundColor = disabled
+  const buttonLabelColor = disabled
     ? colorWithOpacity(theme.all[DISABLED_LABEL_COLOR], DISABLED_LABEL_OPACITY)
-    : (foregroundColor ?? theme.all.primary);
+    : (labelColor ?? theme.all.primary);
+
+  const buttonIconColor = disabled
+    ? colorWithOpacity(theme.all[DISABLED_ICON_COLOR], DISABLED_ICON_OPACITY)
+    : (iconColor ?? theme.all.primary);
 
   const containerStyle = [
     rippleContainerStyle,
     styles.container,
     {
-      paddingLeft: !!leadingIcon ? 16 : undefined,
-      paddingRight: !!trailingIcon ? 16 : undefined,
+      paddingLeft: !!leadingIcon ? LEFT_PADDING_WITH_ICON : undefined,
+      paddingRight: !!trailingIcon ? RIGHT_PADDING_WITH_ICON : undefined,
       backgroundColor: buttonBackgroundColor,
       borderWidth,
       borderColor,
@@ -66,12 +77,12 @@ const ActionButton = ({
           <Icon
             icon={leadingIcon}
             size={Typography.labelLarge.fontSize}
-            color={buttonForegroundColor}
+            color={buttonLabelColor}
           />
         )}
         <TextBlock
           typography={Typography.labelLarge}
-          color={buttonForegroundColor}
+          color={buttonLabelColor}
           numberOfLines={1}
         >
           {label}
@@ -80,7 +91,7 @@ const ActionButton = ({
           <Icon
             icon={trailingIcon}
             size={Typography.labelLarge.fontSize}
-            color={buttonForegroundColor}
+            color={buttonLabelColor}
           />
         )}
         <Animated.View style={rippleStyles} />

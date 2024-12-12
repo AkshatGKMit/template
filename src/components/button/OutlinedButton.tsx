@@ -12,11 +12,12 @@ const {
   CONTAINER_COLOR,
   DISABLED_OUTLINE_COLOR,
   LABEL_COLOR,
+  ICON_COLOR,
   OUTLINE_COLOR,
   DISABLED_OUTLINE_OPACITY,
 } = THEME;
 
-const OutlinedButton = (props: OmittedActionButtonProps) => {
+const OutlinedButton = (props: ActionButtonProps) => {
   const theme = useAppSelector(({ theme }) => theme.colors);
 
   const { disabled } = props;
@@ -27,11 +28,12 @@ const OutlinedButton = (props: OmittedActionButtonProps) => {
 
   return (
     <ActionButton
-      {...props}
       borderColor={outlineColor}
       borderWidth={OUTLINE_WIDTH}
       backgroundColor={theme.all[CONTAINER_COLOR]}
-      foregroundColor={theme.all[LABEL_COLOR]}
+      labelColor={theme.all[LABEL_COLOR]}
+      iconColor={theme.all[ICON_COLOR]}
+      {...props}
     />
   );
 };
