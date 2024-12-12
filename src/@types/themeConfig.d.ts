@@ -49,7 +49,6 @@ declare global {
       background: string;
       foreground: string;
     };
-    underlay: (opacity?: number) => string;
     all: ColorTheme;
     inverted: InvertedOmittedThemeColors;
   }

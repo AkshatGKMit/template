@@ -1,6 +1,4 @@
-import { colorWithOpacity } from '@utility/helpers';
-
-import { Colors, Dark, Light, Palettes } from './colors';
+import { Colors, Dark, Light } from './colors';
 import { FontFamily, Typography, FONT_WEIGHT, Elevation } from './font';
 
 const lightTheme: InvertedOmittedThemeColors = {
@@ -21,7 +19,6 @@ const lightTheme: InvertedOmittedThemeColors = {
     background: Light.surface,
     foreground: Light.onSurface,
   },
-  underlay: (opacity?: number) => colorWithOpacity(Light.outlineVariant, opacity ?? 0.25),
   all: Light,
 } as const;
 
@@ -43,7 +40,6 @@ const darkTheme: InvertedOmittedThemeColors = {
     background: Dark.surface,
     foreground: Dark.onSurface,
   },
-  underlay: (opacity?: number) => colorWithOpacity(Dark.outlineVariant, opacity ?? 0.25),
   all: Dark,
 } as const;
 
@@ -73,4 +69,5 @@ export const StyleValues = {
   headerHeight: 50,
 };
 
-export { FontFamily, Typography, FONT_WEIGHT, Colors, Elevation };
+export * from './font';
+export * from './colors';
