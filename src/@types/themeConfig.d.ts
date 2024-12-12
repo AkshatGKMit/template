@@ -1,3 +1,4 @@
+import ColorType from '@constants/colorType';
 import {
   Orientation,
   ThemeMode,
@@ -26,7 +27,9 @@ declare global {
 
   type ThemeMode = (typeof ThemeMode)[keyof typeof ThemeMode];
 
-  type Colors = typeof Light;
+  type ColorTheme = {
+    [key in keyof typeof ColorType]: string;
+  };
 
   interface ThemeColors {
     main: string;
@@ -47,7 +50,7 @@ declare global {
       foreground: string;
     };
     underlay: (opacity?: number) => string;
-    all: Colors;
+    all: ColorTheme;
     inverted: InvertedOmittedThemeColors;
   }
 

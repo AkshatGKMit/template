@@ -37,6 +37,6 @@ const ColorType = {
   inversePrimary: 'inversePrimary',
   backdrop: 'backdrop',
   transparent: 'transparent',
-};
+} as const;
 
 export default ColorType;

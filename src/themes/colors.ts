@@ -163,7 +163,7 @@ export const Palettes = {
 
 const { error, neutral, neutralVariant, primary, secondary, tertiary } = Palettes;
 
-export const Light = {
+export const Light: ColorTheme = {
   primary: primary.shade40,
   primaryContainer: primary.shade90,
   secondary: secondary.shade40,
@@ -207,9 +207,10 @@ export const Light = {
   inversePrimary: primary.shade80,
 
   backdrop: colorWithOpacity(neutralVariant.shade20, 0.4),
+  transparent: Colors.transparent,
 } as const;
 
-export const Dark: Colors = {
+export const Dark: ColorTheme = {
   primary: primary.shade80,
   primaryContainer: primary.shade30,
   secondary: secondary.shade80,
@@ -253,4 +254,5 @@ export const Dark: Colors = {
   inversePrimary: primary.shade40,
 
   backdrop: colorWithOpacity(neutralVariant.shade20, 0.4),
+  transparent: Colors.transparent,
 } as const;
