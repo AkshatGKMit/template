@@ -10,6 +10,8 @@ type GetParams<T extends StackScreenNames> = T extends typeof PRACTICE_STACK.Det
   : undefined;
 
 declare global {
+  type BottomTabRouteName = (typeof ROUTES.BOTTOM_TABS)[keyof typeof ROUTES.BOTTOM_TABS];
+
   type BottomTabsScreenNames = (typeof BOTTOM_TABS)[keyof typeof BOTTOM_TABS];
   type RootBottomTabParamList = Record<BottomTabsScreenNames, undefined>;
   type BottomTabNavigation = BottomTabNavigationProp<RootBottomTabParamList>;
