@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import IconButton from '@components/iconButton';
+import { IconButton } from '@components/iconButton';
 import TextBlock from '@components/textBlock';
 import { Icons, IMAGES } from '@constants';
 import { Colors, Typography } from '@themes';

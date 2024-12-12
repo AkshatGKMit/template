@@ -172,7 +172,7 @@ export const Light: ColorTheme = {
   tertiaryContainer: tertiary.shade90,
   error: error.shade40,
   errorContainer: error.shade90,
-  background: neutral.shade99,
+  background: neutral.shade98,
 
   onPrimary: primary.shade100,
   onPrimaryContainer: primary.shade10,
@@ -187,8 +187,8 @@ export const Light: ColorTheme = {
   onSurfaceVariant: neutralVariant.shade30,
   onSurfaceDisabled: colorWithOpacity(neutral.shade10, Opacity.level4),
 
-  surface: neutral.shade99,
   surfaceDim: neutral.shade87,
+  surface: neutral.shade98,
   surfaceBright: neutral.shade98,
   surfaceContainerLowest: neutral.shade100,
   surfaceContainerLow: neutral.shade96,
