@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import IconButton from '@components/iconButton';
+import { IconButton } from '@components/iconButton';
 import { APP_BAR_CONSTANTS } from '@constants';
 
 export const TrailingContainer = ({

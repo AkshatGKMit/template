@@ -1,13 +1,12 @@
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 
 import PopUpMenu from '@components/popUpMenu';
-import { APP_BAR_CONSTANTS } from '@constants';
+import { APP_BAR_CONSTANTS, Icons } from '@constants';
+import useScalingMetrics from '@config/useScalingMetrics';
 
 import AppBarMain from './AppBarMain';
 import ThemedStyles from './styles';
 import { TrailingContainer } from './TrailingContainer';
-import useScalingMetrics from '@config/useScalingMetrics';
-import { Icons } from '@constants';
 
 const ExtendedMenuButton = (menuButtons: TrailingButtons) => {
   const styles = ThemedStyles();

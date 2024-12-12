@@ -1,7 +1,7 @@
 import { View, StyleProp, ViewStyle, TextStyle, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import IconButton from '@components/iconButton';
+import { IconButton } from '@components/iconButton';
 import TextBlock from '@components/textBlock';
 import { APP_BAR_CONSTANTS, isIos } from '@constants';
 import { useAppSelector } from '@store';
