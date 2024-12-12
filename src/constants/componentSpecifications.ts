@@ -220,34 +220,27 @@ export const ICON_BUTTON_CONSTANTS = {
   },
   FILLED: {
     CONTAINER: ColorType.primary,
-    CONTAINER_UNSELECTED: ColorType.surfaceContainerHighest,
     ICON: ColorType.onPrimary,
-    ICON_UNSELECTED: ColorType.primary,
   },
   TONAL: {
     CONTAINER: ColorType.secondaryContainer,
-    CONTAINER_UNSELECTED: ColorType.surfaceContainerHighest,
     ICON: ColorType.onSecondaryContainer,
-    ICON_UNSELECTED: ColorType.onSurfaceVariant,
   },
   OUTLINED: {
     COLOR: {
-      CONTAINER: ColorType.transparent,
-      CONTAINER_UNSELECTED: ColorType.transparent,
-      OUTLINE_SELECTED: ColorType.inverseSurface,
-      OUTLINE_UNSELECTED: ColorType.outline,
-      ICON: ColorType.onSurfaceVariant,
-      ICON_UNSELECTED: ColorType.inverseOnSurface,
+      CONTAINER: ColorType.inverseOnSurface,
+      OUTLINE: ColorType.inverseSurface,
+      DISABLED_OUTLINE: ColorType.onSurface,
+      ICON: ColorType.onSurface,
     },
     MEASUREMENTS: {
       OUTLINE_WIDTH: 1,
+      DISABLED_OUTLINE_OPACITY: Opacity.level2,
     },
   },
   STANDARD: {
     CONTAINER: ColorType.transparent,
-    CONTAINER_UNSELECTED: ColorType.transparent,
     ICON: ColorType.primary,
-    ICON_UNSELECTED: ColorType.onSurfaceVariant,
   },
 };
 
