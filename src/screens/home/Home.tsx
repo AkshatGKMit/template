@@ -7,7 +7,7 @@ import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
 import useHeader from '@config/useHeader';
 import { View } from 'react-native';
-import { FilledIconButton, IconButton } from '@components/iconButton';
+import { FilledIconButton, IconButton, TonalIconButton } from '@components/iconButton';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -54,6 +54,17 @@ const Home = () => {
           onPress={() => {}}
         />
         <FilledIconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+          disabled
+        />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <TonalIconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+        />
+        <TonalIconButton
           icon={Icons.materialIcons.window}
           onPress={() => {}}
           disabled
