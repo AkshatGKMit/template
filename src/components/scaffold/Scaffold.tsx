@@ -22,14 +22,14 @@ const Scaffold = (props: ScaffoldProps) => {
     paddingRight: insetRight,
   };
 
-  const screenStyle: StyleProp<ViewStyle> = [style, globalThemedStyles.screen, paddingStyles];
+  const screenStyle: StyleProp<ViewStyle> = [globalThemedStyles.screen, paddingStyles];
 
   return (
     <View
       {...props}
       style={screenStyle}
     >
-      {children}
+      <View style={style}>{children}</View>
     </View>
   );
 };

@@ -269,3 +269,40 @@ export const DIALOG_CONSTANTS = {
     BODY_TYPOGRAPHY: Typography.bodyMedium,
   },
 };
+
+export const SWITCH_CONSTANTS = {
+  COLOR: {
+    ENABLED: {
+      SELECTED_TRACK: ColorType.primary,
+      UNSELECTED_TRACK: ColorType.surfaceContainerHighest,
+      SELECTED_ICON: ColorType.onPrimaryContainer,
+      UNSELECTED_ICON: ColorType.surfaceContainerHighest,
+      SELECTED_HANDLE: ColorType.onPrimary,
+      UNSELECTED_HANDLE: ColorType.outline,
+    },
+    DISABLED: {
+      TRACK_OPACITY: Opacity.level2,
+      SELECTED_TRACK: ColorType.onSurface,
+      UNSELECTED_TRACK: ColorType.surfaceContainerHighest,
+      UNSELECTED_TRACK_OUTLINE: ColorType.onSurface,
+      ICON_OPACITY: Opacity.level4,
+      SELECTED_ICON: ColorType.onSurface,
+      UNSELECTED_ICON: ColorType.surfaceContainerHighest,
+      SELECTED_HANDLE: ColorType.surface,
+      SELECTED_HANDLE_OPACITY: 1,
+      UNSELECTED_HANDLE_OPACITY: Opacity.level4,
+      UNSELECTED_HANDLE: ColorType.onSurface,
+    },
+  },
+  MEASUREMENTS: {
+    TRACK_HEIGHT: 32,
+    TRACK_WIDTH: 52,
+    TRACK_OUTLINE_WIDTH: 2,
+    TRACK_SHAPE: 16,
+    HANDLE_UNSELECTED_SIZE: 16,
+    HANDLE_SELECTED_SIZE: 24,
+    HANDLE_SIZE_WITH_ICON: 24,
+    HANDLE_SHAPE: 12,
+    ICON_SIZE: 16,
+  },
+};

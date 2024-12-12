@@ -2,14 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import AppBar from '@components/appBar';
 import { ElevatedButton } from '@components/button';
-import Loader from '@components/loader';
 import Scaffold from '@components/scaffold';
-import TextBlock from '@components/textBlock';
 import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
-import { useEffect } from 'react';
 import useHeader from '@config/useHeader';
-import { FC } from 'react';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();

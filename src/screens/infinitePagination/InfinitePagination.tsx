@@ -58,7 +58,10 @@ const InfinitePagination = () => {
   const moviesData = data?.pages.flatMap((page) => page.data.results) ?? [];
 
   return (
-    <Scaffold style={{ padding: 12, gap: 10, flex: 1 }}>
+    <Scaffold
+      style={{ padding: 12, gap: 10, flex: 1 }}
+      bottomInset
+    >
       {online.showNoConnectionScreenMessage ? (
         <NoInternetScreen />
       ) : (
