@@ -6,6 +6,8 @@ import Scaffold from '@components/scaffold';
 import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
 import useHeader from '@config/useHeader';
+import { View } from 'react-native';
+import { IconButton } from '@components/iconButton';
 
 const ScreenAppBar = () => {
   const { navigate } = useNavigation<StackNavigation>();
@@ -35,6 +37,28 @@ const Home = () => {
   } = ROUTES.STACK;
   return (
     <Scaffold style={{ padding: 12, gap: 10, flex: 1, ...globalStyles.columnCenter }}>
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <IconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+        />
+        <IconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+          disabled
+        />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <IconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+        />
+        <IconButton
+          icon={Icons.materialIcons.window}
+          onPress={() => {}}
+          disabled
+        />
+      </View>
       <ElevatedButton
         label={PAGINATION_ROUTE}
         onPress={() => navigate(PAGINATION_ROUTE)}

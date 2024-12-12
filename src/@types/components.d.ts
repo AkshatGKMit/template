@@ -91,7 +91,7 @@ declare global {
 
   interface TrailingContainerProps {
     style?: any;
-    trailing?: IconButtonProps;
+    trailing?: IconButtonMainProps;
     iconColor?: string;
   }
 
@@ -101,12 +101,12 @@ declare global {
     centerTitle?: boolean;
     backgroundColor?: string;
     iconColor?: string;
-    leading?: IconButtonProps;
+    leading?: IconButtonMainProps;
     trailing?: ReactNode;
   }
 
   interface SmallAppBarProps extends AppBarProps {
-    trailing?: IconButtonProps;
+    trailing?: IconButtonMainProps;
   }
 
   interface ExtendedAppBarProps extends Omit<AppBarProps, 'centerTitle'> {
@@ -260,10 +260,18 @@ declare global {
     color?: string;
   }
 
-  interface IconButtonProps extends TouchableHighlightProps, IconProps {
-    underlayColor?: string;
+  interface IconButtonMainProps {
+    icon: IconType;
     onPress?: () => void;
+    backgroundColor?: string;
+    color?: string;
+    size?: number;
+    disabled?: boolean;
+    borderWidth?: number;
+    borderColor?: string;
   }
+
+  interface IconButtonProps extends IconButtonMainProps {}
 
   interface ImageOverlayProps extends FastImageProps {
     overlayOpacity?: number;
@@ -363,7 +371,7 @@ declare global {
     placeholder?: string;
     ref?: RefObject<TextInput>;
     prefixIcon?: IconProps;
-    suffixIconButton?: IconButtonProps;
+    suffixIconButton?: IconButtonMainProps;
     secureText?: boolean;
     containerStyle?: StyleProp<ViewStyle>;
     errorMsg?: string;

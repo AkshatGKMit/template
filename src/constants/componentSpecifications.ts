@@ -214,6 +214,7 @@ export const ICON_BUTTON_CONSTANTS = {
     CONTAINER_SIZE: 40,
     SHAPE: 20,
     TARGET_SIZE: 48,
+    ICON_SIZE: 24,
     DISABLED_CONTAINER_OPACITY: Opacity.level2,
     DISABLED_ICON_OPACITY: Opacity.level4,
   },
