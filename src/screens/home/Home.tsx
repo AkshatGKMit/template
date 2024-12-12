@@ -34,6 +34,7 @@ const Home = () => {
     PAGINATION: PAGINATION_ROUTE,
     INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
     FAVORITES: FAVORITES_ROUTE,
+    SAGA: SAGA_ROUTE,
   } = ROUTES.STACK;
 
   return (
@@ -52,6 +53,12 @@ const Home = () => {
         label={FAVORITES_ROUTE}
         onPress={() => navigate(FAVORITES_ROUTE)}
         leadingIcon={Icons.materialIcons.favorite}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
+      />
+      <ElevatedButton
+        label={SAGA_ROUTE}
+        onPress={() => navigate(SAGA_ROUTE)}
+        leadingIcon={Icons.fontisto.shoppingStore}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
     </Scaffold>

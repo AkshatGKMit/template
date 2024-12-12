@@ -64,6 +64,7 @@ export const ROUTES = {
     PAGINATION: 'Pagination',
     INFINITE_PAGINATION: 'Infinite Pagination',
     FAVORITES: 'Favorite Infinite Pagination',
+    SAGA: 'Redux Saga',
   },
 } as const;
 
