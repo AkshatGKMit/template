@@ -58,11 +58,11 @@ const Footer = (
 };
 
 const Pagination = () => {
-  const { goBack } = useNavigation<StackNavigation>();
+  const { goBack } = useNavigation<PracticeStackNavigation>();
 
-  const { PAGINATION: PAGINATION_ROUTE } = ROUTES.STACK;
+  const { PAGINATION: PAGINATION_ROUTE } = ROUTES.PRACTICE_STACK;
 
-  useHeader<StackNavigation>(
+  useHeader<PracticeStackNavigation>(
     <AppBarSmall
       title={PAGINATION_ROUTE}
       leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}

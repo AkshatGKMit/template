@@ -48,12 +48,12 @@ const Footer = <T,>(
 };
 
 const Favorites = () => {
-  const { goBack } = useNavigation<StackNavigation>();
+  const { goBack } = useNavigation<PracticeStackNavigation>();
 
-  const { FAVORITES: FAVORITES_ROUTE } = ROUTES.STACK;
+  const { FAVORITES: FAVORITES_ROUTE } = ROUTES.PRACTICE_STACK;
   const { GET_FAVORITES } = QUERY_CONSTANTS.KEYS;
 
-  useHeader<StackNavigation>(
+  useHeader<PracticeStackNavigation>(
     <AppBarSmall
       title={FAVORITES_ROUTE}
       leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}

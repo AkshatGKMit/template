@@ -16,15 +16,15 @@ import MovieCard from '@components/movieCard';
 import useFavorite from '@config/useFavorite';
 
 const Saga = () => {
-  const { goBack } = useNavigation<StackNavigation>();
+  const { goBack } = useNavigation<PracticeStackNavigation>();
   const dispatch = useAppDispatch();
 
   const { movies } = useAppSelector(({ movie }) => movie);
   const { favorite, addOrRemoveFavorite } = useFavorite();
 
-  const { SAGA: SAGA_ROUTE } = ROUTES.STACK;
+  const { SAGA: SAGA_ROUTE } = ROUTES.PRACTICE_STACK;
 
-  useHeader<StackNavigation>(
+  useHeader<PracticeStackNavigation>(
     <AppBar.Small
       title={SAGA_ROUTE}
       leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}

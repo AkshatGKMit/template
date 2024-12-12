@@ -67,12 +67,19 @@ export const ERRORS = {
 } as const;
 
 export const ROUTES = {
-  STACK: {
-    HOME: 'Home',
+  PRACTICE_STACK: {
+    PRACTICE_HOME: 'Practice Home',
     PAGINATION: 'Pagination',
     INFINITE_PAGINATION: 'Infinite Pagination',
     FAVORITES: 'Favorite Infinite Pagination',
     SAGA: 'Redux Saga',
+  },
+  COMPONENTS_STACK: {
+    COMPONENTS_HOME: 'Components Home',
+  },
+  BOTTOM_TABS: {
+    PRACTICE_TAB: 'Practice',
+    COMPONENTS_TAB: 'Components',
   },
 } as const;
 

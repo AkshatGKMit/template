@@ -34,12 +34,12 @@ const Footer = <T,>(data: T | undefined, isConnected: boolean, theme: ThemeColor
 };
 
 const InfinitePagination = () => {
-  const { goBack } = useNavigation<StackNavigation>();
+  const { goBack } = useNavigation<PracticeStackNavigation>();
 
-  const { INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.STACK;
+  const { INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE } = ROUTES.PRACTICE_STACK;
   const { GET_INFINITE_POPULAR_MOVIES } = QUERY_CONSTANTS.KEYS;
 
-  useHeader<StackNavigation>(
+  useHeader<PracticeStackNavigation>(
     <AppBarSmall
       title={INFINITE_PAGINATION_ROUTE}
       leading={{ icon: Icons.materialIcons.arrowBack, onPress: goBack }}
