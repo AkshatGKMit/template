@@ -179,3 +179,4 @@ export const COMPONENTS_CONSTANTS = {
 export { ICON_FAMILY, Icons, Typography, IMAGES };
 export * from './animationConstants';
 export * from './componentSpecifications';
+export { displayName as APP_NAME } from '../../app.json';
