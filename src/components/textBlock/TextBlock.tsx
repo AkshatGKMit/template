@@ -5,7 +5,7 @@ import { FontFamily, Typography } from '@themes';
 
 const TextBlock = (props: TextBlockProps) => {
   const theme = useAppSelector(({ theme }) => theme);
-  const { family: fontFamily, typography, style, children, color } = props;
+  const { family: fontFamily, typography, fontWeight, style, children, color } = props;
 
   const textStyles: StyleProp<TextStyle> = [
     style,
@@ -13,6 +13,7 @@ const TextBlock = (props: TextBlockProps) => {
       ...(typography ?? Typography.bodyMedium),
       color: color ?? theme.colors.text,
       fontFamily,
+      fontWeight,
     },
   ];
 

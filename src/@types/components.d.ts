@@ -343,6 +343,7 @@ declare global {
   interface TextBlockProps extends TextProps {
     family?: FontFamily;
     typography?: Typography;
+    fontWeight?: FontWeight;
     color?: string;
     style?: StyleProp<Omit<TextStyle, 'fontFamily' | 'fontSize' | 'color'>>;
   }
