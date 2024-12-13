@@ -6,6 +6,7 @@ import InfinitePagination from '@screens/infinitePagination/InfinitePagination';
 import Pagination from '@screens/pagination/Pagination';
 import Saga from '@screens/saga/Saga';
 import { ROUTES } from '@constants';
+import AnimatedFlatList from '@screens/animatedFlatList/AnimatedFlatList';
 
 const Stack = createNativeStackNavigator<RootPracticeStackParamList>();
 
@@ -15,6 +16,7 @@ const {
   INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
   FAVORITES: FAVORITES_ROUTE,
   SAGA: SAGA_ROUTE,
+  ANIMATED_FLAT_LIST: ANIMATED_FLAT_LIST_ROUTE,
 } = ROUTES.PRACTICE_STACK;
 
 const PracticeStackNavigator = () => {
@@ -43,6 +45,11 @@ const PracticeStackNavigator = () => {
       <Stack.Screen
         name={SAGA_ROUTE}
         component={Saga}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ANIMATED_FLAT_LIST_ROUTE}
+        component={AnimatedFlatList}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

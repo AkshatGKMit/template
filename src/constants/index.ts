@@ -73,6 +73,7 @@ export const ROUTES = {
     INFINITE_PAGINATION: 'Infinite Pagination',
     FAVORITES: 'Favorite Infinite Pagination',
     SAGA: 'Redux Saga',
+    ANIMATED_FLAT_LIST: 'Animated Flat List',
   },
   COMPONENTS_STACK: {
     COMPONENTS_HOME: 'Components Home',

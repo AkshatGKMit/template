@@ -37,6 +37,7 @@ const Home = () => {
     INFINITE_PAGINATION: INFINITE_PAGINATION_ROUTE,
     FAVORITES: FAVORITES_ROUTE,
     SAGA: SAGA_ROUTE,
+    ANIMATED_FLAT_LIST: ANIMATED_FLAT_LIST_ROUTE,
   } = ROUTES.PRACTICE_STACK;
 
   return (
@@ -67,6 +68,12 @@ const Home = () => {
         label={'Nothing'}
         onPress={() => {}}
         trailingIcon={Icons.materialIcons.lock}
+      />
+      <ElevatedButton
+        label={ANIMATED_FLAT_LIST_ROUTE}
+        onPress={() => navigate(ANIMATED_FLAT_LIST_ROUTE)}
+        leadingIcon={Icons.materialIcons.formatListBulleted}
+        trailingIcon={Icons.materialIcons.keyboardArrowRight}
       />
     </Scaffold>
   );
