@@ -56,7 +56,7 @@ const useInfinitePagination = <T extends PaginatedResponse>(
       onError(error);
 
       if (showErrorSnackbar && error) {
-        Snackbar.show({ heading: error.name, text: error.message });
+        Snackbar.show({ message: error.message });
       }
     }
   }, [isError]);

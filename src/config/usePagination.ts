@@ -39,7 +39,7 @@ const usePagination = <T extends PaginatedResponse>(
       onError(error);
 
       if (showErrorSnackbar) {
-        Snackbar.show({ heading: error.name, text: error.message });
+        Snackbar.show({ message: error.message });
       }
     }
   }, [isError]);
@@ -86,8 +86,7 @@ const usePagination = <T extends PaginatedResponse>(
       }
     } else {
       Snackbar.show({
-        heading: 'No Internet Connection',
-        text: 'Please check your network settings and try again.',
+        message: 'Please check your internet connection and try again.',
       });
     }
   };

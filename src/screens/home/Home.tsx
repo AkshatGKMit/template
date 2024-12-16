@@ -12,6 +12,8 @@ import Scaffold from '@components/scaffold';
 import useHeader from '@config/useHeader';
 import { Icons, ROUTES } from '@constants';
 import { globalStyles } from '@themes/globalStyles';
+import { IconButton, TonalIconButton } from '@components/iconButton';
+import Snackbar from '@components/snackBar';
 
 const ScreenAppBar = () => (
   <AppBar.Extended
@@ -74,6 +76,14 @@ const Home = () => {
         onPress={() => navigate(ANIMATED_FLAT_LIST_ROUTE)}
         leadingIcon={Icons.materialIcons.formatListBulleted}
         trailingIcon={Icons.materialIcons.keyboardArrowRight}
+      />
+      <TonalIconButton
+        icon={Icons.materialCommunityIcons.toaster}
+        onPress={() => Snackbar.show({ message: 'This is a toaster' })}
+      />
+      <TonalIconButton
+        icon={Icons.materialCommunityIcons.toasterOven}
+        onPress={() => Snackbar.show({ message: 'This is a toaster oven' })}
       />
     </Scaffold>
   );

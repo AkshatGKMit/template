@@ -1,7 +1,6 @@
-import { Elevation, FONT_WEIGHT, Typography } from '@themes';
+import { Elevation, FONT_WEIGHT, Opacity, Typography } from '@themes';
 
 import ColorType from './colorType';
-import { Opacity } from '@themes/colors';
 
 export const APP_BAR_CONSTANTS = {
   THEME: {
@@ -303,5 +302,26 @@ export const SWITCH_CONSTANTS = {
     HANDLE_SIZE_WITH_ICON: 24,
     HANDLE_SHAPE: 12,
     ICON_SIZE: 16,
+  },
+};
+
+export const SNACKBAR_CONSTANTS = {
+  THEME: {
+    CONTAINER_COLOR: ColorType.inverseSurface,
+    CONTAINER_SHADOW_COLOR: ColorType.shadow,
+    CONTAINER_ELEVATION: Elevation.lvl3,
+    LABEL_COLOR: ColorType.inversePrimary,
+    ICON_COLOR: ColorType.inverseOnSurface,
+    LABEL_TYPOGRAPHY: Typography.labelLarge,
+    TEXT_TYPOGRAPHY: Typography.bodyMedium,
+    TEXT_COLOR: ColorType.inverseOnSurface,
+  },
+  MEASUREMENTS: {
+    CONTAINER_HEIGHT_ONE_LINE: 48,
+    CONTAINER_HEIGHT_TWO_LINE: 68,
+    CONTAINER_SHAPE: 4,
+    CONTAINER_PADDING: 16,
+    CONTAINER_GAP: 16,
+    ICON_SIZE: 24,
   },
 };

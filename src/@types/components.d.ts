@@ -316,15 +316,10 @@ declare global {
   }
 
   interface SnackbarParams extends RefOptions {
-    text: string;
-    heading?: string;
+    message: string;
     duration?: number;
-    indefinite?: boolean;
-    showClose?: boolean;
-    action?: ReactNode;
-    containerStyle?: StyleProp<ViewStyle>;
-    headingStyle?: StyleProp<TextStyle>;
-    textStyle?: StyleProp<TextStyle>;
+    actionText?: string;
+    onAction?: () => void;
   }
 
   type SwipeDirection = (typeof SWIPE_DIRECTION)[keyof typeof SWIPE_DIRECTION];

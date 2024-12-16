@@ -1,54 +1,89 @@
-import { View, Text, LayoutChangeEvent, Animated, PanResponder, Modal } from 'react-native';
-import React, {
-  forwardRef,
-  useCallback,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, memo, useCallback, useImperativeHandle, useState } from 'react';
+import { Animated, Pressable, StyleProp, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useAppSelector } from '@config/store';
-import useScalingMetrics from '@config/useScalingMetrics';
+import Icon from '@components/icon';
+import TextBlock from '@components/textBlock';
+import { Icons, SNACKBAR_CONSTANTS } from '@constants';
+import { useAppSelector } from '@store';
+import { globalStyles } from '@themes/globalStyles';
 import { Animation } from '@utility/helpers';
 
-import ThemedStyles from './styles';
+import styles from './styles';
 
-const defaultData: SnackbarParams = { text: '' };
+const defaultData: SnackbarParams = { message: '' };
+
+const { MEASUREMENTS, THEME } = SNACKBAR_CONSTANTS;
+
+const { CONTAINER_COLOR, ICON_COLOR, LABEL_COLOR, LABEL_TYPOGRAPHY, TEXT_COLOR, TEXT_TYPOGRAPHY } =
+  THEME;
+
+const { ICON_SIZE } = MEASUREMENTS;
+
+const snackbarAnimation = () => {
+  const translateYAnimatedValue = Animation.newValue(0);
+  const opacityAnimatedValue = Animation.newValue(0);
+  const scaleAnimatedValue = Animation.newValue(0);
+
+  const show = useCallback(() => {
+    translateYAnimatedValue.setOffset(0);
+    scaleAnimatedValue.setOffset(0);
+    opacityAnimatedValue.setOffset(0);
+
+    return Animated.parallel([
+      Animation.timing(translateYAnimatedValue, 1, 200),
+      Animation.timing(opacityAnimatedValue, 1, 200),
+      Animation.timing(scaleAnimatedValue, 1, 200),
+    ]);
+  }, []);
+
+  const hide = useCallback(() => {
+    return Animated.parallel([
+      Animation.timing(translateYAnimatedValue, 0, 200),
+      Animation.timing(opacityAnimatedValue, 0, 200),
+      Animation.timing(scaleAnimatedValue, 0, 200),
+    ]);
+  }, []);
+
+  const onHide = useCallback(() => {
+    translateYAnimatedValue.flattenOffset();
+    scaleAnimatedValue.flattenOffset();
+    opacityAnimatedValue.flattenOffset();
+  }, []);
+
+  const animate = useCallback(async (delay: number = 3000) => {
+    Animated.sequence([show(), Animated.delay(delay), hide()]).start(onHide);
+  }, []);
+
+  const interpolateTranslateY = translateYAnimatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [500, 0],
+  });
+
+  return {
+    animate,
+    hide,
+    onHide,
+    translateY: interpolateTranslateY,
+    opacity: opacityAnimatedValue,
+    scale: scaleAnimatedValue,
+  };
+};
 
 const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
-  const { WH } = useScalingMetrics();
+  const { bottom: bottomInsets } = useSafeAreaInsets();
 
-  const [isVisible, setVisible] = useState(false);
+  const { colors: theme } = useAppSelector(({ theme }) => theme);
+
   const [data, setData] = useState<SnackbarParams>(defaultData);
-  const [height, setHeight] = useState<number>(0);
 
-  const isIndefinite = useRef(false);
-  const positionAnim = useRef(new Animated.Value(0)).current;
-
-  const styles = ThemedStyles();
+  const { animate, opacity, scale, translateY, hide, onHide } = snackbarAnimation();
 
   function show(params: SnackbarParams) {
-    const { duration = 3000, indefinite = false } = params;
+    const { duration } = params;
 
-    setData({ ...params, duration });
-    setVisible(true);
-
-    isIndefinite.current = indefinite;
-    data.onShow?.();
-  }
-
-  function hide() {
-    setVisible(false);
-    setHeight(0);
-
-    positionAnim.extractOffset();
-    positionAnim.flattenOffset();
-    positionAnim.resetAnimation();
-    data.onHide?.();
+    setData(params);
+    animate(duration);
   }
 
   useImperativeHandle(
@@ -56,97 +91,50 @@ const SnackBarRoot = forwardRef<SnackbarRef>((_, ref) => {
     useCallback(
       () => ({
         show: (params: SnackbarParams) => show(params),
-        hide: () => hide(),
+        hide: () => hide().start(onHide),
       }),
       [],
     ),
   );
 
-  const hidingAnimation = Animation.timing(positionAnim, 0, 300);
+  const { message, actionText, onAction } = data;
 
-  const animate = useCallback(() => {
-    const showingAnimation = Animation.timing(positionAnim, 1, 300);
-    const delayingAnimAnimation = Animation.delay(data.duration!);
-
-    const sequenceAnimations = [showingAnimation, delayingAnimAnimation];
-
-    if (!isIndefinite.current) sequenceAnimations.push(hidingAnimation);
-
-    Animated.sequence(sequenceAnimations).start(({ finished }) => {
-      if (finished && !isIndefinite.current) hide();
-    });
-  }, [positionAnim, isIndefinite, hide]);
-
-  useEffect(() => {
-    if (isVisible) animate();
-  }, [isVisible, height]);
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => isIndefinite.current,
-      onPanResponderMove: (_, gesture) => {
-        if (gesture.dy > 2) {
-          hidingAnimation.start(({ finished }) => {
-            if (finished) hide();
-          });
-        }
-      },
-    }),
-  ).current;
-
-  const { text, action, heading, containerStyle, headingStyle, textStyle } = data;
-
-  const translateY = positionAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [WH, WH - height],
-  });
-
-  const containerStyles = useMemo(
-    () => [styles.paddedBar, containerStyle, styles.bar, { transform: [{ translateY }] }],
-    [styles, containerStyle, translateY],
-  );
-
-  const _renderTitle = useCallback(
-    () => (
-      <Text
-        style={[styles.heading, headingStyle]}
-        numberOfLines={1}
-        ellipsizeMode="tail"
-      >
-        {heading}
-      </Text>
-    ),
-    [heading, headingStyle],
-  );
-
-  const _renderText = useCallback(
-    () => (
-      <Text
-        style={[styles.text, textStyle]}
-        numberOfLines={2}
-        ellipsizeMode="tail"
-      >
-        {text}
-      </Text>
-    ),
-    [text, textStyle],
-  );
-
-  if (!isVisible) return null;
+  const containerStyles: StyleProp<ViewStyle> = [
+    styles.container,
+    {
+      bottom: bottomInsets + 10,
+      backgroundColor: theme.all[CONTAINER_COLOR],
+      transform: [{ translateY }, { scale }],
+      opacity,
+    },
+  ];
 
   return (
-    <Animated.View
-      onLayout={(e) => setHeight(e.nativeEvent.layout.height)}
-      style={containerStyles}
-      {...panResponder.panHandlers}
-    >
-      <View style={styles.content}>
-        {heading && _renderTitle()}
-        {_renderText()}
-      </View>
-      {action}
+    <Animated.View style={containerStyles}>
+      <TextBlock
+        typography={TEXT_TYPOGRAPHY}
+        color={theme.all[TEXT_COLOR]}
+        style={globalStyles.flex1}
+      >
+        {message}
+      </TextBlock>
+      <Pressable onPress={onAction}>
+        <TextBlock
+          typography={LABEL_TYPOGRAPHY}
+          color={theme.all[LABEL_COLOR]}
+        >
+          {actionText}
+        </TextBlock>
+      </Pressable>
+      <Pressable onPress={() => hide().start(onHide)}>
+        <Icon
+          icon={Icons.materialIcons.close}
+          color={theme.all[ICON_COLOR]}
+          size={ICON_SIZE}
+        />
+      </Pressable>
     </Animated.View>
   );
 });
 
-export default SnackBarRoot;
+export default memo(SnackBarRoot);

@@ -1,40 +1,28 @@
-import { createStyles, createThemedStyles } from '@utility/styles';
-import { FONT_WEIGHT, Typography } from '@themes';
+import { StyleSheet } from 'react-native';
 
-const ThemedStyles = createThemedStyles((theme, _, __, insets) => {
-  const { inverted } = theme;
-  const { bottom } = insets;
+import { SNACKBAR_CONSTANTS } from '@constants';
+import { getShadowStyle } from '@utility/styles';
 
-  return createStyles({
-    bar: {
-      position: 'absolute',
-      zIndex: 30,
-      width: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: inverted.secondaryBackground,
-      paddingBottom: bottom ? bottom : 10,
-      gap: 8,
-    },
-    paddedBar: {
-      paddingVertical: 10,
-      paddingHorizontal: 15,
-    },
-    content: {
-      flex: 1,
-      flexDirection: 'column',
-      gap: 2,
-    },
-    text: {
-      ...Typography.labelMedium,
-      color: inverted.text,
-    },
-    heading: {
-      ...Typography.bodyLarge,
-      fontWeight: FONT_WEIGHT.BOLD,
-      color: inverted.text,
-    },
-  });
+const { MEASUREMENTS, THEME } = SNACKBAR_CONSTANTS;
+
+const { CONTAINER_ELEVATION, CONTAINER_SHADOW_COLOR } = THEME;
+
+const { CONTAINER_GAP, CONTAINER_HEIGHT_ONE_LINE, CONTAINER_PADDING, CONTAINER_SHAPE } =
+  MEASUREMENTS;
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    left: 10,
+    right: 10,
+    height: CONTAINER_HEIGHT_ONE_LINE,
+    borderRadius: CONTAINER_SHAPE,
+    paddingHorizontal: CONTAINER_PADDING,
+    flexDirection: 'row',
+    gap: CONTAINER_GAP,
+    alignItems: 'center',
+    ...getShadowStyle(CONTAINER_ELEVATION, CONTAINER_SHADOW_COLOR),
+  },
 });
 
-export default ThemedStyles;
+export default styles;
