@@ -1,9 +1,10 @@
-import { Animated, Easing, StyleProp, ViewStyle } from 'react-native';
+import { useCallback } from 'react';
+import { Easing, StyleProp, ViewStyle } from 'react-native';
 
-import { useAppSelector } from '@store';
-import { Animation } from '@utility/helpers';
 import { COMPONENTS_CONSTANTS } from '@constants';
+import { useAppSelector } from '@store';
 import { globalStyles } from '@themes/globalStyles';
+import { Animation } from '@utility/helpers';
 
 const rippleStyle: StyleProp<ViewStyle> = {
   position: 'absolute',
@@ -19,7 +20,7 @@ const rippleContainerStyle: StyleProp<ViewStyle> = {
   overflow: 'scroll',
 };
 
-const useRippleEffect = () => {
+const useRippleEffect = useCallback(() => {
   const { MAX_OPACITY, MIN_SCALE, MAX_SCALE, RIPPLE_DURATION } = COMPONENTS_CONSTANTS.RIPPLE_BUTTON;
 
   const theme = useAppSelector(({ theme }) => theme.colors);
@@ -27,17 +28,22 @@ const useRippleEffect = () => {
   const opacity = Animation.newValue(MAX_OPACITY);
   const scale = Animation.newValue(MIN_SCALE);
 
-  const animatePressIn = () => {
-    Animation.timing(scale, MAX_SCALE, RIPPLE_DURATION, Easing.bezier(0.0, 0.0, 0.2, 1)).start();
-  };
-
   const animatePressOut = () => {
-    Animation.timing(opacity, 0, 0).start(({ finished }) => {
+    Animation.timing(opacity, 0, 500).start(({ finished }) => {
       if (finished) {
         scale.setValue(MIN_SCALE);
         opacity.setValue(MAX_OPACITY);
       }
     });
+  };
+
+  const pressOut = () => {
+    scale.stopAnimation();
+    animatePressOut();
+  };
+
+  const animatePressIn = () => {
+    Animation.timing(scale, MAX_SCALE, RIPPLE_DURATION, Easing.bezier(0.0, 0.0, 0.2, 1)).start();
   };
 
   const rippleStyles = [
@@ -49,7 +55,7 @@ const useRippleEffect = () => {
     },
   ];
 
-  return { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle };
-};
+  return { animatePressIn, pressOut, rippleStyles, rippleContainerStyle };
+}, []);
 
 export default useRippleEffect;

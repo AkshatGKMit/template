@@ -22,7 +22,7 @@ const { CONTAINER_COLOR, ICON_COLOR } = STANDARD.THEME;
 
 const IconButtonMain = (props: IconButtonMainProps) => {
   const theme = useAppSelector((state) => state.theme.colors);
-  const { animatePressIn, animatePressOut, rippleContainerStyle, rippleStyles } = useRippleEffect();
+  const { animatePressIn, pressOut, rippleContainerStyle, rippleStyles } = useRippleEffect();
 
   const { icon, disabled, backgroundColor, color, onPress, borderColor, borderWidth, size } = props;
 
@@ -37,7 +37,7 @@ const IconButtonMain = (props: IconButtonMainProps) => {
   return (
     <Pressable
       onPressIn={animatePressIn}
-      onPressOut={animatePressOut}
+      onPressOut={pressOut}
       onPress={onPress}
     >
       <View

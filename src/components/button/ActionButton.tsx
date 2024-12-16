@@ -36,7 +36,7 @@ const ActionButton = ({
   borderWidth,
   styleDisabledBackground = true,
 }: ActionButtonProps) => {
-  const { animatePressIn, animatePressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
+  const { animatePressIn, pressOut, rippleStyles, rippleContainerStyle } = useRippleEffect();
 
   const theme = useAppSelector(({ theme }) => theme.colors);
 
@@ -69,7 +69,7 @@ const ActionButton = ({
     <Pressable
       onPress={onPress}
       onPressIn={animatePressIn}
-      onPressOut={animatePressOut}
+      onPressOut={pressOut}
       disabled={disabled}
     >
       <View style={containerStyle}>
